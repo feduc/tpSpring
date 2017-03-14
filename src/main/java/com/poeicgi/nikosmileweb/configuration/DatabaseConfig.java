@@ -33,7 +33,7 @@ public class DatabaseConfig {
 	private LocalContainerEntityManagerFactoryBean entityManagerFactory;
 
 		//map variable et fonction dataSource
-		// indique à srping qu'il doit fusionner ces élément autowired et bean
+		// indique à spring qu'il doit fusionner ces élément autowired et bean
 		@Bean
 		public DataSource datasource(){
 
