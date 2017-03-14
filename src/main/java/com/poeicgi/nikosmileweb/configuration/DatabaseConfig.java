@@ -21,23 +21,19 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 public class DatabaseConfig {
 
-	// l'environment est forcément lié à un projet spring en lien avec application.prop
-
 	@Autowired
 	private Environment env;
-	//appelle également la fonction dataSource
+	
+	//appelle la fonction dataSource
 	@Autowired
 	private DataSource dataSource;
 
 	@Autowired
 	private LocalContainerEntityManagerFactoryBean entityManagerFactory;
 
-		//map variable et fonction dataSource
-		// indique à srping qu'il doit fusionner ces élément autowired et bean
 		@Bean
 		public DataSource datasource(){
 
-		//objet de spring enfant de datasource
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		//recupere dans application.properties la valeur de dbdriver et autres
 		dataSource.setDriverClassName(env.getProperty("db.driver"));
@@ -48,7 +44,6 @@ public class DatabaseConfig {
 	}
 
 	@Bean
-	// lance la fonction datasource en appelant la variable dataSource
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
 		LocalContainerEntityManagerFactoryBean entityManagerFactory = new LocalContainerEntityManagerFactoryBean ();
 		entityManagerFactory.setDataSource(dataSource);
