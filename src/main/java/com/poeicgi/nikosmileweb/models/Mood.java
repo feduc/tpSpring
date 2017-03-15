@@ -5,12 +5,14 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.poeicgi.nikosmileweb.models.modelbase.DataBaseItem;
 import com.poeicgi.nikosmileweb.models.Mood;
@@ -20,6 +22,11 @@ import com.poeicgi.nikosmileweb.models.User;
 @Entity
 @Table(name="avis")
 public class Mood extends DataBaseItem {
+	
+	@Transient
+	public static final String TABLE = "avis";
+	@Transient
+	public static final String[] FIELDS = {"id","satisfaction", "logDate", "commentSat", "user"};
 	
 	@Column(name="avis_journee")
 	private int satisfaction;
@@ -31,7 +38,7 @@ public class Mood extends DataBaseItem {
 	private String commentSat;
 	
 	@OneToMany(targetEntity=ChangeDate.class)
-	private ArrayList<ChangeDate> changeDates;
+	private Set<ChangeDate> changeDates;
 	
 	@ManyToOne(targetEntity=User.class)
 	private User user;
@@ -49,11 +56,15 @@ public class Mood extends DataBaseItem {
 	}
 	
 	public ArrayList<ChangeDate> getChangeDates() {
-		return changeDates;
+		if (changeDates == null) {
+			return new ArrayList<ChangeDate>();
+		}else {
+		return (ArrayList<ChangeDate>) changeDates;
+		}
 	}
 	
 	public void setChangeDates(ArrayList<ChangeDate> changeDates) {
-		this.changeDates = changeDates;
+		this.changeDates = (Set<ChangeDate>) changeDates;
 	}
 	
 	public int getSatisfaction() {
@@ -123,7 +134,7 @@ public class Mood extends DataBaseItem {
 		}
 	}
 	
-	public Mood(User user, Project project, int satisfaction) {
+	public Mood(User user, int satisfaction) {
 		this();
 		this.user = user;
 		this.setSatisfaction(satisfaction);
@@ -131,12 +142,14 @@ public class Mood extends DataBaseItem {
 		this.user.getMoods().add(this);
 	}
 
-	public Mood(User user, Project project, int satisfaction, String comment) {
-		this(user, project, satisfaction);
+	public Mood(User user, int satisfaction, String comment) {
+		this(user, satisfaction);
 		this.commentSat = comment;
 	}
 
 	public Mood() {
+		super(Mood.TABLE, Mood.FIELDS);
+		this.logDate = new Date();
 	}
 
 	@Override

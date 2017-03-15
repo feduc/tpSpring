@@ -2,41 +2,49 @@ package com.poeicgi.nikosmileweb.models;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.poeicgi.nikosmileweb.models.modelbase.DataBaseItem;
 
 @Entity
-@Table(name="projet")
+@Table(name = "projet")
 public class Project extends DataBaseItem {
 
-	@Column(name="nom_projet")
+	@Transient
+	public static final String TABLE = "projet";
+	@Transient
+	public static final String[] FIELDS = { "id", "name", "projectLeader", "verticale", "startDate", "endDate",
+			"isAnonymous", "isHidden" };
+
+	@Column(name = "nom_projet")
 	private String name;
-	
-	@Column(name="chef_de_projet")
+
+	@Column(name = "chef_de_projet")
 	private String projectLeader;
-	
+
 	private String verticale;
-	
-	@Column(name="date_debut")
+
+	@Column(name = "date_debut")
 	private Date startDate;
-	
-	@Column(nullable=true,name ="date_fin")
+
+	@Column(nullable = true, name = "date_fin")
 	private Date endDate;
-	
-	@Column(name="anonyme")
+
+	@Column(name = "anonyme")
 	private Boolean isAnonymous;
-	
-	@Column(name="cache")
+
+	@Column(name = "cache")
 	private Boolean isHidden;
-	
-	@ManyToMany(targetEntity=User.class)
-	private ArrayList<User> team;
+
+	@ManyToMany(targetEntity = User.class)
+	private Set<User> team;
 
 	public String getProjectLeader() {
 		return projectLeader;
@@ -90,11 +98,15 @@ public class Project extends DataBaseItem {
 	}
 
 	public ArrayList<User> getTeam() {
-		return team;
+		if (team == null) {
+			return new ArrayList<User>();
+		} else {
+			return (ArrayList<User>) team;
+		}
 	}
 
 	public void setTeam(ArrayList<User> team) {
-		this.team = team;
+		this.team = (Set<User>) team;
 	}
 
 	public Boolean getIsHidden() {
@@ -104,36 +116,29 @@ public class Project extends DataBaseItem {
 	public void setIsHidden(Boolean isHidden) {
 		this.isHidden = isHidden;
 	}
-	
+
 	public Project(String name, Date start_date) {
+		this();
 		this.name = name;
 		this.startDate = start_date;
-		this.team = new ArrayList<User>();
-		for (User user : team) {
-			user.getProjects().add(this);
-		}
-		this.setIsAnonymous(true);
-		this.setIsHidden(false);
+
 	}
 
 	public Project(String name, Date start_date, Date end_date) {
-		this.name = name;
-		this.startDate = start_date;
+		this(name, start_date);
 		this.endDate = end_date;
-		this.team = new ArrayList<User>();
-		for (User user : team) {
-			user.getProjects().add(this);
-		}
-		this.setIsHidden(false);
 	}
 
 	public Project() {
-		this.team = new ArrayList<User>();
+		
+		super(Project.TABLE,Project.FIELDS);
+		ArrayList<User> team = this.getTeam();
 		for (User user : team) {
 			user.getProjects().add(this);
 		}
 		this.setIsAnonymous(true);
 		this.setIsHidden(false);
+		
 
 	}
 

@@ -4,9 +4,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.Transient;
 
 @MappedSuperclass
 public abstract class DataBaseItem {
+	
+	@Transient
+	public String table;
+	@Transient
+	public String[] fields;
+
 
 	@Id
 	@GeneratedValue(strategy= GenerationType.AUTO)
@@ -31,7 +38,12 @@ public abstract class DataBaseItem {
 		}
 		
 	}
-
+	
+	public DataBaseItem(String table, String[] fields) {
+		this.table = table;
+		this.fields = fields;
+	}
+	
 	public DataBaseItem() {
 	}
 }

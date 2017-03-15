@@ -1,21 +1,30 @@
 package com.poeicgi.nikosmileweb.models;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.poeicgi.nikosmileweb.models.security.SecurityUser;
 import com.poeicgi.nikosmileweb.models.Project;
 import com.poeicgi.nikosmileweb.models.Mood;
 import com.poeicgi.nikosmileweb.models.User;
+import com.poeicgi.nikosmileweb.models.modelbase.DataBaseItem;
 
 @Entity
 @Table(name="utilisateur")
-public class User extends SecurityUser{
+public class User extends DataBaseItem{
+	
+	@Transient
+	public static final String TABLE = "utilisateur";
+	@Transient
+	public static final String[] FIELDS = {"id","lastName", "firstName", "registrationCGI","verticale", "agency"};
 	
 	@Column(name="nom")
 	private String lastName;
@@ -32,10 +41,13 @@ public class User extends SecurityUser{
 	private String agency;
 	
 	@OneToMany(targetEntity=Mood.class)
-	private ArrayList<Mood> moods;
+	private Set<Mood> moods;
 	
 	@ManyToMany(targetEntity=Project.class)
-	private ArrayList<Project> projects;
+	private Set<Project> projects;
+	
+	@OneToOne(targetEntity=SecurityUser.class)
+	private SecurityUser security;
 
 	
 	public String getAgency() {
@@ -80,31 +92,48 @@ public class User extends SecurityUser{
 	}
 	
 	public ArrayList<Project> getProjects() {
-		return projects;
+		if (projects == null) {
+			return new ArrayList<Project>();
+		}else {
+		return (ArrayList<Project>) projects;
+		}
 	}
 	
 	public void setProjects(ArrayList<Project> projects) {
-		this.projects = projects;
+		this.projects = (Set<Project>) projects;
 	}
 	
 	public ArrayList<Mood> getMoods() {
-		return moods;
+		if (moods == null) {
+			return new ArrayList<Mood>();
+		}else {
+		return (ArrayList<Mood>) moods;
+		}
 	}
 	
 	public void setMoods(ArrayList<Mood> moods) {
-		this.moods = moods;
+		this.moods = (Set<Mood>) moods;
+	}
+
+	public SecurityUser getSecurity() {
+		return security;
+	}
+
+	public void setSecurity(SecurityUser security) {
+		this.security = security;
 	}
 
 	public User(String login, String password, String lastname, String firstname, String registration_cgi) {
-		super(login, password);
+		this();
+		this.security.setLogin(login);
+		this.security.setPassword(password);
 		this.lastName = lastname;
 		this.firstName = firstname;
 		this.registrationCGI = registration_cgi;
-		this.projects = new ArrayList<Project>();
 	}
 	
 	public User() {
-		this.projects = new ArrayList<Project>();
+		super(User.TABLE,User.FIELDS);
 	}
 	
 	

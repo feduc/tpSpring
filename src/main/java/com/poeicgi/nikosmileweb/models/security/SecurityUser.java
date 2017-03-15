@@ -2,14 +2,22 @@ package com.poeicgi.nikosmileweb.models.security;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Inheritance;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
+import com.poeicgi.nikosmileweb.models.Mood;
 import com.poeicgi.nikosmileweb.models.modelbase.DataBaseItem;
 
 @Entity
 @Table(name="securite")
 public class SecurityUser extends DataBaseItem {
 	
+	@Transient
+	public static final String TABLE = "securite";
+	@Transient
+	public static final String[] FIELDS = {"id","login", "password", "status"};
+
 	private String login;
 	
 	@Column(name="mot_de_passe")
@@ -58,11 +66,13 @@ public class SecurityUser extends DataBaseItem {
 	}
 	
 	public SecurityUser(String login, String password) {
+		this();
 		this.login = login;
 		this.password = password;
 	}
 
 	public SecurityUser() {
+		super(SecurityUser.TABLE, SecurityUser.FIELDS);
 	}
 }
 
