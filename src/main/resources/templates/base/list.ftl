@@ -24,8 +24,10 @@
                     <#if key==field>
                         <#if item[key]?is_boolean>
                             <td>${item[key]?c}</td> 
+                        <#elseif item[key]?is_date>
+                            <td>${item[key]?string('yyyy/MM/dd HH:mm:ss')}</td> 
                         <#else>
-                            <td>${item[key]}</td>  
+                            <td>${item[key]}</td> 
                         </#if>
                     </#if>
                </#list>       
