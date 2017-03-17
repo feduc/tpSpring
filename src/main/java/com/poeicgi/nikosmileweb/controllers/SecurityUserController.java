@@ -1,8 +1,12 @@
 package com.poeicgi.nikosmileweb.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.poeicgi.nikosmileweb.controllers.base.view.ViewBaseController;
 import com.poeicgi.nikosmileweb.dao.ISecurityUserCrudRepository;
@@ -22,6 +26,33 @@ public class SecurityUserController extends ViewBaseController<SecurityUser>{
 		return "toto";
 		// return "toto" works because toto.ftl is directly in templates, if it
 		// was in templates.pages return would have to be equal to "pages/toto"
+	}
+	
+	@RequestMapping(path = "/login", method = RequestMethod.GET)
+	public String logInView(Model model){
+
+
+			return "user/login";
+	}
+	
+	@RequestMapping(path = "/login/do", method = RequestMethod.GET)
+	public String logIn(Model model, SecurityUser data){
+
+		List<SecurityUser> items = getItems();
+		SecurityUser test = new SecurityUser();
+		
+		for (SecurityUser security : items) {
+			if (security.getLogin().equals(data.getLogin())){
+				test = security;
+			}
+		}
+		
+		if(test.getPassword().equals(data.getPassword())){
+			return "user/homePage";
+		}
+		else {
+			return "user/login";
+		}
 	}
 	
 	@Autowired
