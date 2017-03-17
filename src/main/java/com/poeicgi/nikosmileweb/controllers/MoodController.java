@@ -14,8 +14,10 @@ import com.poeicgi.nikosmileweb.models.Mood;
 import com.poeicgi.nikosmileweb.utils.DumpFields;
 
 @Controller
-@RequestMapping(path = "/mood")
+@RequestMapping(path = MoodController.BASE_URL)
 public class MoodController extends ViewBaseController<Mood>{
+	
+	public final static String BASE_URL = "/mood"; 
 
 	// value is the address to enter in the browser to launch index(), it can be
 	// more than one when writing value = {"/path1", "/path2"}
@@ -25,7 +27,7 @@ public class MoodController extends ViewBaseController<Mood>{
 		ArrayList<Mood> moods = (ArrayList<Mood>) moodCrud.findAll();
 		
 		model.addAttribute("items", DumpFields.listFielder(moods));
-		model.addAttribute("fields", Mood.FIELDS);
+		model.addAttribute("fields", moods.get(0).getMyFields());
 		model.addAttribute("page", "MOODS");
 		
 		return "toto";
@@ -37,6 +39,6 @@ public class MoodController extends ViewBaseController<Mood>{
 	private IMoodCrudRepository moodCrud;
 	
 	public MoodController() {
-		super(Mood.class);
+		super(Mood.class,BASE_URL);
 	}
 }

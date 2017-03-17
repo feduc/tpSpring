@@ -3,13 +3,13 @@
 </head>
 <body>
     <h1> ${page} </h1>
-    <form action="/${path}/delete/do" method="POST">
+    <form action="${path}/${item["id"]}/delete/do" method="POST">
         <table class="table table-bordered table-hover">
             <tr>
 
                 <#list fields as field>
                     <#list item?keys as key>
-                        <#if key==field>
+                        <#if key==field["name"]>
                             <th>${key}</th>
                         </#if>
                     </#list>
@@ -18,7 +18,7 @@
             <tr>
                 <#list fields as field>
                     <#list item?keys as key>
-                        <#if key==field>
+                        <#if key==field["name"]>
                             <#if item[key]?is_boolean>
                                 <td><input type="text"  value="${item[key]?c}" name="${key}" readonly/> 
                             <#elseif item[key]?is_date>

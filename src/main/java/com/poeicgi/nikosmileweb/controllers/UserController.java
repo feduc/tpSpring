@@ -10,8 +10,10 @@ import com.poeicgi.nikosmileweb.models.ChangeDate;
 import com.poeicgi.nikosmileweb.models.User;
 
 @Controller
-@RequestMapping(path = "/user")
+@RequestMapping(path = UserController.BASE_URL)
 public class UserController extends ViewBaseController<User>{
+	
+	public final static String BASE_URL = "/user"; 
 
 	// value is the address to enter in the browser to launch index(), it can be
 	// more than one when writing value = {"/path1", "/path2"}
@@ -26,7 +28,7 @@ public class UserController extends ViewBaseController<User>{
 	private IUserCrudRepository userCrud;
 	
 	public UserController() {
-		super(User.class);
+		super(User.class,BASE_URL);
 
 	}
 }

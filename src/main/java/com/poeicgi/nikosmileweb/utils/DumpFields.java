@@ -190,7 +190,7 @@ public class DumpFields {
 
 		Map<String, Object> map = DumpFields.fielder(bean);
 
-		String[] fields = bean.fields;
+		String[] fields = bean.dbfields;
 
 		Map<String, Object> returnMap = null;
 

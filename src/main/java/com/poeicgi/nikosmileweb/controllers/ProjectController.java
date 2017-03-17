@@ -9,8 +9,10 @@ import com.poeicgi.nikosmileweb.dao.IProjectCrudRepository;
 import com.poeicgi.nikosmileweb.models.Project;
 
 @Controller
-@RequestMapping(path = "/project")
+@RequestMapping(path = ProjectController.BASE_URL)
 public class ProjectController extends ViewBaseController<Project>{
+	
+	public final static String BASE_URL = "/project"; 
 
 	// value is the address to enter in the browser to launch index(), it can be
 	// more than one when writing value = {"/path1", "/path2"}
@@ -25,7 +27,7 @@ public class ProjectController extends ViewBaseController<Project>{
 	private IProjectCrudRepository projectCrud;
 	
 	public ProjectController() {
-		super(Project.class);
+		super(Project.class,BASE_URL);
 	}
 
 }

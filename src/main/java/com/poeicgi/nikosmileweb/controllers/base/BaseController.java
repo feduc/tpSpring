@@ -13,6 +13,8 @@ public abstract class BaseController <T extends DataBaseItem>{
 	@Autowired
 	private IBaseCrudRepository<T> baseCrud;
 	
+	public final static String REDIRECT= "redirect:";
+	
 	private Class<T> clazz;
 	
 	public Class<T> getClazz() {
@@ -48,7 +50,7 @@ public abstract class BaseController <T extends DataBaseItem>{
 		item = baseCrud.findOne(id);
 		return item;
 	}
-	
+		
 	public List<T> getItems(){
 		List<T> items = null;
 		items = (List<T>) baseCrud.findAll();

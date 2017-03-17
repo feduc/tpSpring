@@ -3,7 +3,7 @@
 </head>
 <body>
     <h1> ${page} </h1>
-    <form action="/${path}/update/do" method="POST">
+    <form action="${path}/update/do" method="POST">
         <table class="table table-bordered table-hover">
             <tr>
 

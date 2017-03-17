@@ -9,9 +9,11 @@ import com.poeicgi.nikosmileweb.dao.IChangeDateCrudRepository;
 import com.poeicgi.nikosmileweb.models.ChangeDate;
 
 @Controller
-@RequestMapping(path = "/changeDate")
+@RequestMapping(path = ChangeDateController.BASE_URL)
 public class ChangeDateController extends ViewBaseController<ChangeDate>{
 
+	public final static String BASE_URL = "/changedate";
+	
 	// value is the address to enter in the browser to launch index(), it can be
 	// more than one when writing value = {"/path1", "/path2"}
 	@RequestMapping(value = "/ChangeDate")
@@ -25,6 +27,6 @@ public class ChangeDateController extends ViewBaseController<ChangeDate>{
 	private IChangeDateCrudRepository changeDateCrud;
 	
 	public ChangeDateController() {
-		super(ChangeDate.class);
+		super(ChangeDate.class,BASE_URL);
 	}
 }

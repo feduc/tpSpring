@@ -1,5 +1,9 @@
 package com.poeicgi.nikosmileweb.models.security;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
@@ -15,8 +19,25 @@ public class SecurityUser extends DataBaseItem {
 	
 	@Transient
 	public static final String TABLE = "securite";
-	@Transient
-	public static final String[] FIELDS = {"id","login", "password", "status"};
+	
+	public ArrayList<Map<String,Object>> getMyFields() {
+		ArrayList<Map<String,Object>> myFields = new ArrayList<Map<String,Object>>();
+		
+		myFields.add(new HashMap<String,Object>());
+		(myFields.get(0)).put("name", "id");
+		(myFields.get(0)).put("type", "Long");
+		myFields.add(new HashMap<String,Object>());
+		(myFields.get(1)).put("name", "login");
+		(myFields.get(1)).put("type", "String");
+		myFields.add(new HashMap<String,Object>());
+		(myFields.get(2)).put("name", "password");
+		(myFields.get(2)).put("type", "String");
+		myFields.add(new HashMap<String,Object>());
+		(myFields.get(3)).put("name", "status");
+		(myFields.get(3)).put("type", "String");
+		
+		return myFields;
+	}
 
 	private String login;
 	
@@ -72,7 +93,7 @@ public class SecurityUser extends DataBaseItem {
 	}
 
 	public SecurityUser() {
-		super(SecurityUser.TABLE, SecurityUser.FIELDS);
+		super(SecurityUser.TABLE);
 	}
 }
 

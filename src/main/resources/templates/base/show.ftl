@@ -9,7 +9,7 @@
 
                 <#list fields as field>
                     <#list item?keys as key>
-                        <#if key==field>
+                        <#if key==field["name"]>
                             <th>${key}</th>
                         </#if>
                     </#list>
@@ -18,7 +18,7 @@
         <tr>
             <#list fields as field>
                 <#list item?keys as key>
-                    <#if key==field>
+                    <#if key==field["name"]>
                         <#if item[key]?is_boolean>
                             <td>${item[key]?c}</td> 
                         <#elseif item[key]?is_date>

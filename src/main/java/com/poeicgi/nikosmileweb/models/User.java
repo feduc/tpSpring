@@ -1,6 +1,8 @@
 package com.poeicgi.nikosmileweb.models;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -23,8 +25,32 @@ public class User extends DataBaseItem{
 	
 	@Transient
 	public static final String TABLE = "utilisateur";
-	@Transient
-	public static final String[] FIELDS = {"id","lastName", "firstName", "registrationCGI","verticale", "agency"};
+
+	@Override
+	public ArrayList<Map<String,Object>> getMyFields() {
+		ArrayList<Map<String,Object>> myFields = new ArrayList<Map<String,Object>>();
+		
+		myFields.add(new HashMap<String,Object>());
+		(myFields.get(0)).put("name", "id");
+		(myFields.get(0)).put("type", "Long");
+		myFields.add(new HashMap<String,Object>());
+		(myFields.get(1)).put("name", "lastName");
+		(myFields.get(1)).put("type", "String");
+		myFields.add(new HashMap<String,Object>());
+		(myFields.get(2)).put("name", "firstName");
+		(myFields.get(2)).put("type", "String");
+		myFields.add(new HashMap<String,Object>());
+		(myFields.get(3)).put("name", "registrationCGI");
+		(myFields.get(3)).put("type", "String");
+		myFields.add(new HashMap<String,Object>());
+		(myFields.get(4)).put("name", "verticale");
+		(myFields.get(4)).put("type", "String");
+		myFields.add(new HashMap<String,Object>());
+		(myFields.get(5)).put("name", "agency");
+		(myFields.get(5)).put("type", "String");
+		
+		return myFields;
+	}
 	
 	@Column(name="nom")
 	private String lastName;
@@ -133,7 +159,7 @@ public class User extends DataBaseItem{
 	}
 	
 	public User() {
-		super(User.TABLE,User.FIELDS);
+		super(User.TABLE);
 	}
 	
 	

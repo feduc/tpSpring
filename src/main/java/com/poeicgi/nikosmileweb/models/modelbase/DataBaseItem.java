@@ -1,5 +1,9 @@
 package com.poeicgi.nikosmileweb.models.modelbase;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,11 +16,16 @@ public abstract class DataBaseItem {
 	@Transient
 	public String table;
 	@Transient
-	public String[] fields;
+	public ArrayList<Map<String,Object>> myFields = new ArrayList<Map<String,Object>>();
+	@Transient
+	public String[] dbfields;
 
+//	public ArrayList<Map<String, Object>> getMyFields() {
+//		return myFields;
+//	}
 
 	@Id
-	@GeneratedValue(strategy= GenerationType.AUTO)
+	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private long id;
 
 	/**
@@ -38,12 +47,11 @@ public abstract class DataBaseItem {
 		}
 		
 	}
-	
-	public DataBaseItem(String table, String[] fields) {
+
+	public DataBaseItem(String table) {
 		this.table = table;
-		this.fields = fields;
-	}
+	}	
 	
-	public DataBaseItem() {
-	}
+	public abstract ArrayList<Map<String,Object>> getMyFields();
+	
 }

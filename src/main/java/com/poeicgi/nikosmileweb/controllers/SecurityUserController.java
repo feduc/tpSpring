@@ -10,8 +10,10 @@ import com.poeicgi.nikosmileweb.models.ChangeDate;
 import com.poeicgi.nikosmileweb.models.security.SecurityUser;
 
 @Controller
-@RequestMapping(path = "/security")
+@RequestMapping(path = SecurityUserController.BASE_URL)
 public class SecurityUserController extends ViewBaseController<SecurityUser>{
+	
+	public final static String BASE_URL = "/security"; 
 
 	// value is the address to enter in the browser to launch index(), it can be
 	// more than one when writing value = {"/path1", "/path2"}
@@ -26,7 +28,7 @@ public class SecurityUserController extends ViewBaseController<SecurityUser>{
 	private ISecurityUserCrudRepository securityUserCrud;
 	
 	public SecurityUserController() {
-		super(SecurityUser.class);
+		super(SecurityUser.class,BASE_URL);
 
 	}
 }

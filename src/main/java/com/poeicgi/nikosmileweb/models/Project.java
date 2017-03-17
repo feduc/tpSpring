@@ -2,11 +2,14 @@ package com.poeicgi.nikosmileweb.models;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -19,15 +22,41 @@ public class Project extends DataBaseItem {
 
 	@Transient
 	public static final String TABLE = "projet";
-	@Transient
-	public static final String[] FIELDS = { "id", "name", "projectLeader", "verticale", "startDate", "endDate",
-			"isAnonymous", "isHidden" };
+	
+	@Override
+	public ArrayList<Map<String,Object>> getMyFields() {
+		ArrayList<Map<String,Object>> myFields = new ArrayList<Map<String,Object>>();
+		
+		myFields.add(new HashMap<String,Object>());
+		(myFields.get(0)).put("name", "id");
+		(myFields.get(0)).put("type", "Long");
+		myFields.add(new HashMap<String,Object>());
+		(myFields.get(1)).put("name", "name");
+		(myFields.get(1)).put("type", "String");
+		myFields.add(new HashMap<String,Object>());
+		(myFields.get(2)).put("name", "verticale");
+		(myFields.get(2)).put("type", "String");
+		myFields.add(new HashMap<String,Object>());
+		(myFields.get(3)).put("name", "startDate");
+		(myFields.get(3)).put("type", "Date");
+		myFields.add(new HashMap<String,Object>());
+		(myFields.get(4)).put("name", "endDate");
+		(myFields.get(4)).put("type", "Date");
+		myFields.add(new HashMap<String,Object>());
+		(myFields.get(5)).put("name", "isAnonymous");
+		(myFields.get(5)).put("type", "boolean");
+		myFields.add(new HashMap<String,Object>());
+		(myFields.get(6)).put("name", "isHidden");
+		(myFields.get(6)).put("type", "boolean");
+		
+		return myFields;
+	}
 
 	@Column(name = "nom_projet")
 	private String name;
 
-	@Column(name = "chef_de_projet")
-	private String projectLeader;
+	@ManyToOne(targetEntity = User.class)
+	private User projectLeader;
 
 	private String verticale;
 
@@ -37,20 +66,20 @@ public class Project extends DataBaseItem {
 	@Column(nullable = true, name = "date_fin")
 	private Date endDate;
 
-	@Column(name = "anonyme")
+	@Column(name = "projet_anonyme")
 	private Boolean isAnonymous;
 
-	@Column(name = "cache")
+	@Column(name = "projet_cache")
 	private Boolean isHidden;
 
 	@ManyToMany(targetEntity = User.class)
 	private Set<User> team;
 
-	public String getProjectLeader() {
+	public User getProjectLeader() {
 		return projectLeader;
 	}
 
-	public void setProjectLeader(String projectLeader) {
+	public void setProjectLeader(User projectLeader) {
 		this.projectLeader = projectLeader;
 	}
 
@@ -131,7 +160,7 @@ public class Project extends DataBaseItem {
 
 	public Project() {
 		
-		super(Project.TABLE,Project.FIELDS);
+		super(Project.TABLE);
 		ArrayList<User> team = this.getTeam();
 		for (User user : team) {
 			user.getProjects().add(this);

@@ -5,6 +5,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -25,8 +27,26 @@ public class Mood extends DataBaseItem {
 	
 	@Transient
 	public static final String TABLE = "avis";
-	@Transient
-	public static final String[] FIELDS = {"id","satisfaction", "logDate", "commentSat", "user"};
+
+	@Override
+	public ArrayList<Map<String, Object>> getMyFields() {
+		ArrayList<Map<String,Object>> myFields= new ArrayList<Map<String,Object>>();
+		
+		myFields.add(new HashMap<String,Object>());
+		(myFields.get(0)).put("name", "id");
+		(myFields.get(0)).put("type", "Long");
+		myFields.add(new HashMap<String,Object>());
+		(myFields.get(1)).put("name", "satisfaction");
+		(myFields.get(1)).put("type", "int");
+		myFields.add(new HashMap<String,Object>());
+		(myFields.get(2)).put("name", "logDate");
+		(myFields.get(2)).put("type", "Date");
+		myFields.add(new HashMap<String,Object>());
+		(myFields.get(3)).put("name", "commentSat");
+		(myFields.get(3)).put("type", "String");
+		
+		return myFields;
+	}
 	
 	@Column(name="avis_journee")
 	private int satisfaction;
@@ -97,35 +117,23 @@ public class Mood extends DataBaseItem {
 	}
 
 	public Mood(String logDate, int satisfaction, User user) {
-		super();
+		this(user,satisfaction);
 		DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		try {
 			this.logDate = format.parse(logDate);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		if (Fonction.nikoCheck(satisfaction)){
-			this.satisfaction = satisfaction;
-		}else {
-			this.satisfaction = 0;
-		}
-		this.user = user;
-		user.getMoods().add(this);
 	}
 	
 	public Mood(int satisfaction, String commentSat) {
-		super();
+		this(satisfaction);
 		this.logDate= new Date();
-		if (Fonction.nikoCheck(satisfaction)){
-			this.satisfaction = satisfaction;
-		}else {
-			this.satisfaction = 0;
-		}
 		this.commentSat = commentSat;
 	}
 	
 	public Mood(int satisfaction) {
-		super();
+		this();
 		this.logDate= new Date();
 		if (Fonction.nikoCheck(satisfaction)){
 			this.satisfaction = satisfaction;
@@ -135,10 +143,8 @@ public class Mood extends DataBaseItem {
 	}
 	
 	public Mood(User user, int satisfaction) {
-		this();
+		this(satisfaction);
 		this.user = user;
-		this.setSatisfaction(satisfaction);
-		this.logDate = new Date();
 		this.user.getMoods().add(this);
 	}
 
@@ -148,7 +154,7 @@ public class Mood extends DataBaseItem {
 	}
 
 	public Mood() {
-		super(Mood.TABLE, Mood.FIELDS);
+		super(Mood.TABLE);
 		this.logDate = new Date();
 	}
 
