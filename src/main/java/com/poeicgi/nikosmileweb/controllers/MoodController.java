@@ -61,8 +61,7 @@ public class MoodController extends ViewBaseController<Mood>{
 	    Date sd=new Date();
 	     Calendar cd=Calendar.getInstance();
 	     cd.setTime(sd);
-	     cd.get( Calendar.DAY_OF_WEEK );
-		String jour = new String();
+		String jour ="truc";
 		Integer debutsemaine = null;
 		Integer finsemaine = null;
 		Integer mois = null;
@@ -70,96 +69,69 @@ public class MoodController extends ViewBaseController<Mood>{
 		if ( cd.get( Calendar.DAY_OF_WEEK )== Calendar.MONDAY ) {
 			jour = "Lundi";
 			debutsemaine = cd.get( Calendar.DAY_OF_MONTH);
-			mois = cd.get(Calendar.DAY_OF_WEEK_IN_MONTH);
 			cd.add(Calendar.DATE,4);
 			finsemaine = cd.get( Calendar.DAY_OF_MONTH);
-			model.addAttribute("date", jour);
-			model.addAttribute("debutsemaine", debutsemaine);
-			model.addAttribute("finsemaine", finsemaine);
-			model.addAttribute("mois", mois);
 		}
 
 		else if ( cd.get( Calendar.DAY_OF_WEEK )== Calendar.TUESDAY ) {
 			jour = "Mardi";
 			cd.add(Calendar.DATE,-1);
 			debutsemaine = cd.get( Calendar.DAY_OF_MONTH);
-			mois = cd.get(Calendar.DAY_OF_WEEK_IN_MONTH);
-			cd.add(Calendar.DATE,3);
+			cd.add(Calendar.DATE,4);
 			finsemaine = cd.get( Calendar.DAY_OF_MONTH);
-			model.addAttribute("date", jour);
-			model.addAttribute("debutsemaine", debutsemaine);
-			model.addAttribute("finsemaine", finsemaine);
-			model.addAttribute("mois", mois);
 		}
 
 		else if ( cd.get( Calendar.DAY_OF_WEEK )== Calendar.WEDNESDAY ) {
 			jour = "Mercredi";
 			cd.add(Calendar.DATE,-2);
 			debutsemaine = cd.get( Calendar.DAY_OF_MONTH);
-			mois = cd.get(Calendar.DAY_OF_WEEK_IN_MONTH);
-			cd.add(Calendar.DATE,2);
+			cd.add(Calendar.DATE,4);
 			finsemaine = cd.get( Calendar.DAY_OF_MONTH);
-			model.addAttribute("date", jour);
-			model.addAttribute("debutsemaine", debutsemaine);
-			model.addAttribute("finsemaine", finsemaine);
-			model.addAttribute("mois", mois);
 		}
 
 		else if ( cd.get( Calendar.DAY_OF_WEEK )== Calendar.THURSDAY ) {
 			jour = "Jeudi";
 			cd.add(Calendar.DATE,-3);
 			debutsemaine = cd.get( Calendar.DAY_OF_MONTH);
-			mois = cd.get(Calendar.DAY_OF_WEEK_IN_MONTH);
-			cd.add(Calendar.DATE,1);
+			cd.add(Calendar.DATE,4);
 			finsemaine = cd.get( Calendar.DAY_OF_MONTH);
-			model.addAttribute("date", jour);
-			model.addAttribute("debutsemaine", debutsemaine);
-			model.addAttribute("finsemaine", finsemaine);
-			model.addAttribute("mois", mois);
 		}
 
 		else if ( cd.get( Calendar.DAY_OF_WEEK )== Calendar.FRIDAY ) {
 			jour = "Vendredi";
 			cd.add(Calendar.DATE,-4);
 			debutsemaine = cd.get( Calendar.DAY_OF_MONTH);
-			mois = cd.get(Calendar.DAY_OF_WEEK_IN_MONTH);
+			cd.add(Calendar.DATE,4);
 			finsemaine = cd.get( Calendar.DAY_OF_MONTH);
-			model.addAttribute("date", jour);
-			model.addAttribute("debutsemaine", debutsemaine);
-			model.addAttribute("finsemaine", finsemaine);
-			model.addAttribute("mois", mois);
+
 		}
 
 		else if ( cd.get( Calendar.DAY_OF_WEEK )== Calendar.SATURDAY ) {
 			jour = "Vendredi";
 			cd.add(Calendar.DATE,-5);
 			debutsemaine = cd.get( Calendar.DAY_OF_MONTH);
-			mois = cd.get(Calendar.DAY_OF_WEEK_IN_MONTH);
-			cd.add(Calendar.DATE,-1);
+			cd.add(Calendar.DATE,4);
 			finsemaine = cd.get( Calendar.DAY_OF_MONTH);
-			model.addAttribute("date", jour);
-			model.addAttribute("debutsemaine", debutsemaine);
-			model.addAttribute("finsemaine", finsemaine);
-			model.addAttribute("mois", mois);
 		}
 
 		else if ( cd.get( Calendar.DAY_OF_WEEK )== Calendar.SUNDAY ) {
 			jour = "Vendredi";
 			cd.add(Calendar.DATE,-6);
 			debutsemaine = cd.get( Calendar.DAY_OF_MONTH);
-			mois = cd.get(Calendar.DAY_OF_WEEK_IN_MONTH);
-			cd.add(Calendar.DATE,-2);
+			cd.add(Calendar.DATE,4);
 			finsemaine = cd.get( Calendar.DAY_OF_MONTH);
-			model.addAttribute("date", jour);
-			model.addAttribute("debutsemaine", debutsemaine);
-			model.addAttribute("finsemaine", finsemaine);
-			model.addAttribute("mois", mois);
-
-			int totbad;
-			totbad = moodCrud.findBadSatisaction();
-			model.addAttribute("totbad", totbad);
 
 		}
+
+		mois = cd.get(Calendar.MONTH);
+		model.addAttribute("date", jour);
+		model.addAttribute("debutsemaine", debutsemaine);
+		model.addAttribute("finsemaine", finsemaine);
+		model.addAttribute("mois", String.format("%02d",mois+1));
+
+		int totbad;
+		totbad = moodCrud.findSatisaction(-1);
+		model.addAttribute("totbad", totbad);
 		return "mood/week";
 	}
 }
