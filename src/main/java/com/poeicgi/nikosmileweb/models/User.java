@@ -117,24 +117,16 @@ public class User extends DataBaseItem{
 		this.registrationCGI = registrationCGI;
 	}
 	
-	public ArrayList<Project> getProjects() {
-		if (projects == null) {
-			return new ArrayList<Project>();
-		}else {
-		return (ArrayList<Project>) projects;
-		}
+	public Set<Project> getProjects() {
+		return projects;
 	}
 	
 	public void setProjects(ArrayList<Project> projects) {
 		this.projects = (Set<Project>) projects;
 	}
 	
-	public ArrayList<Mood> getMoods() {
-		if (moods == null) {
-			return new ArrayList<Mood>();
-		}else {
-		return (ArrayList<Mood>) moods;
-		}
+	public Set<Mood> getMoods() {
+		return moods;
 	}
 	
 	public void setMoods(ArrayList<Mood> moods) {
@@ -160,6 +152,12 @@ public class User extends DataBaseItem{
 	
 	public User() {
 		super(User.TABLE);
+	}
+
+	@Override
+	public String toString() {
+		return "User [lastName=" + lastName + ", firstName=" + firstName + ", registrationCGI=" + registrationCGI
+				+ ", verticale=" + verticale + ", agency=" + agency + "]";
 	}
 	
 	

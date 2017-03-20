@@ -5,12 +5,16 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.poeicgi.nikosmileweb.controllers.base.view.ViewBaseController;
 import com.poeicgi.nikosmileweb.dao.ISecurityUserCrudRepository;
 import com.poeicgi.nikosmileweb.models.ChangeDate;
+import com.poeicgi.nikosmileweb.models.User;
 import com.poeicgi.nikosmileweb.models.security.SecurityUser;
 
 @Controller
@@ -36,7 +40,11 @@ public class SecurityUserController extends ViewBaseController<SecurityUser>{
 	}
 	
 	@RequestMapping(path = "/login/do", method = RequestMethod.GET)
-	public String logIn(Model model, SecurityUser data){
+	public String logIn(Model model, SecurityUser data, 
+			@ModelAttribute("child") User child,
+			final BindingResult childBindingResult,
+			final Model model2,
+			final RedirectAttributes redirectAttributes){
 
 		List<SecurityUser> items = getItems();
 		SecurityUser test = new SecurityUser();
@@ -47,8 +55,12 @@ public class SecurityUserController extends ViewBaseController<SecurityUser>{
 			}
 		}
 		
+		child = userCont.getItem(test.getId());
+		redirectAttributes.addAttribute("child",child);
+		
+		
 		if(test.getPassword().equals(data.getPassword())){
-			return "user/homePage";
+			return REDIRECT+MoodController.BASE_URL+"/vote";
 		}
 		else {
 			return "user/login";
@@ -57,6 +69,9 @@ public class SecurityUserController extends ViewBaseController<SecurityUser>{
 	
 	@Autowired
 	private ISecurityUserCrudRepository securityUserCrud;
+	
+	@Autowired
+	private UserController userCont;
 	
 	public SecurityUserController() {
 		super(SecurityUser.class,BASE_URL);

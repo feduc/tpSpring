@@ -161,12 +161,12 @@ public class Project extends DataBaseItem {
 	public Project() {
 		
 		super(Project.TABLE);
-		ArrayList<User> team = this.getTeam();
-		for (User user : team) {
-			user.getProjects().add(this);
-		}
 		this.setIsAnonymous(true);
 		this.setIsHidden(false);
+//		for (User user : team) {
+//			user.getProjects().add(this);
+//		}
+
 		
 
 	}

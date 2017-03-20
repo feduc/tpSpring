@@ -23,7 +23,7 @@
     </div>
     <div>
         <label for="mdp">Mot de Passe:</label>
-        <input type="text" name="password" required="required"/>
+        <input type="password" name="password" required="required"/>
     </div>
     
     <div class="button">

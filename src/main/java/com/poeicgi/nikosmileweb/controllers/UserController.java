@@ -17,7 +17,7 @@ public class UserController extends ViewBaseController<User>{
 
 	// value is the address to enter in the browser to launch index(), it can be
 	// more than one when writing value = {"/path1", "/path2"}
-	@RequestMapping(value = "/User")
+	@RequestMapping(value = "/home")
 	public String index() {
 		return "toto";
 		// return "toto" works because toto.ftl is directly in templates, if it
