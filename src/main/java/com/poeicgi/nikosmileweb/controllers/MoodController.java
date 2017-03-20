@@ -120,7 +120,6 @@ public class MoodController extends ViewBaseController<Mood>{
 			debutsemaine = cd.get( Calendar.DAY_OF_MONTH);
 			cd.add(Calendar.DATE,4);
 			finsemaine = cd.get( Calendar.DAY_OF_MONTH);
-
 		}
 
 		mois = cd.get(Calendar.MONTH);
@@ -132,6 +131,15 @@ public class MoodController extends ViewBaseController<Mood>{
 		int totbad;
 		totbad = moodCrud.findSatisaction(-1);
 		model.addAttribute("totbad", totbad);
+
+		int totnorm;
+		totnorm = moodCrud.findSatisaction(0);
+		model.addAttribute("totnorm", totnorm);
+
+		int totgood;
+		totgood = moodCrud.findSatisaction(1);
+		model.addAttribute("totgood", totgood);
+
 		return "mood/week";
 	}
 }
