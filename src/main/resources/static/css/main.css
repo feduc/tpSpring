@@ -1,7 +1,6 @@
 body {
   background-color: #f7f7f7; }
-
-
+  
 html {
 
   box-sizing: border-box;
@@ -18,9 +17,9 @@ html {
 }
 
 label{
-     display: block;
-     height: 50px;
-     line-height: 35px;
+     display: block; 
+     height: 50px; 
+     line-height: 35px; 
 
 }
 
@@ -70,10 +69,11 @@ body {
 header {
   text-align: center; }
 
-
+ 
  footer {
   background-size: cover;
-    text-align: center;
+    text-align: center; 
+
   margin-top: 15px; }
 
 .projet {
@@ -84,7 +84,6 @@ header {
   position: relative;
   text-align: center; }
 
-
   .changeavis {
   background-color: #a00000;
   border-radius: 20px;
@@ -93,7 +92,6 @@ header {
   position: relative;
   text-align: center;
 }
-
 
 	.calend {
   background-color: #a00000;
@@ -105,10 +103,6 @@ header {
 
     .calend:hover {
     cursor: pointer; }
-
-
-
-
 
 .projet__title {
   bottom: 15px;

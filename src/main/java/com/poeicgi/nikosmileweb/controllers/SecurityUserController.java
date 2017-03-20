@@ -19,7 +19,7 @@ import com.poeicgi.nikosmileweb.models.security.SecurityUser;
 
 @Controller
 @RequestMapping(path = SecurityUserController.BASE_URL)
-public class SecurityUserController extends ViewBaseController<SecurityUser>{
+public class SecurityUserController extends ViewBaseController<SecurityUser> {
 
 	public final static String BASE_URL = "/security";
 
@@ -33,38 +33,33 @@ public class SecurityUserController extends ViewBaseController<SecurityUser>{
 	}
 
 	@RequestMapping(path = "/login", method = RequestMethod.GET)
-	public String logInView(Model model){
+	public String logInView(Model model) {
 
-
-			return "user/login";
+		return "user/login";
 	}
 
 	@RequestMapping(path = "/login/do", method = RequestMethod.GET)
-	public String logIn(Model model, SecurityUser data,
-			//FABRICATION d'un user et renoyver dans redirect
-			@ModelAttribute("child") User child,
-			final BindingResult childBindingResult,
-			final Model model2,
-			final RedirectAttributes redirectAttributes){
 
+	public String logIn(Model model, SecurityUser data,
+			// FABRICATION d'un user et renvoyer dans redirect
+			@ModelAttribute("child") User child, final BindingResult childBindingResult, final Model model2,
+			final RedirectAttributes redirectAttributes) {
 
 		List<SecurityUser> items = getItems();
 		SecurityUser test = new SecurityUser();
 
 		for (SecurityUser security : items) {
-			if (security.getLogin().equals(data.getLogin())){
+			if (security.getLogin().equals(data.getLogin())) {
 				test = security;
 			}
 		}
 
 		child = userCont.getItem(test.getId());
-		redirectAttributes.addAttribute("child",child);
+		redirectAttributes.addAttribute("child", child);
 
-
-		if(test.getPassword().equals(data.getPassword())){
-			return REDIRECT+MoodController.BASE_URL+"/vote";
-		}
-		else {
+		if (test.getPassword().equals(data.getPassword())) {
+			return REDIRECT + MoodController.BASE_URL + "/vote";
+		} else {
 			return "user/login";
 		}
 	}
@@ -76,7 +71,7 @@ public class SecurityUserController extends ViewBaseController<SecurityUser>{
 	private UserController userCont;
 
 	public SecurityUserController() {
-		super(SecurityUser.class,BASE_URL);
+		super(SecurityUser.class, BASE_URL);
 
 	}
 }

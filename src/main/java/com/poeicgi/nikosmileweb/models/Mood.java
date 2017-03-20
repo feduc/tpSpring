@@ -42,8 +42,11 @@ public class Mood extends DataBaseItem {
 		(myFields.get(2)).put("name", "logDate");
 		(myFields.get(2)).put("type", "Date");
 		myFields.add(new HashMap<String,Object>());
-		(myFields.get(3)).put("name", "commentSat");
-		(myFields.get(3)).put("type", "String");
+		(myFields.get(3)).put("name", "voteDate");
+		(myFields.get(3)).put("type", "Date");
+		myFields.add(new HashMap<String,Object>());
+		(myFields.get(4)).put("name", "commentSat");
+		(myFields.get(4)).put("type", "String");
 		
 		return myFields;
 	}
@@ -53,6 +56,9 @@ public class Mood extends DataBaseItem {
 	
 	@Column(name="date_jour")
 	private Date logDate;
+	
+	@Column(name="date_vote")
+	private Date voteDate;
 	
 	@Column(nullable=true, name="texte_jour")
 	private String commentSat;
@@ -75,6 +81,14 @@ public class Mood extends DataBaseItem {
 		this.logDate = logDate;
 	}
 	
+	public Date getVoteDate() {
+		return voteDate;
+	}
+
+	public void setVoteDate(Date voteDate) {
+		this.voteDate = voteDate;
+	}
+
 	public ArrayList<ChangeDate> getChangeDates() {
 		if (changeDates == null) {
 			return new ArrayList<ChangeDate>();
