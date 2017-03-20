@@ -91,9 +91,10 @@ public class MoodController extends ViewBaseController<Mood> {
 		Long id = Long.parseLong(MoodID);
 
 		item.setUser((User) map.get("user"));
-
-		User user = userCont.getItem(item.getUser().getId());
+		
 		item.setId(id);
+		
+		User user = userCont.getItem(item.getUser().getId());
 		user.getMoods().add(item);
 		userCont.updateItem(user);
 		item.setUser(user);

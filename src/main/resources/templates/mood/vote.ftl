@@ -17,12 +17,12 @@
     <div class="main-content">
     <div class="body-exercice">
     <form action="/mood/create/done" method="post">
-    <input type="text" name="id" value="${child["id"]}" />
-    <input type="text" name="agency" value="${child["agency"]}" />
-    <input type="text" name="firstName" value="${child["firstName"]}" />
-    <input type="text" name="lastName" value="${child["lastName"]}" />
-    <input type="text" name="registrationCGI" value="${child["registrationCGI"]}" />
-    <input type="text" name="verticale" value="${child["verticale"]}" />
+    <input type="hidden" name="id" value="${child["id"]}" />
+    <input type="hidden" name="agency" value="${child["agency"]}" />
+    <input type="hidden" name="firstName" value="${child["firstName"]}" />
+    <input type="hidden" name="lastName" value="${child["lastName"]}" />
+    <input type="hidden" name="registrationCGI" value="${child["registrationCGI"]}" />
+    <input type="hidden" name="verticale" value="${child["verticale"]}" />
 
         <div class = "bon">
         <label for="bon">
@@ -56,8 +56,8 @@
 
       <textarea name="commentSat" id="message" cols="29" rows="2"  placeholder="Un commentaire ?"></textarea>
         <input type="hidden" name="logDate" value="${date?string('yyyy/MM/dd HH:mm:ss')}" />
-        <input type="text" name="voteDate" value="${voteDate?string('yyyy/MM/dd HH:mm:ss')}" />
-        <input type="text" name="MoodID" value="${MoodId}" />
+        <input type="hidden" name="voteDate" value="${voteDate?string('yyyy/MM/dd HH:mm:ss')}" />
+        <input type="hidden" name="MoodID" value="${MoodId}" />
         <div class="button">
             <button type="submit" value="submit">Voter</button>
         </div>
