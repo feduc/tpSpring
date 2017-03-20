@@ -1,0 +1,177 @@
+
+body {
+  background-color: #f7f7f7; }
+
+
+html {
+
+  box-sizing: border-box;
+  height: 100%; }
+
+  form {
+    /* Pour le centrer dans la page */
+    width: 250px;
+
+
+}
+
+.semaine{
+            padding: 1em;
+    border: 1px solid #CCC;
+    border-radius: 1em;
+}
+
+label{
+     display: block;
+     height: 50px;
+     line-height: 35px;
+
+}
+
+.bon{
+	 padding-left: 75px
+
+}
+
+
+form div + div {
+    margin-top: 1em;
+}
+
+
+.button {
+    /* Pour positionner les boutons de la même manière que les champs textuels */
+	text-align: center;
+}
+
+button {
+    /* Cette marge représente approximativement le même espace
+       que celui entre les étiquettes et les champs textuels */
+    margin-left: .1em;
+}
+
+label > input{ /* HIDE RADIO */
+  visibility: hidden; /* Makes input not-clickable */
+  position: absolute; /* Remove input from document flow */
+	padding-left: 75px
+
+}
+label > input + img{ /* IMAGE STYLES */
+  cursor:pointer;
+  border:2px solid transparent;
+
+}
+label > input:checked + img{ /* (RADIO CHECKED) IMAGE STYLES */
+  border:2px solid #f00;
+    text-align: center;
+
+}
+
+
+body {
+  margin: 0; }
+
+header {
+  text-align: center; }
+
+
+ footer {
+  background-size: cover;
+    text-align: center;
+  margin-top: 15px; }
+
+.projet {
+  background-color: #a00000;
+  border-radius: 20px;
+  margin: 30px 0;
+  padding: 50px 0 50px;
+  position: relative;
+  text-align: center; }
+
+
+  .changeavis {
+  background-color: #a00000;
+  border-radius: 20px;
+  margin: 5px 0;
+  padding: 5px 0 5px;
+  position: relative;
+  text-align: center;
+}
+
+
+	.calend {
+  background-color: #a00000;
+  border-radius: 20px;
+  margin: 15px 0;
+  padding: 15px 0 60px;
+  position: relative;
+  text-align: center; }
+
+    .calend:hover {
+    cursor: pointer; }
+
+
+
+
+
+.projet__title {
+  bottom: 15px;
+  color: #ffffff;
+  font-family: Impact;
+  font-size: 18px;
+  left: 15px;
+  line-height: 27px;
+  margin-bottom: 0;
+  position: absolute;
+  right: 15px;
+  text-transform: uppercase;
+  z-index: 10; }
+
+  .calend__title {
+  bottom: 15px;
+  color: #ffffff;
+  font-family: Impact;
+  font-size: 18px;
+  left: 15px;
+  line-height: 27px;
+  margin-bottom: 0;
+  position: absolute;
+  right: 15px;
+  text-transform: uppercase;
+  z-index: 10; }
+
+.projet__description {
+  background-color: #fff;
+  border-radius: 20px;
+  bottom: 0;
+  color: #532E23;
+  font-weight: bold;
+  left: 0;
+  margin: 0;
+  opacity: 0;
+
+  padding: 20px 30px 30px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  -webkit-transition: opacity 0.5s ease-in-out;
+          transition: opacity 0.5s ease-in-out; }
+  .projet:hover .projet__description {
+    opacity: 0.75; }
+
+	.calend__description {
+  background-color: #fff;
+  border-radius: 20px;
+  bottom: 0;
+  color: #532E23;
+  font-weight: bold;
+  left: 0;
+  margin: 0;
+  opacity: 0;
+  padding: 50px 30px 30px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  -webkit-transition: opacity 0.5s ease-in-out;
+          transition: opacity 0.5s ease-in-out; }
+

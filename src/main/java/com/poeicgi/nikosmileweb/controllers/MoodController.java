@@ -1,25 +1,21 @@
 package com.poeicgi.nikosmileweb.controllers;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Calendar;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.poeicgi.nikosmileweb.controllers.base.view.ViewBaseController;
 import com.poeicgi.nikosmileweb.dao.IMoodCrudRepository;
-import com.poeicgi.nikosmileweb.dao.IUserCrudRepository;
 import com.poeicgi.nikosmileweb.models.Mood;
 import com.poeicgi.nikosmileweb.models.User;
-import com.poeicgi.nikosmileweb.utils.DumpFields;
 
 @Controller
 @RequestMapping(path = MoodController.BASE_URL)
@@ -65,7 +61,6 @@ public class MoodController extends ViewBaseController<Mood> {
 				voteDate = today;
 
 				id = moodCrud.findLastVoteID(child, lastVote);
-				
 
 			} else if (yesterdayTest.getTimeInMillis() == lastVoteTest.getTimeInMillis()) {
 				voteDate = today;
@@ -79,6 +74,7 @@ public class MoodController extends ViewBaseController<Mood> {
 		model.addAttribute("child", child);
 
 		return "mood/vote";
+
 		// return "toto" works because toto.ftl is directly in templates, if it
 		// was in templates.pages return would have to be equal to "pages/toto"
 	}
@@ -91,9 +87,9 @@ public class MoodController extends ViewBaseController<Mood> {
 		Long id = Long.parseLong(MoodID);
 
 		item.setUser((User) map.get("user"));
-		
+
 		item.setId(id);
-		
+
 		User user = userCont.getItem(item.getUser().getId());
 		user.getMoods().add(item);
 		userCont.updateItem(user);
@@ -112,5 +108,92 @@ public class MoodController extends ViewBaseController<Mood> {
 
 	public MoodController() {
 		super(Mood.class, BASE_URL);
+	}
+
+	@RequestMapping(path = "/vote", method = RequestMethod.GET)
+	public String voteView(Model model) {
+
+		model.addAttribute("date", new Date());
+		return "mood/vote";
+	}
+
+	@RequestMapping(path = "/week", method = RequestMethod.GET)
+	public String weekView(Model model) {
+
+		Date sd = new Date();
+		Calendar cd = Calendar.getInstance();
+		cd.setTime(sd);
+		String jour = "truc";
+		Integer debutsemaine = null;
+		Integer finsemaine = null;
+		Integer mois = null;
+
+		if (cd.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY) {
+			jour = "Lundi";
+			debutsemaine = cd.get(Calendar.DAY_OF_MONTH);
+			cd.add(Calendar.DATE, 4);
+			finsemaine = cd.get(Calendar.DAY_OF_MONTH);
+		}
+
+		else if (cd.get(Calendar.DAY_OF_WEEK) == Calendar.TUESDAY) {
+			jour = "Mardi";
+			cd.add(Calendar.DATE, -1);
+			debutsemaine = cd.get(Calendar.DAY_OF_MONTH);
+			cd.add(Calendar.DATE, 4);
+			finsemaine = cd.get(Calendar.DAY_OF_MONTH);
+		}
+
+		else if (cd.get(Calendar.DAY_OF_WEEK) == Calendar.WEDNESDAY) {
+			jour = "Mercredi";
+			cd.add(Calendar.DATE, -2);
+			debutsemaine = cd.get(Calendar.DAY_OF_MONTH);
+			cd.add(Calendar.DATE, 4);
+			finsemaine = cd.get(Calendar.DAY_OF_MONTH);
+		}
+
+		else if (cd.get(Calendar.DAY_OF_WEEK) == Calendar.THURSDAY) {
+			jour = "Jeudi";
+			cd.add(Calendar.DATE, -3);
+			debutsemaine = cd.get(Calendar.DAY_OF_MONTH);
+			cd.add(Calendar.DATE, 4);
+			finsemaine = cd.get(Calendar.DAY_OF_MONTH);
+		}
+
+		else if (cd.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY) {
+			jour = "Vendredi";
+			cd.add(Calendar.DATE, -4);
+			debutsemaine = cd.get(Calendar.DAY_OF_MONTH);
+			cd.add(Calendar.DATE, 4);
+			finsemaine = cd.get(Calendar.DAY_OF_MONTH);
+
+		}
+
+		else if (cd.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {
+			jour = "Vendredi";
+			cd.add(Calendar.DATE, -5);
+			debutsemaine = cd.get(Calendar.DAY_OF_MONTH);
+			cd.add(Calendar.DATE, 4);
+			finsemaine = cd.get(Calendar.DAY_OF_MONTH);
+		}
+
+		else if (cd.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
+			jour = "Vendredi";
+			cd.add(Calendar.DATE, -6);
+			debutsemaine = cd.get(Calendar.DAY_OF_MONTH);
+			cd.add(Calendar.DATE, 4);
+			finsemaine = cd.get(Calendar.DAY_OF_MONTH);
+
+		}
+
+		mois = cd.get(Calendar.MONTH);
+		model.addAttribute("date", jour);
+		model.addAttribute("debutsemaine", debutsemaine);
+		model.addAttribute("finsemaine", finsemaine);
+		model.addAttribute("mois", String.format("%02d", mois + 1));
+
+		int totbad;
+		totbad = moodCrud.findSatisaction(-1);
+		model.addAttribute("totbad", totbad);
+		return "mood/week";
 	}
 }
