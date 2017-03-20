@@ -23,7 +23,7 @@ public class DatabaseConfig {
 
 	@Autowired
 	private Environment env;
-	
+
 	//appelle la fonction dataSource
 	@Autowired
 	private DataSource dataSource;
@@ -36,7 +36,7 @@ public class DatabaseConfig {
 
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		//recupere dans application.properties la valeur de dbdriver et autres
-		dataSource.setDriverClassName(env.getProperty("db.driver"));
+		dataSource.setDriverClassName("com.mysql.jdbc.Driver");
 		dataSource.setUrl(env.getProperty("db.url"));
 		dataSource.setUsername(env.getProperty("db.username"));
 		dataSource.setPassword(env.getProperty("db.password"));

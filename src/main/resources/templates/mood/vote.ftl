@@ -16,7 +16,7 @@
   <div id="main">
     <div class="main-content">
         <div class="body-exercice">
-            <form action="/create/do/" method="POST">
+            <form action="/mood/create/do" method="POST">
                 <div class = "bon">
                 <label for="bon">
                     <input id="bon" type="radio" name="satisfaction" value="1" checked>

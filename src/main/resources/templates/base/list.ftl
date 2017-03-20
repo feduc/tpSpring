@@ -23,15 +23,22 @@
                 <#list item?keys as key>
                     <#if key==field['name']>
                         <#if item[key]?is_boolean>
-                            <td>${item[key]?c}</td> 
+                            <td>${item[key]?c}</td>
                         <#elseif item[key]?is_date>
-                            <td>${item[key]?string('yyyy/MM/dd HH:mm:ss')}</td> 
+                            <td>${item[key]?string('yyyy/MM/dd HH:mm:ss')}</td>
                         <#else>
-                            <td>${item[key]}</td> 
+                            <td>${item[key]}</td>
                         </#if>
                     </#if>
-               </#list>       
+               </#list>
             </#list>
+                <td><a href="${item["id"]}/show">Select</a></td>
+                <td>
+                    <form action="${item["id"]}/delete" method="POST">
+                        <input type="hidden" name="id" value="${item["id"]}">
+                        <input type="submit" value="delete"/>
+                    </form>
+                </td>
             </tr>
         </#list>
     </table>

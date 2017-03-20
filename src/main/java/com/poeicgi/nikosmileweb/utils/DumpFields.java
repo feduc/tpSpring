@@ -118,7 +118,7 @@ public class DumpFields {
 
 	/**
 	 * This method return an array of all the getters of the given class
-	 * 
+	 *
 	 * @param klazz
 	 * @return
 	 */
@@ -139,7 +139,7 @@ public class DumpFields {
 
 	/**
 	 * This method return an array of all the setters of the given class
-	 * 
+	 *
 	 * @param klazz
 	 * @return
 	 */
@@ -194,15 +194,13 @@ public class DumpFields {
 
 		Map<String, Object> returnMap = null;
 
-		
+
 		for (int i = 0; i < fields.length; i++) {
 			for (Map.Entry<String, Object> element : map.entrySet()) {
 				if (element.getKey() == fields[i]) {
 					returnMap.put(element.getKey(), element.getValue());
-					
 				}
 			}
-
 		}
 		return returnMap;
 	}
@@ -333,7 +331,7 @@ public class DumpFields {
 	/**
 	 * scinder find getter et find setters pourrait etre plus interessant pour
 	 * la suite
-	 * 
+	 *
 	 * @param c
 	 * @return
 	 */
@@ -348,7 +346,7 @@ public class DumpFields {
 
 	/**
 	 * This method return the setter associated to the given field
-	 * 
+	 *
 	 * @param field
 	 * @return
 	 */
@@ -367,7 +365,7 @@ public class DumpFields {
 
 	/**
 	 * This method return the getter associated to the given field
-	 * 
+	 *
 	 * @param field
 	 * @return
 	 */
