@@ -118,7 +118,7 @@ public class MoodController extends ViewBaseController<Mood> {
 				voteDate = today;
 			} else {
 				//sinon la date du vote est pour la journee hier
-				voteDate = today;
+				voteDate = yesterday;
 			}
 		}
 

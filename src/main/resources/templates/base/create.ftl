@@ -41,16 +41,16 @@
             <input type="button" name="Repondre "style="width:300px"value="Vues Projets"/></a>
             </br>
 
-            <form id= "formid" action="/mood/admin/vote/" method="GET">
-                <input type="hidden" name="id" value="${child["id"]}" />
-                <input type="hidden" name="agency" value="${child["agency"]}" />
-                <input type="hidden" name="firstName" value="${child["firstName"]}" />
-                <input type="hidden" name="lastName" value="${child["lastName"]}" />
-                <input type="hidden" name="registrationCGI" value="${child["registrationCGI"]}" />
-                <input type="hidden" name="verticale" value="${child["verticale"]}" />
-                <button type="submit" style="width:300px"value="submit">Page de vote</button>
+           <form action="/mood/admin/vote/" method="GET">
+            <input type="hidden" name="id" value="${child["id"]}" />
+            <input type="hidden" name="agency" value="${child["agency"]}" />
+            <input type="hidden" name="firstName" value="${child["firstName"]}" />
+            <input type="hidden" name="lastName" value="${child["lastName"]}" />
+            <input type="hidden" name="registrationCGI" value="${child["registrationCGI"]}" />
+            <input type="hidden" name="verticale" value="${child["verticale"]}" />
+            <button type="submit" style="width:300px"value="submit">Page de vote</button>
             </form>
-          </div>
+        </div>
       </div>
       <div class="col-xs-12 col-sm-2 col-md-8">
          <div class="changeavis">

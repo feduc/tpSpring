@@ -25,7 +25,7 @@ public abstract class ViewBaseController<T extends DataBaseItem> extends BaseCon
 	private String baseUrl;
 
 	@RequestMapping(path = "/list/", method = RequestMethod.GET)
-	public String list(Model model) {
+	public String list(Model model, @ModelAttribute("child")User child) {
 
 		ArrayList<T> items = (ArrayList<T>) baseCrud.findAll();
 
@@ -36,6 +36,7 @@ public abstract class ViewBaseController<T extends DataBaseItem> extends BaseCon
 		model.addAttribute("items", DumpFields.listFielder(items));
 		model.addAttribute("fields", fields);
 		model.addAttribute("page", pageName);
+		model.addAttribute("child", child);
 
 		return "base/list";
 	}
