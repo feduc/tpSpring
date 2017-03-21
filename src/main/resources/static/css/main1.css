@@ -10,13 +10,13 @@ html {
 
   form {
     /* Pour le centrer dans la page */
+    margin: 0 auto;
     width: 250px;
-
 
 }
 
 .semaine{
-            padding: 1em;
+    padding: 1em;
     border: 1px solid #CCC;
     border-radius: 1em;
 }
@@ -78,6 +78,7 @@ header {
  footer {
   background-size: cover;
     text-align: center;
+
   margin-top: 15px; }
 
 .projet {

@@ -12,37 +12,42 @@ import com.poeicgi.nikosmileweb.models.User;
 
 public interface IMoodCrudRepository extends IBaseCrudRepository<Mood> {
 
-	@Query("SELECT mood FROM User user " 
-			+ "	JOIN user.moods AS mood" 
+	//creation d'une requete d'interrogation de la bdd par nom de projet et date
+	@Query("SELECT mood FROM User user "
+			+ "	JOIN user.moods AS mood"
 			+ " JOIN user.projects AS project"
-			+ " WHERE project.name = :name " 
+			+ " WHERE project.name = :name "
 			+ " AND mood.voteDate = :date")
 	List<Mood> findMoodsByProjectAndDate(@Param("name") String projectName, @Param("date") Date dateTest);
 
-	@Query("SELECT mood FROM User user " 
-			+ "	JOIN user.moods AS mood" 
+	//creation d'une requete d'interrogation de la bdd par nom de projet
+	@Query("SELECT mood FROM User user "
+			+ "	JOIN user.moods AS mood"
 			+ " JOIN user.projects AS project"
 			+ " WHERE project.name = :name ")
 	List<Mood> findMoodsByProject(@Param("name") String projectName);
 
-	@Query("SELECT max(mood.voteDate) FROM Mood AS mood" 
+	//creation d'une requete d'interrogation de la bdd pour trouver la date du dernier vote
+	@Query("SELECT max(mood.voteDate) FROM Mood AS mood"
 			+ " WHERE mood.user = :user ")
 	Date findLastVote(@Param("user") User user);
 
-	@Query("SELECT id FROM Mood AS mood" 
+	//creation d'une requete d'interrogation de la bdd pour trouver l'id de la date du dernier vote
+	@Query("SELECT id FROM Mood AS mood"
 			+ " WHERE mood.user = :user AND mood.voteDate = :date")
 	Long findLastVoteID(@Param("user") User user, @Param("date") Date date);
 
+	//creation d'une requete d'interrogation de la bdd pour trouver la somme de toutes les satisfactions
 	@Query("SELECT COUNT(*) FROM Mood AS mood WHERE mood.satisfaction = :satisfaction ")
 	public int findSatisaction(@Param("satisfaction") int satisfaction);
 
-	@Query("SELECT COUNT(*) FROM User user " 
-			+ "	JOIN user.moods AS mood" 
+	@Query("SELECT COUNT(*) FROM User user "
+			+ "	JOIN user.moods AS mood"
 			+ " JOIN user.projects AS project"
-			+ " WHERE project.name = :name " 
+			+ " WHERE project.name = :name "
 			+ " AND mood.voteDate = :date"
 			+ " AND mood.satisfaction = :satis")
-	int countMoodsBySatisfactionForSummary(@Param("name") String projectName, 
+	int countMoodsBySatisfactionForSummary(@Param("name") String projectName,
 										   @Param("date") Date dateTest,
 										   @Param("satis") int satis);
 }

@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -30,12 +31,6 @@ public class UserController extends ViewBaseController<User>{
 		// return "toto" works because toto.ftl is directly in templates, if it
 		// was in templates.pages return would have to be equal to "pages/toto"
 	}
-	
-	@RequestMapping(path = "/resume", method = RequestMethod.GET)
-	public String resumeView(Model model){
-
-			return "user/resume";
-	}
 
 	@Autowired
 	private IUserCrudRepository userCrud;
@@ -45,10 +40,10 @@ public class UserController extends ViewBaseController<User>{
 
 	}
 
-	@RequestMapping(path = "/page_admin", method = RequestMethod.GET)
-	public String voteView(Model model){
-
-			model.addAttribute("date", new Date());
-			return "admin/page_admin";
+	//vers la page de resume de l'user pour visu globale
+	@RequestMapping(path = "/resume", method = RequestMethod.GET)
+	public String resumeView(Model model, @ModelAttribute("child")User child){
+			model.addAttribute("child", child);
+			return "user/resume";
 	}
 }

@@ -35,22 +35,17 @@ var data = {
 
 </script>
 
-
-
     <h1> ${page} </h1>
     <form action="${path}/update/do" method="POST">
         <table class="table table-bordered table-hover">
             <tr>
-
                     <#list item?keys as key>
                         <#if key==field>
                             <th>${key} :</th>
                         </#if>
                     </#list>
-
             </tr>
-            <tr>
-
+                <tr>
                     <#list item?keys as key>
                         <#if key==field>
                             <#list item[field] as child>
@@ -58,7 +53,6 @@ var data = {
                             </#list>
                         </#if>
                    </#list>
-
             </tr>
         </table>
         <button type="submit" value="submit">Update</button>

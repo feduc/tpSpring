@@ -4,13 +4,13 @@
   <meta charset="UTF8">
   <title>Niko Smile</title>
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-      <link rel="stylesheet" href="/css/main.css">    
+      <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
     <header>
-     <img src="/image/BaniereCGI.jpg">
+     <img src="/img/BaniereCGI.jpg">
   </header>
-  
+
   <h1 align="center">Quel a été votre ressenti pour la journée du ${voteDate?string('yyyy/MM/dd')}?</h1>
 
   <div id="main">
@@ -27,15 +27,15 @@
         <div class = "bon">
         <label for="bon">
           <input id="bon" type="radio" name="satisfaction" value="1" checked>
-          <img src="/image/niko-vert-fond blanc.png" width="50%">
+          <img src="/img/niko-vert-fond blanc.png" width="50%">
         </label>
-          
+
 </br>
 
 
         <label for="moyen">
           <input id="moyen" type="radio" name="satisfaction" value="0">
-          <img src="/image/niko-jaune-fond blanc.png" width="50%">
+          <img src="/img/niko-jaune-fond blanc.png" width="50%">
         </label>
 
 </br>
@@ -43,7 +43,7 @@
 
       <label for="mauvais">
           <input id="mauvais" type="radio" name="satisfaction" value="-1">
-          <img src="/image/niko-rouge-fond blanc.png" width="50%">
+          <img src="/img/niko-rouge-fond blanc.png" width="50%">
         </label>
          </div class>
 </br>
@@ -61,11 +61,11 @@
         <div class="button">
             <button type="submit" value="submit">Voter</button>
         </div>
-        
+
       </fieldset>
 
     </form>
-    
+
       </div>
     </div>
   </div>

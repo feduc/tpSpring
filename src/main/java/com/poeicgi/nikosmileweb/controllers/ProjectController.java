@@ -29,5 +29,4 @@ public class ProjectController extends ViewBaseController<Project>{
 	public ProjectController() {
 		super(Project.class,BASE_URL);
 	}
-
 }

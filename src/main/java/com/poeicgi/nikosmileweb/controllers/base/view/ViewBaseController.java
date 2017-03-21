@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.poeicgi.nikosmileweb.controllers.base.BaseController;
 import com.poeicgi.nikosmileweb.dao.IMoodCrudRepository;
 import com.poeicgi.nikosmileweb.dao.base.IBaseCrudRepository;
+import com.poeicgi.nikosmileweb.models.User;
 import com.poeicgi.nikosmileweb.models.modelbase.DataBaseItem;
 import com.poeicgi.nikosmileweb.utils.DumpFields;
 
@@ -37,8 +39,6 @@ public abstract class ViewBaseController<T extends DataBaseItem> extends BaseCon
 
 		return "base/list";
 	}
-
-	
 
 	private String toString(int i) {
 		// TODO Auto-generated method stub
@@ -90,13 +90,14 @@ public abstract class ViewBaseController<T extends DataBaseItem> extends BaseCon
 	}
 
 	@RequestMapping(path = "/create/", method = RequestMethod.GET)
-	public String createView(Model model){
+	public String createView(Model model, @ModelAttribute("child")User child){
 
 		String pageName = "Create a "+ baseName;
 
 		model.addAttribute("fields", DumpFields.createContentsEmpty(super.getClazz()).getMyFields());
 		model.addAttribute("page", pageName);
 		model.addAttribute("path", baseUrl);
+		model.addAttribute("child", child);
 
 		return "base/create";
 	}

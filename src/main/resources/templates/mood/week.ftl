@@ -6,13 +6,16 @@
       <link rel="stylesheet" href="/css/bootstrap.css">
       <link rel="stylesheet" href="/css/main1.css">
 </head>
+
 <body>
     <header>
      <img src="/img/BaniereCGI.jpg">
     </header>
 <div align = right><a href ="page de vote.html"><img src="/img/parametre.png" alt="exemple" width="5%"></a>
                     <a href ="page_accueil.html"><img src="/img/logout.jpg" alt="exemple" width="5%"></a></div>
+
   <h1 align="center"> Semaine du ${debutsemaine} au ${finsemaine} / ${mois}   </h1>
+
 
   <div id="main">
 
