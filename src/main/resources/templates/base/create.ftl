@@ -22,26 +22,26 @@
          <div class="changeavis">
 
             <a href="/user/create/">
-            <input type="button" name="Répondre "style="width:300px"value="Creation/modification d'un utilisateur"/></a>
+            <input type="button" name="Repondre "style="width:300px"value="Creation/modification d'un utilisateur"/></a>
             </br>
 
             <a href="/security/create/">
-            <input type="button" name="Répondre "style="width:300px"value="Creation/modification d'un login/mdp/status"/></a>
+            <input type="button" name="Repondre "style="width:300px"value="Creation/modification d'un login/mdp/status"/></a>
             </br>
 
             <a href="/project/create/">
-            <input type="button" name="Répondre "style="width:300px"value="Creation/modification d'un projet"/></a>
+            <input type="button" name="Repondre "style="width:300px"value="Creation/modification d'un projet"/></a>
             </br>
 
             <a href="/project/create/">
-            <input type="button" name="Répondre "style="width:300px"value="Gestion d'un projet"/></a>
+            <input type="button" name="Repondre "style="width:300px"value="Gestion d'un projet"/></a>
             </br>
 
             <a href="/user/resume/">
-            <input type="button" name="Répondre "style="width:300px"value="Vues Projets"/></a>
+            <input type="button" name="Repondre "style="width:300px"value="Vues Projets"/></a>
             </br>
 
-            <form id= "formid" action="/admin/vote/" method="GET">
+            <form action="/mood/admin/vote/" method="GET">
             <input type="hidden" name="id" value="${child["id"]}" />
             <input type="hidden" name="agency" value="${child["agency"]}" />
             <input type="hidden" name="firstName" value="${child["firstName"]}" />

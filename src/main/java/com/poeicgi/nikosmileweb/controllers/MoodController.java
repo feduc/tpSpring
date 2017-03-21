@@ -30,7 +30,7 @@ public class MoodController extends ViewBaseController<Mood> {
 	public String adminVoteGet(Model model, @ModelAttribute User user, @ModelAttribute("child") User child, final BindingResult childBindingResult, final Model model2,
 			final RedirectAttributes redirectAttributes) {
 
-		child = user;
+		child = userCont.getItem(user.getId());
 		redirectAttributes.addAttribute("child", child);
 		return REDIRECT + MoodController.BASE_URL + "/vote";
 
@@ -83,11 +83,11 @@ public class MoodController extends ViewBaseController<Mood> {
 		} else {
 			//sinon on transforme en calendar cette valeur lastvote
 			lastVoteTest.setTime(lastVote);
-			//si la date d'aujourd'hui est égale à cette date test
+			//si la date d'aujourd'hui est ï¿½gale ï¿½ cette date test
 			if (todayTest.getTimeInMillis() == lastVoteTest.getTimeInMillis()) {
 				//alors on est parti pour modifier le vote d'aujourd'hui
 				voteDate = today;
-				//on recupere l'id du vote à modifier
+				//on recupere l'id du vote ï¿½ modifier
 				id = moodCrud.findLastVoteID(child, lastVote);
 			//sinon si la datetestd'hier est egale au lastvotetest
 			} else if (yesterdayTest.getTimeInMillis() == lastVoteTest.getTimeInMillis()) {
