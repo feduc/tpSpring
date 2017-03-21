@@ -22,25 +22,26 @@
          <div class="changeavis">
 
             <a href="/user/create/">
-            <input type="button" name="Répondre "style="width:300px"value="Creation/modification d'un utilisateur"/></a>
+            <input type="button" name="Repondre "style="width:300px"value="Creation/modification d'un utilisateur"/></a>
             </br>
 
             <a href="/security/create/">
-            <input type="button" name="Répondre "style="width:300px"value="Creation/modification d'un login/mdp/status"/></a>
+            <input type="button" name="Repondre "style="width:300px"value="Creation/modification d'un login/mdp/status"/></a>
             </br>
 
             <a href="/project/create/">
-            <input type="button" name="Répondre "style="width:300px"value="Creation/modification d'un projet"/></a>
+            <input type="button" name="Repondre "style="width:300px"value="Creation/modification d'un projet"/></a>
             </br>
 
             <a href="/project/create/">
-            <input type="button" name="Répondre "style="width:300px"value="Gestion d'un projet"/></a>
+            <input type="button" name="Repondre "style="width:300px"value="Gestion d'un projet"/></a>
             </br>
 
             <a href="/user/resume/">
-            <input type="button" name="Répondre "style="width:300px"value="Vues Projets"/></a>
+            <input type="button" name="Repondre "style="width:300px"value="Vues Projets"/></a>
             </br>
 
+<<<<<<< HEAD
             <form id= "formid" action="/mood/admin/vote/" method="GET">
                 <input type="hidden" name="id" value="${child["id"]}" />
                 <input type="hidden" name="agency" value="${child["agency"]}" />
@@ -49,6 +50,16 @@
                 <input type="hidden" name="registrationCGI" value="${child["registrationCGI"]}" />
                 <input type="hidden" name="verticale" value="${child["verticale"]}" />
                 <button type="submit" style="width:300px"value="submit">Page de vote</button>
+=======
+            <form action="/mood/admin/vote/" method="GET">
+            <input type="hidden" name="id" value="${child["id"]}" />
+            <input type="hidden" name="agency" value="${child["agency"]}" />
+            <input type="hidden" name="firstName" value="${child["firstName"]}" />
+            <input type="hidden" name="lastName" value="${child["lastName"]}" />
+            <input type="hidden" name="registrationCGI" value="${child["registrationCGI"]}" />
+            <input type="hidden" name="verticale" value="${child["verticale"]}" />
+            <button type="submit" style="width:300px"value="submit">Page de vote</button>
+>>>>>>> 26486919b2d2a783f29edece495e2ea0778dee09
             </form>
           </div>
       </div>

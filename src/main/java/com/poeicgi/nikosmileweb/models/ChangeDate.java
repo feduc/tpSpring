@@ -48,6 +48,14 @@ public class ChangeDate extends DataBaseItem{
 		this.changeDate = changeDate;
 	}
 
+	public Mood getMood() {
+		return mood;
+	}
+
+	public void setMood(Mood mood) {
+		this.mood = mood;
+	}
+
 	public ChangeDate() {
 		super(ChangeDate.TABLE);
 	}
