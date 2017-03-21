@@ -108,7 +108,15 @@
                     <p> <FONT color="white">Mon humeur du jour <FONT color="white"></p>
                     <img src="/img/niko-vert.png" alt="exemple" width="24%">
                     </br>
-                    <a href="page de vote.html"><input type="button" name="Répondre "value="Changer d'avis"/></a>
+                    <form id= "formid" action="/mood/vote/" method="post">
+                    <input type="hidden" name="id" value="${child["id"]}" />
+                    <input type="hidden" name="agency" value="${child["agency"]}" />
+                    <input type="hidden" name="firstName" value="${child["firstName"]}" />
+                    <input type="hidden" name="lastName" value="${child["lastName"]}" />
+                    <input type="hidden" name="registrationCGI" value="${child["registrationCGI"]}" />
+                    <input type="hidden" name="verticale" value="${child["verticale"]}" />
+                <input type="submit" name="Répondre "style="width:300px"value="Page de vote"/>
+            </form>
 
               </div>
             </div>
@@ -116,14 +124,14 @@
             <div class="col-xs-12 col-sm-2 col-md-8">
               <div class="changeavis">
                     <p> <FONT color="white">Mes anciens projets <FONT color="white"></p>
-<a href="vue_mois_projet.html">Projet1</a>
+              <a href="vue_mois_projet.html">Projet1</a>
 </br>
 <a href="vue_mois_projet.html">Projet2</a>
 </br>
 <a href="vue_mois_projet.html">Projet3</a>
 </br>
 </br>
-                    <a href="page de vote.html"><input type="button" name="Répondre "value="Vers la sélection de projet"/></a>
+                    <a href="page de vote.html"><input type="button" name="Rï¿½pondre "value="Vers la sï¿½lection de projet"/></a>
 
               </div>
             </div>

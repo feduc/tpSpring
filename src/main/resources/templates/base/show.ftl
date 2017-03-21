@@ -6,7 +6,6 @@
 
     <table class="table table-bordered table-hover">
         <tr>
-
                 <#list fields as field>
                     <#list item?keys as key>
                         <#if key==field["name"]>
@@ -20,14 +19,14 @@
                 <#list item?keys as key>
                     <#if key==field["name"]>
                         <#if item[key]?is_boolean>
-                            <td>${item[key]?c}</td> 
+                            <td>${item[key]?c}</td>
                         <#elseif item[key]?is_date>
-                            <td>${item[key]?string('yyyy/MM/dd HH:mm:ss')}</td> 
+                            <td>${item[key]?string('yyyy/MM/dd HH:mm:ss')}</td>
                         <#else>
-                            <td>${item[key]}</td> 
+                            <td>${item[key]}</td>
                         </#if>
                     </#if>
-               </#list>       
+               </#list>
             </#list>
         </tr>
     </table>

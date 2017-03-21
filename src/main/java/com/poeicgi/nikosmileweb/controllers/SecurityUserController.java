@@ -62,7 +62,7 @@ public class SecurityUserController extends ViewBaseController<SecurityUser> {
 
 		//on recupere l'id pour trouver l'user
 		child = userCont.getItem(test.getId());
-// permet de l'envoyer vers le redirect
+		// permet de l'envoyer vers le redirect
 		redirectAttributes.addAttribute("child", child);
 
 		if ((test.getPassword().equals(data.getPassword())) && (test.getStatus().equals("admin"))) {

@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -41,8 +42,8 @@ public class UserController extends ViewBaseController<User>{
 
 	//vers la page de resume de l'user pour visu globale
 	@RequestMapping(path = "/resume", method = RequestMethod.GET)
-	public String resumeView(Model model){
-
+	public String resumeView(Model model, @ModelAttribute("child")User child){
+			model.addAttribute("child", child);
 			return "user/resume";
 	}
 }

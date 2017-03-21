@@ -8,9 +8,11 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.poeicgi.nikosmileweb.controllers.base.view.ViewBaseController;
 import com.poeicgi.nikosmileweb.dao.IMoodCrudRepository;
@@ -22,6 +24,18 @@ import com.poeicgi.nikosmileweb.models.User;
 public class MoodController extends ViewBaseController<Mood> {
 
 	public final static String BASE_URL = "/mood";
+
+
+	@RequestMapping(path = "/admin/vote/", method = RequestMethod.GET)
+	public String adminVoteGet(Model model, @ModelAttribute User user, @ModelAttribute("child") User child, final BindingResult childBindingResult, final Model model2,
+			final RedirectAttributes redirectAttributes) {
+
+		child = user;
+		redirectAttributes.addAttribute("child", child);
+		return REDIRECT + MoodController.BASE_URL + "/vote";
+
+	}
+
 
 	// value is the address to enter in the browser to launch index(), it can be
 	// more than one when writing value = {"/path1", "/path2"}
@@ -56,6 +70,7 @@ public class MoodController extends ViewBaseController<Mood> {
 
 		//on recupere la date du dernier vote
 		Date lastVote = moodCrud.findLastVote(child);
+
 		// on transforme cette date en calendar
 		GregorianCalendar lastVoteTest = new GregorianCalendar();
 
@@ -80,7 +95,7 @@ public class MoodController extends ViewBaseController<Mood> {
 				voteDate = today;
 			} else {
 				//sinon la date du vote est pour la journee hier
-				voteDate = yesterday;
+				voteDate = today;
 			}
 		}
 
@@ -132,6 +147,12 @@ public class MoodController extends ViewBaseController<Mood> {
 		Date sd = new Date();
 		Calendar cd = Calendar.getInstance();
 		cd.setTime(sd);
+
+		cd.set(Calendar.HOUR_OF_DAY, 00);
+		cd.set(Calendar.MINUTE, 00);
+		cd.set(Calendar.SECOND, 00);
+		cd.set(Calendar.MILLISECOND, 00);
+
 		String jour = "truc";
 		Integer debutsemaine = null;
 		Integer finsemaine = null;
@@ -140,6 +161,7 @@ public class MoodController extends ViewBaseController<Mood> {
 		if (cd.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY) {
 			jour = "Lundi";
 			debutsemaine = cd.get(Calendar.DAY_OF_MONTH);
+			sd = new Date(cd.getTimeInMillis());
 			cd.add(Calendar.DATE, 4);
 			finsemaine = cd.get(Calendar.DAY_OF_MONTH);
 		}
@@ -148,6 +170,7 @@ public class MoodController extends ViewBaseController<Mood> {
 			jour = "Mardi";
 			cd.add(Calendar.DATE, -1);
 			debutsemaine = cd.get(Calendar.DAY_OF_MONTH);
+			sd = new Date(cd.getTimeInMillis());
 			cd.add(Calendar.DATE, 4);
 			finsemaine = cd.get(Calendar.DAY_OF_MONTH);
 		}
@@ -156,6 +179,7 @@ public class MoodController extends ViewBaseController<Mood> {
 			jour = "Mercredi";
 			cd.add(Calendar.DATE, -2);
 			debutsemaine = cd.get(Calendar.DAY_OF_MONTH);
+			sd = new Date(cd.getTimeInMillis());
 			cd.add(Calendar.DATE, 4);
 			finsemaine = cd.get(Calendar.DAY_OF_MONTH);
 		}
@@ -164,6 +188,7 @@ public class MoodController extends ViewBaseController<Mood> {
 			jour = "Jeudi";
 			cd.add(Calendar.DATE, -3);
 			debutsemaine = cd.get(Calendar.DAY_OF_MONTH);
+			sd = new Date(cd.getTimeInMillis());
 			cd.add(Calendar.DATE, 4);
 			finsemaine = cd.get(Calendar.DAY_OF_MONTH);
 		}
@@ -172,22 +197,25 @@ public class MoodController extends ViewBaseController<Mood> {
 			jour = "Vendredi";
 			cd.add(Calendar.DATE, -4);
 			debutsemaine = cd.get(Calendar.DAY_OF_MONTH);
+			sd = new Date(cd.getTimeInMillis());
 			cd.add(Calendar.DATE, 4);
 			finsemaine = cd.get(Calendar.DAY_OF_MONTH);
 		}
 
 		else if (cd.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {
-			jour = "Vendredi";
+			jour = "Samedi";
 			cd.add(Calendar.DATE, -5);
 			debutsemaine = cd.get(Calendar.DAY_OF_MONTH);
+			sd = new Date(cd.getTimeInMillis());
 			cd.add(Calendar.DATE, 4);
 			finsemaine = cd.get(Calendar.DAY_OF_MONTH);
 		}
 
 		else if (cd.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
-			jour = "Vendredi";
+			jour = "Dimanche";
 			cd.add(Calendar.DATE, -6);
 			debutsemaine = cd.get(Calendar.DAY_OF_MONTH);
+			sd = new Date(cd.getTimeInMillis());
 			cd.add(Calendar.DATE, 4);
 			finsemaine = cd.get(Calendar.DAY_OF_MONTH);
 		}
@@ -198,18 +226,19 @@ public class MoodController extends ViewBaseController<Mood> {
 		model.addAttribute("finsemaine", finsemaine);
 		model.addAttribute("mois", String.format("%02d", mois + 1));
 
-		int totbad;
-		totbad = moodCrud.findSatisaction(-1);
-		model.addAttribute("totbad", totbad);
+		String projectName = "Projet1";
+		int nbChoice =3;
 
-		int totnorm;
-		totnorm = moodCrud.findSatisaction(0);
-		model.addAttribute("totnorm", totnorm);
-
-		int totgood;
-		totgood = moodCrud.findSatisaction(1);
-		model.addAttribute("totgood", totgood);
-
+		for (int j = 1; j <= 5; j++) {
+			for (int i = 0; i <nbChoice; i++) {
+				String nom = "jour" + j + "satis" + i;
+				int satis = i- (nbChoice/2);
+				model.addAttribute(nom, moodCrud.countMoodsBySatisfactionForSummary(projectName, sd, satis));
+			}
+			cd.setTime(sd);
+			cd.add(Calendar.DATE, 1);
+			sd.setTime(cd.getTimeInMillis());
+		}
 		return "mood/week";
 	}
 }
