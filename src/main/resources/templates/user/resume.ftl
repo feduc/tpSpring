@@ -108,14 +108,14 @@
                     <p> <FONT color="white">Mon humeur du jour <FONT color="white"></p>
                     <img src="/img/niko-vert.png" alt="exemple" width="24%">
                     </br>
-                    <form id= "formid" action="/mood/vote/" method="post">
+                    <form id= "formid" action="/mood/vote/" method="get">
                     <input type="hidden" name="id" value="${child["id"]}" />
                     <input type="hidden" name="agency" value="${child["agency"]}" />
                     <input type="hidden" name="firstName" value="${child["firstName"]}" />
                     <input type="hidden" name="lastName" value="${child["lastName"]}" />
                     <input type="hidden" name="registrationCGI" value="${child["registrationCGI"]}" />
                     <input type="hidden" name="verticale" value="${child["verticale"]}" />
-                <input type="submit" name="Répondre "style="width:300px"value="Page de vote"/>
+                <input type="submit" name="Repondre "style="width:300px"value="Page de vote"/>
             </form>
 
               </div>

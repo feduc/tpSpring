@@ -17,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.poeicgi.nikosmileweb.controllers.base.view.ViewBaseController;
 import com.poeicgi.nikosmileweb.dao.IMoodCrudRepository;
+import com.poeicgi.nikosmileweb.dao.IUserCrudRepository;
 import com.poeicgi.nikosmileweb.models.ChangeDate;
 import com.poeicgi.nikosmileweb.models.Mood;
 import com.poeicgi.nikosmileweb.models.User;
@@ -29,7 +30,7 @@ public class MoodController extends ViewBaseController<Mood> {
 	private IMoodCrudRepository moodCrud;
 
 	@Autowired
-	private UserController userCont;
+	private IUserCrudRepository userCrud;
 
 	@Autowired
 	private ChangeDateController changeCont;
@@ -45,7 +46,7 @@ public class MoodController extends ViewBaseController<Mood> {
 	public String adminVoteGet(Model model, @ModelAttribute User user, @ModelAttribute("child") User child, final BindingResult childBindingResult, final Model model2,
 			final RedirectAttributes redirectAttributes) {
 
-		child = userCont.getItem(user.getId());
+		child = userCrud.findOne(user.getId());
 		redirectAttributes.addAttribute("child", child);
 		return REDIRECT + MoodController.BASE_URL + "/vote";
 
@@ -134,12 +135,11 @@ public class MoodController extends ViewBaseController<Mood> {
 
 	@RequestMapping(path = "/create/done", method = RequestMethod.POST)
 	public String create(Model model, @ModelAttribute Mood item, @ModelAttribute User child,
-			@ModelAttribute("MoodID") String MoodID) {
+			@ModelAttribute("MoodID") String MoodID , @ModelAttribute("child") User userChild, final BindingResult childBindingResult, final Model model2,
+			final RedirectAttributes redirectAttributes) {
 		Map<String, Object> map = model.asMap();
 
 		Long id = Long.parseLong(MoodID);
-
-		item.setUser((User) map.get("user"));
 
 		item.setId(id);
 
@@ -152,17 +152,22 @@ public class MoodController extends ViewBaseController<Mood> {
 			changeCont.insertItem(changeDate);
 		}
 
-		User user = userCont.getItem(item.getUser().getId());
+		insertItem(item);
+		
+		User user = userCrud.findOne(child.getId());
 		user.getMoods().add(item);
-		userCont.updateItem(user);
+		userCrud.save(user);
 		item.setUser(user);
 
-		insertItem(item);
+		updateItem(item);
 		
 		Set<Mood> list = user.getMoods();
 		list.add(item);
 		user.setMoods(list);
-		userCont.updateItem(user);
+		userCrud.save(user);
+		
+		userChild = userCrud.findOne(user.getId());
+		redirectAttributes.addAttribute("child", userChild);
 
 		return REDIRECT + UserController.BASE_URL + "/resume";
 	}

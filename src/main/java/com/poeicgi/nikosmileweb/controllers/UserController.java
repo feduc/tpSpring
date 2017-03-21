@@ -43,7 +43,9 @@ public class UserController extends ViewBaseController<User>{
 	//vers la page de resume de l'user pour visu globale
 	@RequestMapping(path = "/resume", method = RequestMethod.GET)
 	public String resumeView(Model model, @ModelAttribute("child")User child){
+		
 			model.addAttribute("child", child);
+			
 			return "user/resume";
 	}
 }
