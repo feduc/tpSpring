@@ -121,16 +121,16 @@ public class User extends DataBaseItem{
 		return projects;
 	}
 	
-	public void setProjects(ArrayList<Project> projects) {
-		this.projects = (Set<Project>) projects;
+	public void setProjects(Set<Project> projects) {
+		this.projects =  projects;
 	}
 	
 	public Set<Mood> getMoods() {
 		return moods;
 	}
 	
-	public void setMoods(ArrayList<Mood> moods) {
-		this.moods = (Set<Mood>) moods;
+	public void setMoods(Set<Mood> moods) {
+		this.moods = moods;
 	}
 
 	public SecurityUser getSecurity() {

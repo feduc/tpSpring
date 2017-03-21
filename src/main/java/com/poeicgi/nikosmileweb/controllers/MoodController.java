@@ -2,8 +2,10 @@ package com.poeicgi.nikosmileweb.controllers;
 
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,12 +16,26 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.poeicgi.nikosmileweb.controllers.base.view.ViewBaseController;
 import com.poeicgi.nikosmileweb.dao.IMoodCrudRepository;
+import com.poeicgi.nikosmileweb.models.ChangeDate;
 import com.poeicgi.nikosmileweb.models.Mood;
 import com.poeicgi.nikosmileweb.models.User;
 
 @Controller
 @RequestMapping(path = MoodController.BASE_URL)
 public class MoodController extends ViewBaseController<Mood> {
+
+	@Autowired
+	private IMoodCrudRepository moodCrud;
+
+	@Autowired
+	private UserController userCont;
+
+	@Autowired
+	private ChangeDateController changeCont;
+
+	public MoodController() {
+		super(Mood.class, BASE_URL);
+	}
 
 	public final static String BASE_URL = "/mood";
 
@@ -41,7 +57,8 @@ public class MoodController extends ViewBaseController<Mood> {
 		todayTest.set(GregorianCalendar.MILLISECOND, 00);
 		Date today = new Date(todayTest.getTimeInMillis());
 
-		GregorianCalendar yesterdayTest = todayTest;
+		GregorianCalendar yesterdayTest = new GregorianCalendar();
+		yesterdayTest.setTimeInMillis(todayTest.getTimeInMillis());
 		yesterdayTest.add(GregorianCalendar.DATE, -1);
 		Date yesterday = new Date(yesterdayTest.getTimeInMillis());
 
@@ -56,12 +73,16 @@ public class MoodController extends ViewBaseController<Mood> {
 
 			lastVoteTest.setTime(lastVote);
 
-			if (todayTest.getTimeInMillis() == lastVoteTest.getTimeInMillis()) {
+			if (todayTest.get(GregorianCalendar.YEAR) == lastVoteTest.get(GregorianCalendar.YEAR) && 
+					todayTest.get(GregorianCalendar.MONTH) == lastVoteTest.get(GregorianCalendar.MONTH) && 
+					todayTest.get(GregorianCalendar.DAY_OF_MONTH) == lastVoteTest.get(GregorianCalendar.DAY_OF_MONTH)) {
 				voteDate = today;
 
 				id = moodCrud.findLastVoteID(child, lastVote);
 
-			} else if (yesterdayTest.getTimeInMillis() == lastVoteTest.getTimeInMillis()) {
+			} else if (yesterdayTest.get(GregorianCalendar.YEAR) == lastVoteTest.get(GregorianCalendar.YEAR) && 
+					yesterdayTest.get(GregorianCalendar.MONTH) == lastVoteTest.get(GregorianCalendar.MONTH) && 
+					yesterdayTest.get(GregorianCalendar.DAY_OF_MONTH)==lastVoteTest.get(GregorianCalendar.DAY_OF_MONTH)) {
 				voteDate = today;
 			} else {
 				voteDate = yesterday;
@@ -89,24 +110,28 @@ public class MoodController extends ViewBaseController<Mood> {
 
 		item.setId(id);
 
+		if (item.getId() != 0) {
+			ChangeDate changeDate = new ChangeDate();
+			changeDate.setChangeDate(item.getLogDate());
+			changeDate.setMood(item);
+			item.setLogDate(getItem(id).getLogDate());
+			item.getChangeDates().add(changeDate);
+			changeCont.insertItem(changeDate);
+		}
+
 		User user = userCont.getItem(item.getUser().getId());
 		user.getMoods().add(item);
 		userCont.updateItem(user);
 		item.setUser(user);
 
 		insertItem(item);
+		
+		Set<Mood> list = user.getMoods();
+		list.add(item);
+		user.setMoods(list);
+		userCont.updateItem(user);
 
 		return REDIRECT + UserController.BASE_URL + "/resume";
-	}
-
-	@Autowired
-	private IMoodCrudRepository moodCrud;
-
-	@Autowired
-	private UserController userCont;
-
-	public MoodController() {
-		super(Mood.class, BASE_URL);
 	}
 
 	@RequestMapping(path = "/week", method = RequestMethod.GET)
@@ -195,21 +220,21 @@ public class MoodController extends ViewBaseController<Mood> {
 		model.addAttribute("debutsemaine", debutsemaine);
 		model.addAttribute("finsemaine", finsemaine);
 		model.addAttribute("mois", String.format("%02d", mois + 1));
-		
+
 		String projectName = "Projet1";
-		int nbChoice =3;
-		
+		int nbChoice = 3;
+
 		for (int j = 1; j <= 5; j++) {
-			for (int i = 0; i <nbChoice; i++) {
+			for (int i = 0; i < nbChoice; i++) {
 				String nom = "jour" + j + "satis" + i;
-				int satis = i- (nbChoice/2);
+				int satis = i - (nbChoice / 2);
 				model.addAttribute(nom, moodCrud.countMoodsBySatisfactionForSummary(projectName, sd, satis));
 			}
 			cd.setTime(sd);
 			cd.add(Calendar.DATE, 1);
 			sd.setTime(cd.getTimeInMillis());
 		}
-		
+
 		return "mood/week";
 	}
 }
