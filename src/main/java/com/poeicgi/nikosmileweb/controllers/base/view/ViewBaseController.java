@@ -38,21 +38,7 @@ public abstract class ViewBaseController<T extends DataBaseItem> extends BaseCon
 		return "base/list";
 	}
 
-	@RequestMapping(path = "/resume", method = RequestMethod.GET)
-	public String resumeView(Model model){
-		ArrayList<T> items = (ArrayList<T>) baseCrud.findAll();
-
-		String pageName = baseName.toUpperCase() + "S";
-
-		ArrayList<Map<String,Object>> fields= DumpFields.createContentsEmpty(super.getClazz()).getMyFields();
-
-		model.addAttribute("items", DumpFields.listFielder(items));
-		model.addAttribute("fields", fields);
-		model.addAttribute("page", pageName);
-
-			model.addAttribute("date", new Date());
-			return "mood/resume";
-	}
+	
 
 	private String toString(int i) {
 		// TODO Auto-generated method stub

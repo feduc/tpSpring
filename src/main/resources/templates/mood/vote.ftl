@@ -16,7 +16,7 @@
   <div id="main">
     <div class="main-content">
     <div class="body-exercice">
-    <form action="/mood/create/done" method="post">
+    <form id= "formid" action="/mood/create/done" method="post">
     <input type="hidden" name="id" value="${child["id"]}" />
     <input type="hidden" name="agency" value="${child["agency"]}" />
     <input type="hidden" name="firstName" value="${child["firstName"]}" />
@@ -54,7 +54,7 @@
         </div>
         </br>
 
-      <textarea name="commentSat" id="message" cols="29" rows="2"  placeholder="Un commentaire ?"></textarea>
+      <textarea form = "formid" name="commentSat" id="message" cols="29" rows="2"  placeholder="Un commentaire ?"></textarea>
         <input type="hidden" name="logDate" value="${date?string('yyyy/MM/dd HH:mm:ss')}" />
         <input type="hidden" name="voteDate" value="${voteDate?string('yyyy/MM/dd HH:mm:ss')}" />
         <input type="hidden" name="MoodID" value="${MoodId}" />

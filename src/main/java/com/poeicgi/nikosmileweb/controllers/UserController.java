@@ -1,6 +1,8 @@
 package com.poeicgi.nikosmileweb.controllers;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +14,7 @@ import com.poeicgi.nikosmileweb.controllers.base.view.ViewBaseController;
 import com.poeicgi.nikosmileweb.dao.IUserCrudRepository;
 import com.poeicgi.nikosmileweb.models.ChangeDate;
 import com.poeicgi.nikosmileweb.models.User;
+import com.poeicgi.nikosmileweb.utils.DumpFields;
 
 @Controller
 @RequestMapping(path = UserController.BASE_URL)
@@ -26,6 +29,12 @@ public class UserController extends ViewBaseController<User>{
 		return "toto";
 		// return "toto" works because toto.ftl is directly in templates, if it
 		// was in templates.pages return would have to be equal to "pages/toto"
+	}
+	
+	@RequestMapping(path = "/resume", method = RequestMethod.GET)
+	public String resumeView(Model model){
+
+			return "user/resume";
 	}
 
 	@Autowired

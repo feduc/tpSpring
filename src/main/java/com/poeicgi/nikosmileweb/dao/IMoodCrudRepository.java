@@ -12,12 +12,12 @@ import com.poeicgi.nikosmileweb.models.User;
 
 public interface IMoodCrudRepository extends IBaseCrudRepository<Mood> {
 
-	@Query("SELECT mood FROM User user "
+	@Query("SELECT mood FROM User user " 
 			+ "	JOIN user.moods AS mood" 
 			+ " JOIN user.projects AS project"
 			+ " WHERE project.name = :name " 
-			+ " AND mood.voteDate >= :date")
-	List<Mood> findMoodsByProjectAndDate(@Param("name") String projectName, @Param("date") String dateTest);
+			+ " AND mood.voteDate = :date")
+	List<Mood> findMoodsByProjectAndDate(@Param("name") String projectName, @Param("date") Date dateTest);
 
 	@Query("SELECT mood FROM User user " 
 			+ "	JOIN user.moods AS mood" 
@@ -36,4 +36,13 @@ public interface IMoodCrudRepository extends IBaseCrudRepository<Mood> {
 	@Query("SELECT COUNT(*) FROM Mood AS mood WHERE mood.satisfaction = :satisfaction ")
 	public int findSatisaction(@Param("satisfaction") int satisfaction);
 
+	@Query("SELECT COUNT(*) FROM User user " 
+			+ "	JOIN user.moods AS mood" 
+			+ " JOIN user.projects AS project"
+			+ " WHERE project.name = :name " 
+			+ " AND mood.voteDate = :date"
+			+ " AND mood.satisfaction = :satis")
+	int countMoodsBySatisfactionForSummary(@Param("name") String projectName, 
+										   @Param("date") Date dateTest,
+										   @Param("satis") int satis);
 }

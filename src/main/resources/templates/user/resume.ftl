@@ -102,39 +102,13 @@
                     <div id="donutchart3" style="width: 300px; height: 200px;" ></div>
               </div>
             </div>
-
-             <h1> ${page} </h1>
-
-    <table class="table table-bordered table-hover">
-        <tr>
-            <#list items as item>
-                    <#list item?keys as key>
-                        <#if key=='satisfaction'>
-                            <th>${key}</th>
-                        <#elseif key=='logDate'>
-                             <th>${key}</th>
-                        </#if>
-                    </#list>
-                <#break>
-            </#list>
-        </tr>
-        <#list items as item>
-            <tr>
-                <#list item?keys as key>
-                    <#if key=='satisfaction'>
-                            <td>${item[key]}</td>
-                            <#elseif key=='logDate'>
-                            <td>${item[key]}</td>
-                    </#if>
-               </#list>
-        </#list>
-    </table>
+    
           <div class="col-xs-12 col-sm-2 col-md-4">
               <div class="changeavis">
                     <p> <FONT color="white">Mon humeur du jour <FONT color="white"></p>
                     <img src="/img/niko-vert.png" alt="exemple" width="24%">
                     </br>
-                    <a href="page de vote.html"><input type="button" name="Répondre "value="Changer d'avis"/></a>
+                    <a href="page de vote.html"><input type="button" name="Rï¿½pondre "value="Changer d'avis"/></a>
 
               </div>
             </div>
@@ -149,7 +123,7 @@
 <a href="vue_mois_projet.html">Projet3</a>
 </br>
 </br>
-                    <a href="page de vote.html"><input type="button" name="Répondre "value="Vers la sélection de projet"/></a>
+                    <a href="page de vote.html"><input type="button" name="Rï¿½pondre "value="Vers la sï¿½lection de projet"/></a>
 
               </div>
             </div>
