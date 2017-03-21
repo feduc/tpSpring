@@ -41,27 +41,39 @@ public class SecurityUserController extends ViewBaseController<SecurityUser> {
 	@RequestMapping(path = "/login/do", method = RequestMethod.GET)
 
 	public String logIn(Model model, SecurityUser data,
-			// FABRICATION d'un user et renvoyer dans redirect
-			@ModelAttribute("child") User child, final BindingResult childBindingResult, final Model model2,
-			final RedirectAttributes redirectAttributes) {
+		// fabrication d'un user et renvoyer dans redirect
+		@ModelAttribute("child") User child, final BindingResult childBindingResult, final Model model2,
+		final RedirectAttributes redirectAttributes) {
 
+		// recuperation de tous les securityuser renseignes
 		List<SecurityUser> items = getItems();
+		//creation d'un securityuser pour comparaison
+		//il viendra récupérer les données entrées
 		SecurityUser test = new SecurityUser();
 
+		//boucle sur tous les securityuser renseignes
 		for (SecurityUser security : items) {
+			//si le login rentre est egal au login de la bdd alors les
+			//objets sont les memes
 			if (security.getLogin().equals(data.getLogin())) {
 				test = security;
 			}
 		}
 
+		//on recupere l'id pour trouver l'user
 		child = userCont.getItem(test.getId());
+// permet de l'envoyer vers le redirect
 		redirectAttributes.addAttribute("child", child);
 
-		if (test.getPassword().equals(data.getPassword())) {
+		if ((test.getPassword().equals(data.getPassword())) && (test.getStatus().equals("admin"))) {
+			return REDIRECT+ "/user/create/";
+
+		} else if (test.getPassword().equals(data.getPassword()))  {
 			return REDIRECT + MoodController.BASE_URL + "/vote";
-		} else {
-			return "user/login";
 		}
+ 		else {
+ 			return "user/login";
+ 		}
 	}
 
 	@Autowired

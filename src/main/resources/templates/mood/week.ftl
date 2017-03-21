@@ -5,74 +5,8 @@
   <title>Niko Niko</title>
       <link rel="stylesheet" href="/css/bootstrap.css">
       <link rel="stylesheet" href="/css/main1.css">
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
-      google.charts.load("current", {packages:["corechart"]});
-      google.charts.setOnLoadCallback(drawChart);
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          ['Task', 'Avis'],
-          ['Content',     60],
-          ['Normal',      20],
-          ['Mecontent',  20],
-        ]);
-
-        var options = {
-          title: 'Nikos du jour',
-          pieHole: 0.4,
-          colors:['green','yellow','red'],
-          backgroundColor : '#a00000'
-        };
-
-        var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
-        chart.draw(data, options);
-      }
-    </script>
-    <script type="text/javascript">
-      google.charts.load("current", {packages:["corechart"]});
-      google.charts.setOnLoadCallback(drawChart);
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          ['Task', 'Avis'],
-          ['Content',     60],
-          ['Normal',      20],
-          ['Mecontent',  20],
-        ]);
-
-        var options = {
-          title: 'Nikos du jour',
-          pieHole: 0.4,
-          colors:['green','yellow','red'],
-          backgroundColor : '#a00000'
-        };
-
-        var chart = new google.visualization.PieChart(document.getElementById('donutchart2'));
-        chart.draw(data, options);
-      }
-    </script>
-    <script type="text/javascript">
-      google.charts.load("current", {packages:["corechart"]});
-      google.charts.setOnLoadCallback(drawChart);
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          ['Task', 'Avis'],
-          ['Content',     60],
-          ['Normal',      20],
-          ['Mecontent',  20],
-        ]);
-
-        var options = {
-          title: 'Nikos du jour',
-          pieHole: 0.4,
-          colors:['green','yellow','red'],
-          backgroundColor : '#a00000'
-        };
-
-        var chart = new google.visualization.PieChart(document.getElementById('donutchart3'));
-        chart.draw(data, options);
-      }
-    </script>
 </head>
+
 <body>
     <header>
      <img src="/img/BaniereCGI.jpg">

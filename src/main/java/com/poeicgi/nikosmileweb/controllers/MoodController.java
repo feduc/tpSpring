@@ -28,49 +28,65 @@ public class MoodController extends ViewBaseController<Mood> {
 	@RequestMapping(path = "/vote", method = RequestMethod.GET)
 	public String voteView(Model model, @ModelAttribute("child") final User child) {
 
-		Long id = 0L;
 
+		Long id = 0L;
+		//creation d'une date d'aujourd'hui
 		Date date = new Date();
+		//que l'on ajoute dans le modele
 		model.addAttribute("date", date);
 
+		//on cree un gregoriancalendat
 		GregorianCalendar todayTest = new GregorianCalendar();
+		//auquel on attribue la date
 		todayTest.setTime(date);
+		//on met a 0 l'heure
 		todayTest.set(GregorianCalendar.HOUR_OF_DAY, 00);
 		todayTest.set(GregorianCalendar.MINUTE, 00);
 		todayTest.set(GregorianCalendar.SECOND, 00);
 		todayTest.set(GregorianCalendar.MILLISECOND, 00);
+		//que l'on recupere en millisecond > Date d'aujourd'hui en millis
 		Date today = new Date(todayTest.getTimeInMillis());
 
+		//gregorian d'hier
 		GregorianCalendar yesterdayTest = todayTest;
+		// auquel on attribue date -1
 		yesterdayTest.add(GregorianCalendar.DATE, -1);
+		// en millisecond> Date d'hier en millis
 		Date yesterday = new Date(yesterdayTest.getTimeInMillis());
 
+		//on recupere la date du dernier vote
 		Date lastVote = moodCrud.findLastVote(child);
-		// lastMood.getVoteDate();
+		// on transforme cette date en calendar
 		GregorianCalendar lastVoteTest = new GregorianCalendar();
 
 		Date voteDate;
 
+		//si la la date du dernier vote est null alors on vote pour la journee d'hier
+		//on a jamais vote
 		if (lastVote == null) {
 			voteDate = yesterday;
 		} else {
-
+			//sinon on transforme en calendar cette valeur lastvote
 			lastVoteTest.setTime(lastVote);
-
+			//si la date d'aujourd'hui est égale à cette date test
 			if (todayTest.getTimeInMillis() == lastVoteTest.getTimeInMillis()) {
+				//alors on est parti pour modifier le vote d'aujourd'hui
 				voteDate = today;
-
+				//on recupere l'id du vote à modifier
 				id = moodCrud.findLastVoteID(child, lastVote);
-
+			//sinon si la datetestd'hier est egale au lastvotetest
 			} else if (yesterdayTest.getTimeInMillis() == lastVoteTest.getTimeInMillis()) {
+				//alors la date du vote est aujourd'hui
 				voteDate = today;
 			} else {
+				//sinon la date du vote est pour la journee hier
 				voteDate = yesterday;
 			}
 		}
 
 		model.addAttribute("voteDate", voteDate);
 		model.addAttribute("MoodId", id);
+		//en mode cache on recupere toutes les infos du child associe
 		model.addAttribute("child", child);
 
 		return "mood/vote";
@@ -97,7 +113,7 @@ public class MoodController extends ViewBaseController<Mood> {
 
 		insertItem(item);
 
-		return REDIRECT + UserController.BASE_URL + "/home";
+		return REDIRECT + UserController.BASE_URL + "/resume";
 	}
 
 	@Autowired
@@ -108,13 +124,6 @@ public class MoodController extends ViewBaseController<Mood> {
 
 	public MoodController() {
 		super(Mood.class, BASE_URL);
-	}
-
-	@RequestMapping(path = "/vote", method = RequestMethod.GET)
-	public String voteView(Model model) {
-
-		model.addAttribute("date", new Date());
-		return "mood/vote";
 	}
 
 	@RequestMapping(path = "/week", method = RequestMethod.GET)
@@ -165,7 +174,6 @@ public class MoodController extends ViewBaseController<Mood> {
 			debutsemaine = cd.get(Calendar.DAY_OF_MONTH);
 			cd.add(Calendar.DATE, 4);
 			finsemaine = cd.get(Calendar.DAY_OF_MONTH);
-
 		}
 
 		else if (cd.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {
@@ -182,7 +190,6 @@ public class MoodController extends ViewBaseController<Mood> {
 			debutsemaine = cd.get(Calendar.DAY_OF_MONTH);
 			cd.add(Calendar.DATE, 4);
 			finsemaine = cd.get(Calendar.DAY_OF_MONTH);
-
 		}
 
 		mois = cd.get(Calendar.MONTH);

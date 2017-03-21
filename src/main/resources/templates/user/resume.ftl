@@ -56,7 +56,7 @@
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
           ['Task', 'Avis'],
-          ['Content',     60],
+          ['Content',     50],
           ['Normal',      20],
           ['Mecontent',  20],
         ]);
@@ -72,7 +72,7 @@
         chart.draw(data, options);
       }
     </script>
-</head>
+  </head>
 <body>
     <header>
      <img src="/img/BaniereCGI.jpg">
@@ -103,32 +103,6 @@
               </div>
             </div>
 
-             <h1> ${page} </h1>
-
-    <table class="table table-bordered table-hover">
-        <tr>
-            <#list items as item>
-                    <#list item?keys as key>
-                        <#if key=='satisfaction'>
-                            <th>${key}</th>
-                        <#elseif key=='logDate'>
-                             <th>${key}</th>
-                        </#if>
-                    </#list>
-                <#break>
-            </#list>
-        </tr>
-        <#list items as item>
-            <tr>
-                <#list item?keys as key>
-                    <#if key=='satisfaction'>
-                            <td>${item[key]}</td>
-                            <#elseif key=='logDate'>
-                            <td>${item[key]}</td>
-                    </#if>
-               </#list>
-        </#list>
-    </table>
           <div class="col-xs-12 col-sm-2 col-md-4">
               <div class="changeavis">
                     <p> <FONT color="white">Mon humeur du jour <FONT color="white"></p>
