@@ -41,14 +41,14 @@
             <input type="button" name="Répondre "style="width:300px"value="Vues Projets"/></a>
             </br>
 
-            <form id= "formid" action="/admin/vote/" method="GET">
-            <input type="hidden" name="id" value="${child["id"]}" />
-            <input type="hidden" name="agency" value="${child["agency"]}" />
-            <input type="hidden" name="firstName" value="${child["firstName"]}" />
-            <input type="hidden" name="lastName" value="${child["lastName"]}" />
-            <input type="hidden" name="registrationCGI" value="${child["registrationCGI"]}" />
-            <input type="hidden" name="verticale" value="${child["verticale"]}" />
-            <button type="submit" style="width:300px"value="submit">Page de vote</button>
+            <form id= "formid" action="/mood/admin/vote/" method="GET">
+                <input type="hidden" name="id" value="${child["id"]}" />
+                <input type="hidden" name="agency" value="${child["agency"]}" />
+                <input type="hidden" name="firstName" value="${child["firstName"]}" />
+                <input type="hidden" name="lastName" value="${child["lastName"]}" />
+                <input type="hidden" name="registrationCGI" value="${child["registrationCGI"]}" />
+                <input type="hidden" name="verticale" value="${child["verticale"]}" />
+                <button type="submit" style="width:300px"value="submit">Page de vote</button>
             </form>
           </div>
       </div>
@@ -84,14 +84,14 @@
                         </br>
                        </#if>
                     </#list>
-               </br>
-                <button type="submit" value="submit">Create</button>
+                  </br>
+ -        <button type="submit" value="submit">Create</button>
             </form>
-             </div>
+          </div>
         </div>
       </div>
-      </div>
+    </div>
  <footer>
     <img src="/img/basdepage.JPG">
-  </footer>
+ </footer>
 </body>

@@ -27,7 +27,8 @@ public class MoodController extends ViewBaseController<Mood> {
 
 
 	@RequestMapping(path = "/admin/vote/", method = RequestMethod.GET)
-	public String adminVoteGet(Model model, @ModelAttribute User user, @ModelAttribute("child") User child, final BindingResult childBindingResult, final Model model2,
+	public String adminVoteGet(Model model, @ModelAttribute User user, @ModelAttribute("child") User child,
+			final BindingResult childBindingResult, final Model model2,
 			final RedirectAttributes redirectAttributes) {
 
 		child = user;
