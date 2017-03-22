@@ -41,11 +41,9 @@ public class MoodController extends ViewBaseController<Mood> {
 
 	public final static String BASE_URL = "/mood";
 
-
 	@RequestMapping(path = "/admin/vote/", method = RequestMethod.GET)
 	public String adminVoteGet(Model model, @ModelAttribute User user, @ModelAttribute("child") User child,
-			final BindingResult childBindingResult, final Model model2,
-			final RedirectAttributes redirectAttributes) {
+			final BindingResult childBindingResult, final Model model2, final RedirectAttributes redirectAttributes) {
 
 		child = userCrud.findOne(user.getId());
 		redirectAttributes.addAttribute("child", child);
@@ -53,32 +51,30 @@ public class MoodController extends ViewBaseController<Mood> {
 
 	}
 
-
 	// value is the address to enter in the browser to launch index(), it can be
 	// more than one when writing value = {"/path1", "/path2"}
 	@RequestMapping(path = "/vote", method = RequestMethod.GET)
 	public String voteView(Model model, @ModelAttribute("child") final User child) {
 
-
 		Long id = 0L;
-		//creation d'une date d'aujourd'hui
+		// creation d'une date d'aujourd'hui
 		Date date = new Date();
-		//que l'on ajoute dans le modele
+		// que l'on ajoute dans le modele
 		model.addAttribute("date", date);
 
-		//on cree un gregoriancalendat
+		// on cree un gregoriancalendat
 		GregorianCalendar todayTest = new GregorianCalendar();
-		//auquel on attribue la date
+		// auquel on attribue la date
 		todayTest.setTime(date);
-		//on met a 0 l'heure
+		// on met a 0 l'heure
 		todayTest.set(GregorianCalendar.HOUR_OF_DAY, 00);
 		todayTest.set(GregorianCalendar.MINUTE, 00);
 		todayTest.set(GregorianCalendar.SECOND, 00);
 		todayTest.set(GregorianCalendar.MILLISECOND, 00);
-		//que l'on recupere en millisecond > Date d'aujourd'hui en millis
+		// que l'on recupere en millisecond > Date d'aujourd'hui en millis
 		Date today = new Date(todayTest.getTimeInMillis());
 
-		//gregorian d'hier
+		// gregorian d'hier
 		GregorianCalendar yesterdayTest = new GregorianCalendar();
 		yesterdayTest.setTimeInMillis(todayTest.getTimeInMillis());
 		// auquel on attribue date -1
@@ -86,7 +82,7 @@ public class MoodController extends ViewBaseController<Mood> {
 		// en millisecond> Date d'hier en millis
 		Date yesterday = new Date(yesterdayTest.getTimeInMillis());
 
-		//on recupere la date du dernier vote
+		// on recupere la date du dernier vote
 		Date lastVote = moodCrud.findLastVote(child);
 
 		// on transforme cette date en calendar
@@ -94,39 +90,41 @@ public class MoodController extends ViewBaseController<Mood> {
 
 		Date voteDate;
 
-		//si la la date du dernier vote est null alors on vote pour la journee d'hier
-		//on a jamais vote
+		// si la la date du dernier vote est null alors on vote pour la journee
+		// d'hier
+		// on a jamais vote
 		if (lastVote == null) {
 			voteDate = yesterday;
 		} else {
-			//sinon on transforme en calendar cette valeur lastvote
+			// sinon on transforme en calendar cette valeur lastvote
 			lastVoteTest.setTime(lastVote);
 
-			//si la date d'aujourd'hui est �gale � cette date test
-			if (todayTest.get(GregorianCalendar.YEAR) == lastVoteTest.get(GregorianCalendar.YEAR) &&
-					todayTest.get(GregorianCalendar.MONTH) == lastVoteTest.get(GregorianCalendar.MONTH) &&
-					todayTest.get(GregorianCalendar.DAY_OF_MONTH) == lastVoteTest.get(GregorianCalendar.DAY_OF_MONTH)) {
+			// si la date d'aujourd'hui est �gale � cette date test
+			if (todayTest.get(GregorianCalendar.YEAR) == lastVoteTest.get(GregorianCalendar.YEAR)
+					&& todayTest.get(GregorianCalendar.MONTH) == lastVoteTest.get(GregorianCalendar.MONTH) && todayTest
+							.get(GregorianCalendar.DAY_OF_MONTH) == lastVoteTest.get(GregorianCalendar.DAY_OF_MONTH)) {
 
-				//alors on est parti pour modifier le vote d'aujourd'hui
+				// alors on est parti pour modifier le vote d'aujourd'hui
 				voteDate = today;
-				//on recupere l'id du vote � modifier
+				// on recupere l'id du vote a modifier
 				id = moodCrud.findLastVoteID(child, lastVote);
 
-			//sinon si la datetestd'hier est egale au lastvotetest
-			} else if (yesterdayTest.get(GregorianCalendar.YEAR) == lastVoteTest.get(GregorianCalendar.YEAR) &&
-					yesterdayTest.get(GregorianCalendar.MONTH) == lastVoteTest.get(GregorianCalendar.MONTH) &&
-					yesterdayTest.get(GregorianCalendar.DAY_OF_MONTH)==lastVoteTest.get(GregorianCalendar.DAY_OF_MONTH)) {
-				//alors la date du vote est aujourd'hui
+				// sinon si la datetestd'hier est egale au lastvotetest
+			} else if (yesterdayTest.get(GregorianCalendar.YEAR) == lastVoteTest.get(GregorianCalendar.YEAR)
+					&& yesterdayTest.get(GregorianCalendar.MONTH) == lastVoteTest.get(GregorianCalendar.MONTH)
+					&& yesterdayTest.get(GregorianCalendar.DAY_OF_MONTH) == lastVoteTest
+							.get(GregorianCalendar.DAY_OF_MONTH)) {
+				// alors la date du vote est aujourd'hui
 				voteDate = today;
 			} else {
-				//sinon la date du vote est pour la journee hier
-				voteDate = today;
+				// sinon la date du vote est pour la journee hier
+				voteDate = yesterday;
 			}
 		}
 
 		model.addAttribute("voteDate", voteDate);
 		model.addAttribute("MoodId", id);
-		//en mode cache on recupere toutes les infos du child associe
+		// en mode cache on recupere toutes les infos du child associe
 		model.addAttribute("child", child);
 
 		return "mood/vote";
@@ -137,8 +135,8 @@ public class MoodController extends ViewBaseController<Mood> {
 
 	@RequestMapping(path = "/create/done", method = RequestMethod.POST)
 	public String create(Model model, @ModelAttribute Mood item, @ModelAttribute User child,
-			@ModelAttribute("MoodID") String MoodID , @ModelAttribute("child") User userChild, final BindingResult childBindingResult, final Model model2,
-			final RedirectAttributes redirectAttributes) {
+			@ModelAttribute("MoodID") String MoodID, @ModelAttribute("child") User userChild,
+			final BindingResult childBindingResult, final Model model2, final RedirectAttributes redirectAttributes) {
 		Map<String, Object> map = model.asMap();
 
 		Long id = Long.parseLong(MoodID);
@@ -186,7 +184,7 @@ public class MoodController extends ViewBaseController<Mood> {
 		cd.set(Calendar.SECOND, 00);
 		cd.set(Calendar.MILLISECOND, 00);
 
-		String jour = "truc";
+		String jour = "";
 		Integer debutsemaine = null;
 		Integer finsemaine = null;
 		Integer mois = null;
@@ -263,7 +261,6 @@ public class MoodController extends ViewBaseController<Mood> {
 
 		int nbChoice = 3;
 
-
 		for (int j = 1; j <= 5; j++) {
 			for (int i = 0; i < nbChoice; i++) {
 				String nom = "jour" + j + "satis" + i;
@@ -277,4 +274,12 @@ public class MoodController extends ViewBaseController<Mood> {
 
 		return "mood/week";
 	}
+
+	@RequestMapping(path = "/week/Change", method = RequestMethod.GET)
+	public String weekChange(Model model, @ModelAttribute Date date) {
+
+
+		return "mood/week";
+	}
+
 }

@@ -35,10 +35,10 @@ public class UserController extends ViewBaseController<User>{
 	}
 
 	@Autowired
-	private IMoodCrudRepository moodCrud;
+	private IUserCrudRepository userCrud;
 
 	@Autowired
-	private IUserCrudRepository userCrud;
+	private IMoodCrudRepository moodCrud;
 
 	public UserController() {
 		super(User.class,BASE_URL);
@@ -46,41 +46,44 @@ public class UserController extends ViewBaseController<User>{
 	}
 
 	//vers la page de resume de l'user pour visu globale
-//	@RequestMapping(path = "/resume", method = RequestMethod.GET)
-//	public String resumeView(Model model, @ModelAttribute("child")User child){
-//
-//			Date date = new Date();
-//
-//			GregorianCalendar todayTest = new GregorianCalendar();
-//
-//			todayTest.setTime(date);
-//
-//			todayTest.set(GregorianCalendar.HOUR_OF_DAY, 00);
-//			todayTest.set(GregorianCalendar.MINUTE, 00);
-//			todayTest.set(GregorianCalendar.SECOND, 00);
-//			todayTest.set(GregorianCalendar.MILLISECOND, 00);
-//			Date today = new Date(todayTest.getTimeInMillis());
-//
-//			int satisfaction= moodCrud.findLastSatisf(child, today);
-//			String image = null;
+	@RequestMapping(path = "/resume", method = RequestMethod.GET)
+	public String resumeView(Model model, @ModelAttribute("child")User child){
+
+			Date date = new Date();
+			model.addAttribute("date", date);
+
+			GregorianCalendar todayTest = new GregorianCalendar();
+
+			todayTest.setTime(date);
+
+			todayTest.set(GregorianCalendar.HOUR_OF_DAY, 00);
+			todayTest.set(GregorianCalendar.MINUTE, 00);
+			todayTest.set(GregorianCalendar.SECOND, 00);
+			todayTest.set(GregorianCalendar.MILLISECOND, 00);
+
+			Date today = new Date(todayTest.getTimeInMillis());
+
+			int satisfaction = moodCrud.findSatisfaction(child, today);
+			model.addAttribute("smile", satisfaction);
+
+//			String smile ="";
 //
 //			if (satisfaction == -1)
 //			{
-//				image = "/img/niko-rouge.png";
+//				smile = "niko-rouge.png";
 //			}
 //
 //			else if (satisfaction == 0)
 //			{
-//				image = "/img/niko-jaune.png";
+//				smile = "niko-jaune.png";
 //			}
 //
 //			else if (satisfaction == 1)
 //			{
-//				image = "/img/niko-vert.png";
+//				smile = "niko-rouge.png";
 //			}
-//
-//			model.addAttribute("image", image);
-//
-//			return "user/resume";
-//	}
+//			model.addAttribute("smile", smile);
+
+			return "user/resume";
+	}
 }

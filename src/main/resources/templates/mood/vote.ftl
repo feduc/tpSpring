@@ -29,25 +29,21 @@
           <input id="bon" type="radio" name="satisfaction" value="1" checked>
           <img src="/img/niko-vert-fond blanc.png" width="50%">
         </label>
-
-</br>
-
+        </br>
 
         <label for="moyen">
           <input id="moyen" type="radio" name="satisfaction" value="0">
           <img src="/img/niko-jaune-fond blanc.png" width="50%">
         </label>
+        </br>
 
-</br>
-
-
-      <label for="mauvais">
+        <label for="mauvais">
           <input id="mauvais" type="radio" name="satisfaction" value="-1">
           <img src="/img/niko-rouge-fond blanc.png" width="50%">
         </label>
-         </div class>
-</br>
-</br>
+       </div class>
+    </br>
+    </br>
 
         <div class="button">
             <a href="/../ResumeProjet"><input type="button" name="Répondre "value="Je ne veux pas voter"/></a>
@@ -61,18 +57,14 @@
         <div class="button">
             <button type="submit" value="submit">Voter</button>
         </div>
-
       </fieldset>
-
     </form>
-
-      </div>
     </div>
+   </div>
   </div>
 
   <footer>
     <img src="/image/basdepage.jpg">
-
   </footer>
 </body>
 </html>

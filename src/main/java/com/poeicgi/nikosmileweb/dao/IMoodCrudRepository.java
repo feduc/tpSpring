@@ -37,14 +37,13 @@ public interface IMoodCrudRepository extends IBaseCrudRepository<Mood> {
 			+ " WHERE mood.user = :user AND mood.voteDate = :date")
 	Long findLastVoteID(@Param("user") User user, @Param("date") Date date);
 
-	//creation d'une requete d'interrogation de la bdd pour trouver l'id de la date du dernier vote
-	@Query("SELECT mood.satisfaction FROM Mood AS mood"
-			+ " WHERE mood.user = :user AND mood.voteDate = :date")
-	int findLastSatisf(@Param("user") User user, @Param("date") Date date);
-
 	//creation d'une requete d'interrogation de la bdd pour trouver la somme de toutes les satisfactions
 	@Query("SELECT COUNT(*) FROM Mood AS mood WHERE mood.satisfaction = :satisfaction ")
-	public int findSatisaction(@Param("satisfaction") int satisfaction);
+	public int findSatisactionCount(@Param("satisfaction") int satisfaction);
+
+	//creation d'une requete d'interrogation de la bdd pour trouver la satisfaction
+	@Query("SELECT mood.satisfaction FROM Mood AS mood WHERE mood.user = :user AND mood.voteDate = :date")
+	public int findSatisfaction(@Param("user") User user, @Param("date") Date date);;
 
 	@Query("SELECT COUNT(*) FROM User user "
 			+ "	JOIN user.moods AS mood"
