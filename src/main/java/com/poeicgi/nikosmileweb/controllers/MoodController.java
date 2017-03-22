@@ -298,17 +298,7 @@ public class MoodController extends ViewBaseController<Mood> {
 			Date sd= new Date();
 			Calendar cd = Calendar.getInstance();
 			
-		if(changeWeek==""){
-			
-			
-			cd.setTime(sd);
-			cd.set(Calendar.HOUR_OF_DAY, 00);
-			cd.set(Calendar.MINUTE, 00);
-			cd.set(Calendar.SECOND, 00);
-			cd.set(Calendar.MILLISECOND, 00);
-			sd = new Date(cd.getTimeInMillis());
-		}
-		else if (changeWeek.equals("previous")){
+		if (changeWeek.equals("previous")){
 			
 			sd = new Date(date);
 

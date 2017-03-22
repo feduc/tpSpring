@@ -3,6 +3,7 @@ package com.poeicgi.nikosmileweb.controllers;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,14 +15,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.poeicgi.nikosmileweb.controllers.base.view.ViewBaseController;
 import com.poeicgi.nikosmileweb.dao.IMoodCrudRepository;
+import com.poeicgi.nikosmileweb.dao.IProjectCrudRepository;
 import com.poeicgi.nikosmileweb.dao.IUserCrudRepository;
 import com.poeicgi.nikosmileweb.models.ChangeDate;
+import com.poeicgi.nikosmileweb.models.Project;
 import com.poeicgi.nikosmileweb.models.User;
 import com.poeicgi.nikosmileweb.utils.DumpFields;
 
 @Controller
 @RequestMapping(path = UserController.BASE_URL)
-public class UserController extends ViewBaseController<User>{
+public class UserController extends ViewBaseController<User> {
 
 	public final static String BASE_URL = "/user";
 
@@ -38,33 +41,51 @@ public class UserController extends ViewBaseController<User>{
 	private IUserCrudRepository userCrud;
 
 	@Autowired
+	private IProjectCrudRepository projectCrud;
+
+	@Autowired
 	private IMoodCrudRepository moodCrud;
 
 	public UserController() {
-		super(User.class,BASE_URL);
+		super(User.class, BASE_URL);
 
 	}
 
-	//vers la page de resume de l'user pour visu globale
+	// vers la page de resume de l'user pour visu globale
 	@RequestMapping(path = "/resume", method = RequestMethod.GET)
-	public String resumeView(Model model, @ModelAttribute("child")User child){
+	public String resumeView(Model model, @ModelAttribute("child") User child) {
 
-			GregorianCalendar todayTest = new GregorianCalendar();
+		GregorianCalendar todayTest = new GregorianCalendar();
 
-			todayTest.setTime(new Date());
+		todayTest.setTime(new Date());
 
-			todayTest.set(GregorianCalendar.HOUR_OF_DAY, 00);
-			todayTest.set(GregorianCalendar.MINUTE, 00);
-			todayTest.set(GregorianCalendar.SECOND, 00);
-			todayTest.set(GregorianCalendar.MILLISECOND, 00);
+		todayTest.set(GregorianCalendar.HOUR_OF_DAY, 00);
+		todayTest.set(GregorianCalendar.MINUTE, 00);
+		todayTest.set(GregorianCalendar.SECOND, 00);
+		todayTest.set(GregorianCalendar.MILLISECOND, 00);
 
-			Date today = new Date(todayTest.getTimeInMillis());
-		
-			model.addAttribute("child", child);
-			model.addAttribute("date", today.getTime());
-			int satisfaction = moodCrud.findSatisfaction(child, today);
-			model.addAttribute("smile", satisfaction);
+		Date today = new Date(todayTest.getTimeInMillis());
 
-			return "user/resume";
+		model.addAttribute("child", child);
+		model.addAttribute("date", today.getTime());
+		int satisfaction = moodCrud.findSatisfaction(child, today);
+		model.addAttribute("smile", satisfaction);
+
+		List<String> actualProjectsNames = projectCrud.findActualProjectsByUser(child, today);
+
+		for (String projectName : actualProjectsNames) {
+			int[] projectxTodaySatis = { moodCrud.countMoodsBySatisfactionForSummary(projectName, today, 1),
+					moodCrud.countMoodsBySatisfactionForSummary(projectName, today, 0),
+					moodCrud.countMoodsBySatisfactionForSummary(projectName, today, -1) };
+			String name = projectName+"TodaySatis";
+			model.addAttribute(name, projectxTodaySatis);
+		}
+
+		List<String> oldProjectsNames = projectCrud.findOldProjectsByUser(child, today);
+
+		model.addAttribute("actualProjectsNames", actualProjectsNames);
+		model.addAttribute("oldProjectsNames", oldProjectsNames);
+
+		return "user/resume";
 	}
 }

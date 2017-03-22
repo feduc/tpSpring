@@ -5,6 +5,7 @@
   <title>Niko Niko</title>
       <link rel="stylesheet" href="/css/bootstrap.css">
       <link rel="stylesheet" href="/css/main1.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
       google.charts.load("current", {packages:["corechart"]});
@@ -77,38 +78,11 @@
 
   <div id="main">
 
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-12 col-sm-6 col-md-4">
-                    <div class="projet">
-                        <div id="donutchart" style="width: 300px; height: 200px;" ></div>
-                        <form id= "formid" action="/mood/week/change" method="get">
-                        <input type="hidden" name="id" value="${child["id"]}" />
-                        <input type="hidden" name="agency" value="${child["agency"]}" />
-                        <input type="hidden" name="firstName" value="${child["firstName"]}" />
-                        <input type="hidden" name="lastName" value="${child["lastName"]}" />
-                        <input type="hidden" name="registrationCGI" value="${child["registrationCGI"]}" />
-                        <input type="hidden" name="verticale" value="${child["verticale"]}" />
-                        <input type="hidden" name="projectName" value="Projet1" />
-                        <input type="hidden" name="date" value="${date?c}"/>
-                        <input type="hidden" name="changeWeek"/>
-                        <button type="submit" style="width:300px" value="submit">Voir</button>
-                    </form>
-                    </div>
+        <div class="container" >
+            <div class="row" >
+                <div  id = "actualProjects">
+                
                 </div>
-
-                <div class="col-xs-12 col-sm-6 col-md-4">
-                    <div class="projet">
-                        <div id="donutchart2" style="width: 300px; height: 200px;" ></div>
-                    </div>
-                </div>
-
-                <div class="col-xs-12 col-sm-6 col-md-4">
-                    <div class="projet">
-                        <div id="donutchart3" style="width: 300px; height: 200px;" ></div>
-                    </div>
-                </div>
-
                 <div class="col-xs-12 col-sm-2 col-md-4">
                     <div class="changeavis">
                         <p> <FONT color="white">Mon humeur du jour <FONT color="white"></p>
@@ -159,5 +133,22 @@
   <footer>
     <img src="/img/basdepage.jpg">
   </footer>
+  
+  <script src="/js/projectsViewingOnResume.js"></script>
+
+    <script>
+      $(document).ready(function(){
+        <#list actualProjectsNames as name>
+        addProject(${name});
+        
+        
+        </#list>
+      });
+
+      $(document).unload(function(){
+        
+      });
+    </script>
+    
 </body>
 </html>
