@@ -118,7 +118,7 @@ public class MoodController extends ViewBaseController<Mood> {
 				voteDate = today;
 			} else {
 				// sinon la date du vote est pour la journee hier
-				voteDate = today;
+				voteDate = yesterday;
 			}
 		}
 
@@ -173,26 +173,25 @@ public class MoodController extends ViewBaseController<Mood> {
 	}
 
 	@RequestMapping(path = "/week", method = RequestMethod.GET)
-	public String weekView(Model model) {
+	public String weekView(Model model,@ModelAttribute("child") User child,
+			@ModelAttribute("date") Long date,@ModelAttribute("projectName") String projectName) {
 
-		Date sd = new Date();
+		Date sd = new Date(date);
 		Calendar cd = Calendar.getInstance();
 		cd.setTime(sd);
-
-		cd.set(Calendar.HOUR_OF_DAY, 00);
-		cd.set(Calendar.MINUTE, 00);
-		cd.set(Calendar.SECOND, 00);
-		cd.set(Calendar.MILLISECOND, 00);
 
 		String jour = "truc";
 		Integer debutsemaine = null;
 		Integer finsemaine = null;
 		Integer mois = null;
+		Integer mois1 = null;
+		Integer annee = null;
 
 		if (cd.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY) {
 			jour = "Lundi";
 			debutsemaine = cd.get(Calendar.DAY_OF_MONTH);
 			sd = new Date(cd.getTimeInMillis());
+			mois = cd.get(Calendar.MONTH);
 			cd.add(Calendar.DATE, 4);
 			finsemaine = cd.get(Calendar.DAY_OF_MONTH);
 		}
@@ -202,6 +201,7 @@ public class MoodController extends ViewBaseController<Mood> {
 			cd.add(Calendar.DATE, -1);
 			debutsemaine = cd.get(Calendar.DAY_OF_MONTH);
 			sd = new Date(cd.getTimeInMillis());
+			mois = cd.get(Calendar.MONTH);
 			cd.add(Calendar.DATE, 4);
 			finsemaine = cd.get(Calendar.DAY_OF_MONTH);
 		}
@@ -211,6 +211,7 @@ public class MoodController extends ViewBaseController<Mood> {
 			cd.add(Calendar.DATE, -2);
 			debutsemaine = cd.get(Calendar.DAY_OF_MONTH);
 			sd = new Date(cd.getTimeInMillis());
+			mois = cd.get(Calendar.MONTH);
 			cd.add(Calendar.DATE, 4);
 			finsemaine = cd.get(Calendar.DAY_OF_MONTH);
 		}
@@ -220,6 +221,7 @@ public class MoodController extends ViewBaseController<Mood> {
 			cd.add(Calendar.DATE, -3);
 			debutsemaine = cd.get(Calendar.DAY_OF_MONTH);
 			sd = new Date(cd.getTimeInMillis());
+			mois = cd.get(Calendar.MONTH);
 			cd.add(Calendar.DATE, 4);
 			finsemaine = cd.get(Calendar.DAY_OF_MONTH);
 		}
@@ -229,6 +231,7 @@ public class MoodController extends ViewBaseController<Mood> {
 			cd.add(Calendar.DATE, -4);
 			debutsemaine = cd.get(Calendar.DAY_OF_MONTH);
 			sd = new Date(cd.getTimeInMillis());
+			mois = cd.get(Calendar.MONTH);
 			cd.add(Calendar.DATE, 4);
 			finsemaine = cd.get(Calendar.DAY_OF_MONTH);
 		}
@@ -238,6 +241,7 @@ public class MoodController extends ViewBaseController<Mood> {
 			cd.add(Calendar.DATE, -5);
 			debutsemaine = cd.get(Calendar.DAY_OF_MONTH);
 			sd = new Date(cd.getTimeInMillis());
+			mois = cd.get(Calendar.MONTH);
 			cd.add(Calendar.DATE, 4);
 			finsemaine = cd.get(Calendar.DAY_OF_MONTH);
 		}
@@ -247,17 +251,27 @@ public class MoodController extends ViewBaseController<Mood> {
 			cd.add(Calendar.DATE, -6);
 			debutsemaine = cd.get(Calendar.DAY_OF_MONTH);
 			sd = new Date(cd.getTimeInMillis());
+			mois = cd.get(Calendar.MONTH);
 			cd.add(Calendar.DATE, 4);
 			finsemaine = cd.get(Calendar.DAY_OF_MONTH);
 		}
 
-		mois = cd.get(Calendar.MONTH);
+		mois1 = cd.get(Calendar.MONTH);
+		annee = cd.get(Calendar.YEAR);
 		model.addAttribute("date", jour);
-		model.addAttribute("debutsemaine", debutsemaine);
-		model.addAttribute("finsemaine", finsemaine);
+		model.addAttribute("debutsemaine", String.format("%02d", debutsemaine));
+		model.addAttribute("finsemaine", String.format("%02d", finsemaine));
 		model.addAttribute("mois", String.format("%02d", mois + 1));
+		model.addAttribute("mois1", String.format("%02d", mois1 + 1));
+		model.addAttribute("annee", String.format("%04d", annee));
+		
+		model.addAttribute("date", sd.getTime());
+		
+		model.addAttribute("child", child);
+		
+		model.addAttribute("projectName", projectName);
 
-		String projectName = "Projet1";
+		//String projectName = "Projet1";
 
 		int nbChoice = 3;
 
@@ -275,11 +289,57 @@ public class MoodController extends ViewBaseController<Mood> {
 		return "mood/week";
 	}
 	
-	@RequestMapping(path = "/week/Change", method = RequestMethod.GET)
-	public String weekChange(Model model, @ModelAttribute Date date) {
+	@RequestMapping(path = "/week/change", method = RequestMethod.GET)
+	public String weekChange(Model model,@ModelAttribute User child,
+			@ModelAttribute("date") Long date,@ModelAttribute("projectName") String projectName,@ModelAttribute("changeWeek") String changeWeek, @ModelAttribute("child") User userChild,
+			final BindingResult childBindingResult, final Model model2, final RedirectAttributes redirectAttributes) {
 		
+			Date sd= new Date();
+			Calendar cd = Calendar.getInstance();
+			
+		if(changeWeek==""){
+			
+			
+			cd.setTime(sd);
+			cd.set(Calendar.HOUR_OF_DAY, 00);
+			cd.set(Calendar.MINUTE, 00);
+			cd.set(Calendar.SECOND, 00);
+			cd.set(Calendar.MILLISECOND, 00);
+			sd = new Date(cd.getTimeInMillis());
+		}
+		else if (changeWeek.equals("previous")){
+			
+			sd = new Date(date);
+
+			cd.setTime(sd);	
+			cd.add(Calendar.DATE, -7);
+			sd = new Date(cd.getTimeInMillis());
+		}
+		else if (changeWeek.equals("next")){
+			
+			sd = new Date(date);
+
+			cd.setTime(sd);
+			cd.add(Calendar.DATE, 7);
+			sd = new Date(cd.getTimeInMillis());
+		}
+		else {
+			cd = Calendar.getInstance();
+			cd.setTime(sd);
+
+			cd.set(Calendar.HOUR_OF_DAY, 00);
+			cd.set(Calendar.MINUTE, 00);
+			cd.set(Calendar.SECOND, 00);
+			cd.set(Calendar.MILLISECOND, 00);
+			sd = new Date(cd.getTimeInMillis());
+		}
 		
-		return "mood/week";
+		userChild = userCrud.findOne(child.getId());
+		redirectAttributes.addAttribute("child", userChild);
+		redirectAttributes.addAttribute("projectName", projectName);
+		redirectAttributes.addAttribute("date", sd.getTime());
+		
+		return REDIRECT + MoodController.BASE_URL + "/week/" ;
 	}
 	
 }

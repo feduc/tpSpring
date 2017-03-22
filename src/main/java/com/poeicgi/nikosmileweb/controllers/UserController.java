@@ -45,6 +45,7 @@ public class UserController extends ViewBaseController<User>{
 	public String resumeView(Model model, @ModelAttribute("child")User child){
 		
 			model.addAttribute("child", child);
+			model.addAttribute("date", new Date().getTime());
 			
 			return "user/resume";
 	}
