@@ -106,7 +106,7 @@ public class MoodController extends ViewBaseController<Mood> {
 
 				// alors on est parti pour modifier le vote d'aujourd'hui
 				voteDate = today;
-				// on recupere l'id du vote � modifier
+				// on recupere l'id du vote a modifier
 				id = moodCrud.findLastVoteID(child, lastVote);
 
 				// sinon si la datetestd'hier est egale au lastvotetest
@@ -181,6 +181,7 @@ public class MoodController extends ViewBaseController<Mood> {
 		cd.setTime(sd);
 
 		String jour = "truc";
+
 		Integer debutsemaine = null;
 		Integer finsemaine = null;
 		Integer mois = null;
@@ -340,6 +341,7 @@ public class MoodController extends ViewBaseController<Mood> {
 		redirectAttributes.addAttribute("date", sd.getTime());
 		
 		return REDIRECT + MoodController.BASE_URL + "/week/" ;
+
 	}
-	
+
 }

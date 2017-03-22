@@ -4,7 +4,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
     <script src="/Chart.js-master/src/chart.js"></script>
       <link rel="stylesheet" href="/css/bootstrap.css">
-      <link rel="stylesheet" href="/css/main.css">
+      <link rel="stylesheet" href="/css/main1.css">
 </head>
 <body>
     <header>
@@ -41,15 +41,18 @@
             <input type="button" name="Repondre "style="width:300px"value="Vues Projets"/></a>
             </br>
 
-            <form action="/mood/admin/vote/" method="GET">
+            <form id= "formid" action="/mood/vote/" method="get">
             <input type="hidden" name="id" value="${child["id"]}" />
             <input type="hidden" name="agency" value="${child["agency"]}" />
             <input type="hidden" name="firstName" value="${child["firstName"]}" />
             <input type="hidden" name="lastName" value="${child["lastName"]}" />
             <input type="hidden" name="registrationCGI" value="${child["registrationCGI"]}" />
             <input type="hidden" name="verticale" value="${child["verticale"]}" />
-            <button type="submit" style="width:300px"value="submit">Page de vote</button>
+            <font color="black"><input type="submit"name="Repondre" style="width:300px"value="Changer d'avis"/>
+            </font>
             </form>
+
+
           </div>
       </div>
       <div class="col-xs-12 col-sm-2 col-md-8">

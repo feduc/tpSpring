@@ -2,6 +2,7 @@ package com.poeicgi.nikosmileweb.controllers;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.poeicgi.nikosmileweb.controllers.base.view.ViewBaseController;
+import com.poeicgi.nikosmileweb.dao.IMoodCrudRepository;
 import com.poeicgi.nikosmileweb.dao.IUserCrudRepository;
 import com.poeicgi.nikosmileweb.models.ChangeDate;
 import com.poeicgi.nikosmileweb.models.User;
@@ -35,6 +37,9 @@ public class UserController extends ViewBaseController<User>{
 	@Autowired
 	private IUserCrudRepository userCrud;
 
+	@Autowired
+	private IMoodCrudRepository moodCrud;
+
 	public UserController() {
 		super(User.class,BASE_URL);
 
@@ -43,10 +48,23 @@ public class UserController extends ViewBaseController<User>{
 	//vers la page de resume de l'user pour visu globale
 	@RequestMapping(path = "/resume", method = RequestMethod.GET)
 	public String resumeView(Model model, @ModelAttribute("child")User child){
+
+			GregorianCalendar todayTest = new GregorianCalendar();
+
+			todayTest.setTime(new Date());
+
+			todayTest.set(GregorianCalendar.HOUR_OF_DAY, 00);
+			todayTest.set(GregorianCalendar.MINUTE, 00);
+			todayTest.set(GregorianCalendar.SECOND, 00);
+			todayTest.set(GregorianCalendar.MILLISECOND, 00);
+
+			Date today = new Date(todayTest.getTimeInMillis());
 		
 			model.addAttribute("child", child);
-			model.addAttribute("date", new Date().getTime());
-			
+			model.addAttribute("date", today.getTime());
+			int satisfaction = moodCrud.findSatisfaction(child, today);
+			model.addAttribute("smile", satisfaction);
+
 			return "user/resume";
 	}
 }
