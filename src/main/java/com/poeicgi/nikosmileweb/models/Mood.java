@@ -24,14 +24,14 @@ import com.poeicgi.nikosmileweb.models.User;
 @Entity
 @Table(name="avis")
 public class Mood extends DataBaseItem {
-	
+
 	@Transient
 	public static final String TABLE = "avis";
 
 	@Override
 	public ArrayList<Map<String, Object>> getMyFields() {
 		ArrayList<Map<String,Object>> myFields= new ArrayList<Map<String,Object>>();
-		
+
 		myFields.add(new HashMap<String,Object>());
 		(myFields.get(0)).put("name", "id");
 		(myFields.get(0)).put("type", "Long");
@@ -47,40 +47,40 @@ public class Mood extends DataBaseItem {
 		myFields.add(new HashMap<String,Object>());
 		(myFields.get(4)).put("name", "commentSat");
 		(myFields.get(4)).put("type", "String");
-		
+
 		return myFields;
 	}
-	
+
 	@Column(name="avis_journee")
 	private int satisfaction;
-	
+
 	@Column(name="date_jour")
 	private Date logDate;
-	
+
 	@Column(name="date_vote")
 	private Date voteDate;
-	
+
 	@Column(nullable=true, name="texte_jour")
 	private String commentSat;
-	
+
 	@OneToMany(targetEntity=ChangeDate.class)
 	private Set<ChangeDate> changeDates;
-	
+
 	@ManyToOne(targetEntity=User.class)
 	private User user;
 
-	
+
 	public Date getLogDate() {
 		if (this.logDate==null) {
 			this.logDate= new Date();
 		}
 		return logDate;
 	}
-	
+
 	public void setLogDate(Date logDate) {
 		this.logDate = logDate;
 	}
-	
+
 	public Date getVoteDate() {
 		return voteDate;
 	}
@@ -96,28 +96,27 @@ public class Mood extends DataBaseItem {
 		return (ArrayList<ChangeDate>) changeDates;
 		}
 	}
-	
+
 	public void setChangeDates(ArrayList<ChangeDate> changeDates) {
 		this.changeDates = (Set<ChangeDate>) changeDates;
 	}
-	
+
 	public int getSatisfaction() {
 		return satisfaction;
 	}
-	
+
 	public void setSatisfaction(int satisfaction) {
 		if (Fonction.nikoCheck(satisfaction)){
 			this.satisfaction = satisfaction;
 		}else {
 			this.satisfaction = 0;
 		}
-		
 	}
-	
+
 	public String getCommentSat() {
 		return commentSat;
 	}
-	
+
 	public void setCommentSat(String comment) {
 		this.commentSat = comment;
 	}
@@ -125,7 +124,7 @@ public class Mood extends DataBaseItem {
 	public User getUser() {
 		return user;
 	}
-	
+
 	public void setUser(User user) {
 		this.user = user;
 	}
@@ -139,13 +138,13 @@ public class Mood extends DataBaseItem {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public Mood(int satisfaction, String commentSat) {
 		this(satisfaction);
 		this.logDate= new Date();
 		this.commentSat = commentSat;
 	}
-	
+
 	public Mood(int satisfaction) {
 		this();
 		this.logDate= new Date();
@@ -155,7 +154,7 @@ public class Mood extends DataBaseItem {
 			this.satisfaction = 0;
 		}
 	}
-	
+
 	public Mood(User user, int satisfaction) {
 		this(satisfaction);
 		this.user = user;
@@ -178,11 +177,11 @@ public class Mood extends DataBaseItem {
 				+ changeDates + ", satisfaction=" + satisfaction + ", comment="
 				+ commentSat + "]";
 	}
-	
+
 	private static class Fonction {
-		
+
 		public static boolean nikoCheck(int intgiven) {
-			
+
 			ArrayList<Integer> test = new ArrayList<Integer>();
 			test.add(1);
 			test.add(0);
@@ -192,7 +191,7 @@ public class Mood extends DataBaseItem {
 			}else{
 				return false;
 			}
-	
+
 	}
 
 	}
