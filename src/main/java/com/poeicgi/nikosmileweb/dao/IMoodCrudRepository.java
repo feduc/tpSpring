@@ -51,7 +51,7 @@ public interface IMoodCrudRepository extends IBaseCrudRepository<Mood> {
 			+ " WHERE project.name = :name "
 			+ " AND mood.voteDate = :date"
 			+ " AND mood.satisfaction = :satis")
-	int countMoodsBySatisfactionForSummary(@Param("name") String projectName,
+	Integer countMoodsBySatisfactionForSummary(@Param("name") String projectName,
 										   @Param("date") Date dateTest,
 										   @Param("satis") int satis);
 }

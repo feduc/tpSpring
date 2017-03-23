@@ -45,10 +45,7 @@
     </br>
     </br>
 
-        <div class="button">
-            <a href="/../ResumeProjet"><input type="button" name="Répondre "value="Je ne veux pas voter"/></a>
-        </div>
-        </br>
+        
 
       <textarea form = "formid" name="commentSat" id="message" cols="29" rows="2"  placeholder="Un commentaire ?"></textarea>
         <input type="hidden" name="logDate" value="${date?string('yyyy/MM/dd HH:mm:ss')}" />
@@ -57,8 +54,20 @@
         <div class="button">
             <button type="submit" value="submit">Voter</button>
         </div>
-      </fieldset>
+      </form>
+    
+      
+    <form id= "formid" action="/user/resume/" method="get">
+    <input type="hidden" name="id" value="${child["id"]}" />
+    <input type="hidden" name="agency" value="${child["agency"]}" />
+    <input type="hidden" name="firstName" value="${child["firstName"]}" />
+    <input type="hidden" name="lastName" value="${child["lastName"]}" />
+    <input type="hidden" name="registrationCGI" value="${child["registrationCGI"]}" />
+    <input type="hidden" name="verticale" value="${child["verticale"]}" />
+    <input type="submit" value="Je ne veux pas voter"/></a>
     </form>
+    </br>
+    </fieldset>
     </div>
    </div>
   </div>

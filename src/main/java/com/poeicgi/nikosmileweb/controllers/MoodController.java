@@ -2,6 +2,9 @@ package com.poeicgi.nikosmileweb.controllers;
 
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Map;
 import java.util.Set;
@@ -182,6 +185,11 @@ public class MoodController extends ViewBaseController<Mood> {
 
 		String jour = "truc";
 
+		Date lundi = null;
+		Date mardi = null;
+		Date mercredi = null;
+		Date jeudi = null;
+		Date vendredi = null;
 		Integer debutsemaine = null;
 		Integer finsemaine = null;
 		Integer mois = null;
@@ -202,6 +210,7 @@ public class MoodController extends ViewBaseController<Mood> {
 			cd.add(Calendar.DATE, -1);
 			debutsemaine = cd.get(Calendar.DAY_OF_MONTH);
 			sd = new Date(cd.getTimeInMillis());
+			lundi = new Date(cd.getTimeInMillis());
 			mois = cd.get(Calendar.MONTH);
 			cd.add(Calendar.DATE, 4);
 			finsemaine = cd.get(Calendar.DAY_OF_MONTH);
@@ -212,6 +221,7 @@ public class MoodController extends ViewBaseController<Mood> {
 			cd.add(Calendar.DATE, -2);
 			debutsemaine = cd.get(Calendar.DAY_OF_MONTH);
 			sd = new Date(cd.getTimeInMillis());
+			lundi = new Date(cd.getTimeInMillis());
 			mois = cd.get(Calendar.MONTH);
 			cd.add(Calendar.DATE, 4);
 			finsemaine = cd.get(Calendar.DAY_OF_MONTH);
@@ -222,6 +232,7 @@ public class MoodController extends ViewBaseController<Mood> {
 			cd.add(Calendar.DATE, -3);
 			debutsemaine = cd.get(Calendar.DAY_OF_MONTH);
 			sd = new Date(cd.getTimeInMillis());
+			lundi = new Date(cd.getTimeInMillis());
 			mois = cd.get(Calendar.MONTH);
 			cd.add(Calendar.DATE, 4);
 			finsemaine = cd.get(Calendar.DAY_OF_MONTH);
@@ -232,6 +243,7 @@ public class MoodController extends ViewBaseController<Mood> {
 			cd.add(Calendar.DATE, -4);
 			debutsemaine = cd.get(Calendar.DAY_OF_MONTH);
 			sd = new Date(cd.getTimeInMillis());
+			lundi = new Date(cd.getTimeInMillis());
 			mois = cd.get(Calendar.MONTH);
 			cd.add(Calendar.DATE, 4);
 			finsemaine = cd.get(Calendar.DAY_OF_MONTH);
@@ -242,6 +254,7 @@ public class MoodController extends ViewBaseController<Mood> {
 			cd.add(Calendar.DATE, -5);
 			debutsemaine = cd.get(Calendar.DAY_OF_MONTH);
 			sd = new Date(cd.getTimeInMillis());
+			lundi = new Date(cd.getTimeInMillis());
 			mois = cd.get(Calendar.MONTH);
 			cd.add(Calendar.DATE, 4);
 			finsemaine = cd.get(Calendar.DAY_OF_MONTH);
@@ -252,11 +265,13 @@ public class MoodController extends ViewBaseController<Mood> {
 			cd.add(Calendar.DATE, -6);
 			debutsemaine = cd.get(Calendar.DAY_OF_MONTH);
 			sd = new Date(cd.getTimeInMillis());
+			lundi = new Date(cd.getTimeInMillis());
 			mois = cd.get(Calendar.MONTH);
 			cd.add(Calendar.DATE, 4);
 			finsemaine = cd.get(Calendar.DAY_OF_MONTH);
 		}
 
+		
 		mois1 = cd.get(Calendar.MONTH);
 		annee = cd.get(Calendar.YEAR);
 		model.addAttribute("date", jour);
@@ -286,7 +301,26 @@ public class MoodController extends ViewBaseController<Mood> {
 			cd.add(Calendar.DATE, 1);
 			sd.setTime(cd.getTimeInMillis());
 		}
+		
+		model.addAttribute("lundi", lundi.getTime());
 
+		cd.setTime(lundi);
+		cd.add(Calendar.DATE, 1);
+		mardi = new Date(cd.getTimeInMillis());
+		model.addAttribute("mardi", mardi.getTime());
+		
+		cd.add(Calendar.DATE, 1);
+		mercredi = new Date(cd.getTimeInMillis());
+		model.addAttribute("mercredi", mercredi.getTime());
+		
+		cd.add(Calendar.DATE, 1);
+		jeudi = new Date(cd.getTimeInMillis());
+		model.addAttribute("jeudi", jeudi.getTime());
+		
+		cd.add(Calendar.DATE, 1);
+		vendredi = new Date(cd.getTimeInMillis());
+		model.addAttribute("vendredi", vendredi.getTime());
+		
 		return "mood/week";
 	}
 	
@@ -331,6 +365,49 @@ public class MoodController extends ViewBaseController<Mood> {
 		redirectAttributes.addAttribute("date", sd.getTime());
 		
 		return REDIRECT + MoodController.BASE_URL + "/week/" ;
+
+	}
+	
+	@RequestMapping(path = "/day/", method = RequestMethod.GET)
+	public String dayView(Model model,@ModelAttribute("child") User child,
+			@ModelAttribute("date") Long date,@ModelAttribute("projectName") String projectName) {
+		
+			Date sd= new Date();
+			Calendar cd = Calendar.getInstance();
+			sd = new Date(date);
+			cd.setTimeInMillis(date);
+		
+			int jour = cd.get(Calendar.DAY_OF_MONTH);
+			int mois = cd.get(Calendar.MONTH);
+			int annee = cd.get(Calendar.YEAR);
+			
+			model.addAttribute("jour", String.format("%02d", jour));
+			model.addAttribute("mois", String.format("%02d", mois + 1));
+			model.addAttribute("annee", String.format("%04d", annee));
+			
+			model.addAttribute("date", date);
+			
+			model.addAttribute("child", child);
+			
+			model.addAttribute("projectName", projectName);
+			
+			List<Mood> moods = moodCrud.findMoodsByProjectAndDate(projectName,sd);
+			
+			ArrayList<Map<String,Object>> dayInfos = new ArrayList<Map<String,Object>>();
+			
+			int i=0;
+			for (Mood mood : moods) {
+				dayInfos.add(new HashMap<String,Object>());
+				(dayInfos.get(i)).put("satis", mood.getSatisfaction());
+				(dayInfos.get(i)).put("comment", mood.getCommentSat());
+				
+				i++;
+		
+			}
+			
+			model.addAttribute("dayInfos", dayInfos);
+	
+		return "mood/day" ;
 
 	}
 

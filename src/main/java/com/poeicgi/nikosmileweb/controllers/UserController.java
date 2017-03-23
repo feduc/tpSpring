@@ -3,6 +3,7 @@ package com.poeicgi.nikosmileweb.controllers;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -68,21 +69,28 @@ public class UserController extends ViewBaseController<User> {
 
 		model.addAttribute("child", child);
 		model.addAttribute("date", today.getTime());
-		int satisfaction = moodCrud.findSatisfaction(child, today);
+		Integer satisfaction = null;
+		if (moodCrud.findLastVote(child).compareTo(today)<0){ satisfaction = 40;}
+		else{satisfaction=moodCrud.findSatisfaction(child, today);}
 		model.addAttribute("smile", satisfaction);
 
 		List<String> actualProjectsNames = projectCrud.findActualProjectsByUser(child, today);
-
+		ArrayList<Map<String,Object>> actualProjectsInfo = new ArrayList<Map<String,Object>>();
+		
+		int i=0;
 		for (String projectName : actualProjectsNames) {
-			int[] projectxTodaySatis = { moodCrud.countMoodsBySatisfactionForSummary(projectName, today, 1),
-					moodCrud.countMoodsBySatisfactionForSummary(projectName, today, 0),
-					moodCrud.countMoodsBySatisfactionForSummary(projectName, today, -1) };
-			String name = projectName+"TodaySatis";
-			model.addAttribute(name, projectxTodaySatis);
+			actualProjectsInfo.add(new HashMap<String,Object>());
+			(actualProjectsInfo.get(i)).put("name", projectName);
+			(actualProjectsInfo.get(i)).put("Content", moodCrud.countMoodsBySatisfactionForSummary(projectName, today, 1));
+			(actualProjectsInfo.get(i)).put("Normal", moodCrud.countMoodsBySatisfactionForSummary(projectName, today, 0));
+			(actualProjectsInfo.get(i)).put("Mecontent", moodCrud.countMoodsBySatisfactionForSummary(projectName, today, -1));
+			i++;
+	
 		}
 
 		List<String> oldProjectsNames = projectCrud.findOldProjectsByUser(child, today);
 
+		model.addAttribute("actualProjectsInfo", actualProjectsInfo);
 		model.addAttribute("actualProjectsNames", actualProjectsNames);
 		model.addAttribute("oldProjectsNames", oldProjectsNames);
 

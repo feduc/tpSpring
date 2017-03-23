@@ -22,6 +22,9 @@ import com.poeicgi.nikosmileweb.models.security.SecurityUser;
 public class SecurityUserController extends ViewBaseController<SecurityUser> {
 
 	public final static String BASE_URL = "/security";
+	
+	@Autowired
+	private ISecurityUserCrudRepository secuCrud;
 
 	// value is the address to enter in the browser to launch index(), it can be
 	// more than one when writing value = {"/path1", "/path2"}
@@ -45,20 +48,9 @@ public class SecurityUserController extends ViewBaseController<SecurityUser> {
 		@ModelAttribute("child") User child, final BindingResult childBindingResult, final Model model2,
 		final RedirectAttributes redirectAttributes) {
 
-		// recuperation de tous les securityuser renseignes
-		List<SecurityUser> items = getItems();
 		//creation d'un securityuser pour comparaison
-		//il viendra récupérer les données entrées
-		SecurityUser test = new SecurityUser();
-
-		//boucle sur tous les securityuser renseignes
-		for (SecurityUser security : items) {
-			//si le login rentre est egal au login de la bdd alors les
-			//objets sont les memes
-			if (security.getLogin().equals(data.getLogin())) {
-				test = security;
-			}
-		}
+		//rempli par une requete sur le login
+		SecurityUser test = secuCrud.getSecurityTest(data.getLogin());
 
 		//on recupere l'id pour trouver l'user
 		child = userCont.getItem(test.getId());
