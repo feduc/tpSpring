@@ -35,14 +35,16 @@
                     </#if>
                 </div>
                 <div class="col-xs-9 col-sm-9 col-md-9" id="comment">
+                <#if info["comment"]?has_content>
                     <font color="white">${info["comment"]}</font>
+                </#if>
                 </div>
               </div>
               </div>
            </div>
          </#list>
             <div "col-xs-12 col-sm-12 col-md-12">
-              
+
                 <form id= 'formid' action='/mood/week/change' method='get'>
                   <input type='hidden' name='id' value='${child['id']}' />
                   <input type='hidden' name='agency' value='${child['agency']}' />
@@ -57,11 +59,11 @@
                     <button type='submit' style='width:300px' value='submit'>Vue par semaine</button>
                   </div>
                 </form>
-              
-            </div>    
+
+            </div>
         </div>
     </div>
-    
+
  </div>
 
     <footer>
