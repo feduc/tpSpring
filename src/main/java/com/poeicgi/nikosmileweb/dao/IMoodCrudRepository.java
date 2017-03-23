@@ -1,6 +1,7 @@
 package com.poeicgi.nikosmileweb.dao;
 
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
@@ -54,4 +55,21 @@ public interface IMoodCrudRepository extends IBaseCrudRepository<Mood> {
 	int countMoodsBySatisfactionForSummary(@Param("name") String projectName,
 										   @Param("date") Date dateTest,
 										   @Param("satis") int satis);
+
+	@Query("SELECT COUNT(mood) FROM User user "
+			+ "	JOIN user.moods AS mood"
+			+ " JOIN user.projects AS project"
+			+ " WHERE project.name = :name "
+			+ " AND mood.voteDate = :date")
+	Float countMoodsByDate(@Param("name") String projectName,
+										   @Param("date") Date dateTest);
+
+	@Query("SELECT SUM(mood.satisfaction) FROM User user "
+			+ "	JOIN user.moods AS mood"
+			+ " JOIN user.projects AS project"
+			+ " WHERE project.name = :name "
+			+ " AND mood.voteDate = :date")
+	Float sumMoodsByDate(@Param("name") String projectName,
+										   @Param("date") Date dateTest);
+
 }

@@ -16,7 +16,7 @@ html {
 
 .semaine{
     padding: 1em;
-    border: 1px solid #CCC;
+    border: 1px solid #CCCCCC;
     border-radius: 1em;
 }
 
@@ -72,7 +72,7 @@ label > input + img{ /* IMAGE STYLES */
 
 }
 label > input:checked + img{ /* (RADIO CHECKED) IMAGE STYLES */
-  border:2px solid #f00;
+  border:2px solid #ff0000;
     text-align: center;
 
 }
@@ -93,6 +93,22 @@ header {
 
 .projet {
   background-color: #a00000;
+  border-radius: 20px;
+  margin: 30px 0;
+  padding: 50px 0 50px;
+  position: relative;
+  text-align: center; }
+
+  .calendjour {
+  background-color: #a00000;
+  border-radius: 20px;
+  margin: 30px 0;
+  padding: 50px 0 50px;
+  position: relative;
+  text-align: center; }
+
+  .weekend{
+  background-color: #808080;
   border-radius: 20px;
   margin: 30px 0;
   padding: 50px 0 50px;
@@ -152,7 +168,7 @@ header {
   z-index: 10; }
 
 .projet__description {
-  background-color: #fff;
+  background-color: #ffffff;
   border-radius: 20px;
   bottom: 0;
   color: #532E23;
@@ -171,7 +187,7 @@ header {
     opacity: 0.75; }
 
 	.calend__description {
-  background-color: #fff;
+  background-color: #ffffff;
   border-radius: 20px;
   bottom: 0;
   color: #532E23;
