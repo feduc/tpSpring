@@ -22,33 +22,37 @@ public class Project extends DataBaseItem {
 
 	@Transient
 	public static final String TABLE = "projet";
-	
+
+	@Transient
+	public static final String[] FIELDS = { "id", "nom_projet", "verticale", "date_debut", "date_fin", "projet_anonyme",
+			"projet_cache" };
+
 	@Override
-	public ArrayList<Map<String,Object>> getMyFields() {
-		ArrayList<Map<String,Object>> myFields = new ArrayList<Map<String,Object>>();
-		
-		myFields.add(new HashMap<String,Object>());
+	public ArrayList<Map<String, Object>> getMyFields() {
+		ArrayList<Map<String, Object>> myFields = new ArrayList<Map<String, Object>>();
+
+		myFields.add(new HashMap<String, Object>());
 		(myFields.get(0)).put("name", "id");
 		(myFields.get(0)).put("type", "Long");
-		myFields.add(new HashMap<String,Object>());
+		myFields.add(new HashMap<String, Object>());
 		(myFields.get(1)).put("name", "name");
 		(myFields.get(1)).put("type", "String");
-		myFields.add(new HashMap<String,Object>());
+		myFields.add(new HashMap<String, Object>());
 		(myFields.get(2)).put("name", "verticale");
 		(myFields.get(2)).put("type", "String");
-		myFields.add(new HashMap<String,Object>());
+		myFields.add(new HashMap<String, Object>());
 		(myFields.get(3)).put("name", "startDate");
 		(myFields.get(3)).put("type", "Date");
-		myFields.add(new HashMap<String,Object>());
+		myFields.add(new HashMap<String, Object>());
 		(myFields.get(4)).put("name", "endDate");
 		(myFields.get(4)).put("type", "Date");
-		myFields.add(new HashMap<String,Object>());
+		myFields.add(new HashMap<String, Object>());
 		(myFields.get(5)).put("name", "isAnonymous");
 		(myFields.get(5)).put("type", "boolean");
-		myFields.add(new HashMap<String,Object>());
+		myFields.add(new HashMap<String, Object>());
 		(myFields.get(6)).put("name", "isHidden");
 		(myFields.get(6)).put("type", "boolean");
-		
+
 		return myFields;
 	}
 
@@ -159,15 +163,13 @@ public class Project extends DataBaseItem {
 	}
 
 	public Project() {
-		
-		super(Project.TABLE);
+
+		super(Project.TABLE, Project.FIELDS);
 		this.setIsAnonymous(true);
 		this.setIsHidden(false);
-//		for (User user : team) {
-//			user.getProjects().add(this);
-//		}
-
-		
+		// for (User user : team) {
+		// user.getProjects().add(this);
+		// }
 
 	}
 

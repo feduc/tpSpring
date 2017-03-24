@@ -25,6 +25,9 @@ public class User extends DataBaseItem{
 	
 	@Transient
 	public static final String TABLE = "utilisateur";
+	
+	@Transient
+	public static final String[] FIELDS =  {"id", "nom", "prenom", "matricule_CGI", "verticale", "agence"};
 
 	@Override
 	public ArrayList<Map<String,Object>> getMyFields() {
@@ -151,7 +154,7 @@ public class User extends DataBaseItem{
 	}
 	
 	public User() {
-		super(User.TABLE);
+		super(User.TABLE, User.FIELDS);
 	}
 
 	@Override

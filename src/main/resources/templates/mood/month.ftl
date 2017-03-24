@@ -12,7 +12,7 @@
         <img src="/img/BaniereCGI.jpg">
     </header>
     <div align = right><a href ="page de vote.html"><img src="/img/parametre.png" alt="exemple" width="5%"></a>
-                    <a href ="page_accueil.html"><img src="/img/logout.jpg" alt="exemple" width="5%"></a></div>
+                    <a href =/security/login/><img src="/img/logout.jpg" alt="exemple" width="5%"></a></div>
 
   <h1 align="center"> Mois du ${debutmois} / ${mois} au ${finmois} / ${mois} / ${annee}  </h1>
 

@@ -14,11 +14,12 @@ import javax.persistence.Transient;
 public abstract class DataBaseItem {
 	
 	@Transient
-	public String table;
+	public String table;	
+	@Transient
+	public String[] fields;
 	@Transient
 	public ArrayList<Map<String,Object>> myFields = new ArrayList<Map<String,Object>>();
-	@Transient
-	public String[] dbfields;
+
 
 //	public ArrayList<Map<String, Object>> getMyFields() {
 //		return myFields;
@@ -48,8 +49,9 @@ public abstract class DataBaseItem {
 		
 	}
 
-	public DataBaseItem(String table) {
+	public DataBaseItem(String table, String[] fields) {
 		this.table = table;
+		this.fields = fields;
 	}	
 	
 	public abstract ArrayList<Map<String,Object>> getMyFields();

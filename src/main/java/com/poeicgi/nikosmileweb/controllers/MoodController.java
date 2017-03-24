@@ -44,16 +44,6 @@ public class MoodController extends ViewBaseController<Mood> {
 
 	public final static String BASE_URL = "/mood";
 
-	@RequestMapping(path = "/admin/vote/", method = RequestMethod.GET)
-	public String adminVoteGet(Model model, @ModelAttribute User user, @ModelAttribute("child") User child,
-			final BindingResult childBindingResult, final Model model2, final RedirectAttributes redirectAttributes) {
-
-		child = userCrud.findOne(user.getId());
-		redirectAttributes.addAttribute("child", child);
-		return REDIRECT + MoodController.BASE_URL + "/vote";
-
-	}
-
 	// value is the address to enter in the browser to launch index(), it can be
 	// more than one when writing value = {"/path1", "/path2"}
 	@RequestMapping(path = "/vote", method = RequestMethod.GET)
@@ -200,6 +190,7 @@ public class MoodController extends ViewBaseController<Mood> {
 			jour = "Lundi";
 			debutsemaine = cd.get(Calendar.DAY_OF_MONTH);
 			sd = new Date(cd.getTimeInMillis());
+			lundi = new Date(cd.getTimeInMillis());
 			mois = cd.get(Calendar.MONTH);
 			cd.add(Calendar.DATE, 4);
 			finsemaine = cd.get(Calendar.DAY_OF_MONTH);

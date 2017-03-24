@@ -92,7 +92,7 @@
       <div class="col-xs-12 col-sm-8 col-md-8">
          <div class="changeavis">
             <font color = "white"><h1> ${page} </h1> </font>
-                <form action="${path}/create/do" method="POST" id = "renseignement">
+                <form action="${path}/create/do" method="POST" >
                     <#list fields as field>
                         <#if field["name"]=="id">
                         <#elseif field["type"]== "boolean">

@@ -27,6 +27,9 @@ public class Mood extends DataBaseItem {
 
 	@Transient
 	public static final String TABLE = "avis";
+	
+	@Transient
+	public static final String[] FIELDS = { "id", "avis_journee", "date_jour", "date_vote", "texte_jour"};
 
 	@Override
 	public ArrayList<Map<String, Object>> getMyFields() {
@@ -167,7 +170,7 @@ public class Mood extends DataBaseItem {
 	}
 
 	public Mood() {
-		super(Mood.TABLE);
+		super(Mood.TABLE, Mood.FIELDS);
 		this.logDate = new Date();
 	}
 
