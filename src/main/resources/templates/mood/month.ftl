@@ -26,8 +26,8 @@
                     <input type="hidden" name="projectName" value="${projectName}" />
 
                         <button id="nextWeek" type="submit" name="changeMonth" value="next"></button>
-
                 </form>
+
             </div>
   <h1 align="center"> Mois du ${debutmois} / ${mois} au ${finmois} / ${mois} / ${annee}  </h1>
               <div class="col-xs-12 col-sm-1 col-md-12">

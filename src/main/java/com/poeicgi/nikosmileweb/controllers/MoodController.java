@@ -451,7 +451,6 @@ public class MoodController extends ViewBaseController<Mood> {
 			else if (joursem == 4){
 				nomjour = "Mercredi";
 			}
-
 			else if (joursem == 5){
 				nomjour = "Jeudi";
 			}
