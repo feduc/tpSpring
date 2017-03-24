@@ -5,16 +5,21 @@ import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.io.File;
 import java.io.IOException;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.stream.Collectors;
+
+import org.hibernate.mapping.ManyToOne;
 
 import com.poeicgi.nikosmileweb.models.modelbase.DataBaseItem;
 
@@ -29,7 +34,8 @@ public class DumpFields {
 			attributs.add(field.getName());
 		}
 
-		while (superClass.getSuperclass() != DataBaseItem.class && superClass.getSuperclass() != Object.class) {
+		while (superClass.getSuperclass() != DataBaseItem.class
+				&& superClass.getSuperclass() != Object.class) {
 			superClass = superClass.getSuperclass();
 			fields = superClass.getDeclaredFields();
 			for (int i = fields.length - 1; i >= 0; i--) {
@@ -47,13 +53,13 @@ public class DumpFields {
 		Class superClass = klazz;
 
 		fields = superClass.getDeclaredFields();
+
 		for (Field field : fields) {
-
 			attributs.add(field);
-
 		}
 
-		while (superClass.getSuperclass() != DataBaseItem.class && superClass.getSuperclass() != Object.class) {
+		while (superClass.getSuperclass() != Object.class
+				&& superClass.getSuperclass() != Object.class) {
 			superClass = superClass.getSuperclass();
 			fields = superClass.getDeclaredFields();
 			for (int i = fields.length - 1; i >= 0; i--) {
@@ -67,8 +73,10 @@ public class DumpFields {
 	public static <T extends DataBaseItem> Object runGetter(Field field, T o) {
 		// MZ: Find the correct method
 		for (Method method : DumpFields.getGetter(o.getClass())) {
-			if ((method.getName().startsWith("get")) && (method.getName().length() == (field.getName().length() + 3))) {
-				if (method.getName().toLowerCase().endsWith(field.getName().toLowerCase())) {
+			if ((method.getName().startsWith("get"))
+					&& (method.getName().length() == (field.getName().length() + 3))) {
+				if (method.getName().toLowerCase()
+						.endsWith(field.getName().toLowerCase())) {
 					// MZ: Method found, run it
 					try {
 						Object result = method.invoke(o);
@@ -89,7 +97,8 @@ public class DumpFields {
 	public static <T> ArrayList<String> inspectGetter(Class<T> klazz) {
 		ArrayList<String> result = new ArrayList<String>();
 		try {
-			for (PropertyDescriptor propertyDescriptor : Introspector.getBeanInfo(klazz, DataBaseItem.class)
+			for (PropertyDescriptor propertyDescriptor : Introspector
+					.getBeanInfo(klazz, DataBaseItem.class)
 					.getPropertyDescriptors()) {
 
 				result.add(propertyDescriptor.getReadMethod().getName());
@@ -104,7 +113,8 @@ public class DumpFields {
 	public static <T> ArrayList<String> inspectSetter(Class<T> klazz) {
 		ArrayList<String> result = new ArrayList<String>();
 		try {
-			for (PropertyDescriptor propertyDescriptor : Introspector.getBeanInfo(klazz, DataBaseItem.class)
+			for (PropertyDescriptor propertyDescriptor : Introspector
+					.getBeanInfo(klazz, DataBaseItem.class)
 					.getPropertyDescriptors()) {
 
 				result.add(propertyDescriptor.getWriteMethod().getName());
@@ -125,7 +135,8 @@ public class DumpFields {
 	public static <T> ArrayList<Method> getGetter(Class<T> klazz) {
 		ArrayList<Method> result = new ArrayList<Method>();
 		try {
-			for (PropertyDescriptor propertyDescriptor : Introspector.getBeanInfo(klazz, DataBaseItem.class)
+			for (PropertyDescriptor propertyDescriptor : Introspector
+					.getBeanInfo(klazz, DataBaseItem.class)
 					.getPropertyDescriptors()) {
 
 				result.add(propertyDescriptor.getReadMethod());
@@ -146,7 +157,8 @@ public class DumpFields {
 	public static <T> ArrayList<Method> getSetter(Class<T> klazz) {
 		ArrayList<Method> result = new ArrayList<Method>();
 		try {
-			for (PropertyDescriptor propertyDescriptor : Introspector.getBeanInfo(klazz, DataBaseItem.class)
+			for (PropertyDescriptor propertyDescriptor : Introspector
+					.getBeanInfo(klazz, DataBaseItem.class)
 					.getPropertyDescriptors()) {
 
 				result.add(propertyDescriptor.getWriteMethod());
@@ -160,55 +172,147 @@ public class DumpFields {
 
 	public static Map<String, Object> fielder(Object bean) {
 		try {
-			return Arrays.asList(Introspector.getBeanInfo(bean.getClass(), Object.class).getPropertyDescriptors())
+			return Arrays
+					.asList(Introspector.getBeanInfo(bean.getClass(),
+							Object.class).getPropertyDescriptors())
 					.stream()
 					// filter out properties with setters only
 					.filter(pd -> Objects.nonNull(pd.getReadMethod()))
-					.collect(Collectors.toMap(
+					.collect(
+							Collectors.toMap(
 							// bean property name
-							PropertyDescriptor::getName, pd -> { // invoke
-																	// method to
-																	// get value
-								try {
-									Object test = pd.getReadMethod().invoke(bean);
-									if (test == null) {
-										test = "";
-									}
-									return test;
-								} catch (Exception e) {
-									// replace this with better error handling
-									return e;
-								}
-							}));
+									PropertyDescriptor::getName, pd -> { // invoke
+																			// method
+																			// to
+																			// get
+																			// value
+										try {
+											Object test = pd.getReadMethod()
+													.invoke(bean);
+											if (test == null) {
+												test = "";
+											}
+											return test;
+										} catch (Exception e) {
+											// replace this with better error
+											// handling
+											return e;
+										}
+									}));
 		} catch (IntrospectionException e) {
 			// and this, too
 			return Collections.emptyMap();
 		}
 	}
 
-	public static Map<String, Object> orderedFielder(DataBaseItem bean) {
-
-		Map<String, Object> map = DumpFields.fielder(bean);
-
-		String[] fields = bean.dbfields;
-
-		Map<String, Object> returnMap = null;
-
-
-		for (int i = 0; i < fields.length; i++) {
-			for (Map.Entry<String, Object> element : map.entrySet()) {
-				if (element.getKey() == fields[i]) {
-					returnMap.put(element.getKey(), element.getValue());
-				}
-			}
-		}
-		return returnMap;
-	}
-
 	public static <T> ArrayList<Map<String, Object>> listFielder(List<T> items) {
 		ArrayList<Map<String, Object>> listMap = new ArrayList<Map<String, Object>>();
 		for (T item : items) {
 			listMap.add(DumpFields.fielder(item));
+		}
+		return listMap;
+	}
+
+	public static <T> Map<String, Map<String, Object>> fielderAdvance(
+			Object item, Class klazz) {
+		Map<String, Object> fields = DumpFields.fielder(item);
+		Map<String, Map<String, Object>> tempMap = new HashMap<String, Map<String, Object>>();
+		ArrayList<Field> realFields = getFields(klazz);
+		for (Entry<String, Object> field : fields.entrySet()) {
+			Map<String, Object> tempField = new HashMap<String, Object>();
+			tempField.put("value", field.getValue());
+
+			Field realFieldSelected = null;
+
+			for (Field realField : realFields) {
+				if (realField.getName().equals(field.getKey())) {
+					tempField.put("type", realField.getType().getSimpleName());
+					tempField.put("name", realField.getName());
+					tempField.put("isbase", true);
+					realFieldSelected = realField;
+					break;
+				}
+			}
+
+			if (realFieldSelected != null) {
+				if (realFieldSelected
+						.getAnnotation(javax.persistence.ManyToOne.class) != null) {
+					javax.persistence.ManyToOne annotation = realFieldSelected
+							.getAnnotation(javax.persistence.ManyToOne.class);
+					tempField.putIfAbsent("ManyToOne", annotation.targetEntity()
+							.getName());
+					tempField.putIfAbsent("isbase", false);
+
+					if (field.getValue() == "") {
+						Object value = null;
+						for (Field realField : realFields) {
+							if (realField.getName().equals(field.getKey())) {
+								value = DumpFields
+										.createContentsEmpty(realField
+												.getType());
+								tempField.put(
+										"value",
+										fielderAdvance(value,
+												realField.getType()));
+								break;
+							}
+						}
+					} else {
+						for (Field realField : realFields) {
+							if (realField.getName().equals(field.getKey())) {
+								tempField.put(
+										"value",
+										fielderAdvance(field.getValue(),
+												realField.getType()));
+								break;
+							}
+						}
+					}
+				}
+
+				if (realFieldSelected
+						.getAnnotation(javax.persistence.ManyToMany.class) != null) {
+					javax.persistence.ManyToMany annotation = realFieldSelected
+							.getAnnotation(javax.persistence.ManyToMany.class);
+					tempField.putIfAbsent("ManyToMany", annotation.targetEntity()
+							.getName());
+					tempField.putIfAbsent("isbase", false);
+				}
+				if (realFieldSelected
+						.getAnnotation(javax.persistence.OneToMany.class) != null) {
+					javax.persistence.OneToMany annotation = realFieldSelected
+							.getAnnotation(javax.persistence.OneToMany.class);
+					tempField.put("OneToMany", annotation.targetEntity()
+							.getName());
+					tempField.putIfAbsent("isbase", false);
+				}
+				if (realFieldSelected
+						.getAnnotation(javax.persistence.OneToOne.class) != null) {
+					javax.persistence.OneToOne annotation = realFieldSelected
+							.getAnnotation(javax.persistence.OneToOne.class);
+					tempField.put("OneToOne", annotation.targetEntity()
+							.getName());
+					tempField.putIfAbsent("isbase", false);
+					tempField.put(
+							"value",
+							fielderAdvance(field.getValue(), field.getValue()
+									.getClass()));
+				}
+			}
+
+			tempMap.put(field.getKey(), tempField);
+		}
+
+		return tempMap;
+	}
+
+	public static <T> ArrayList<Map<Map<String, Object>, String>> listFielderAdvance(
+			List<T> items, Class klazz) {
+		ArrayList<Map<Map<String, Object>, String>> listMap = new ArrayList<Map<Map<String, Object>, String>>();
+		Map<Map<String, Object>, String> tempMap = new HashMap<Map<String, Object>, String>();
+		for (T item : items) {
+			fielderAdvance(item, klazz);
+			listMap.add(tempMap);
 		}
 		return listMap;
 	}
@@ -223,10 +327,12 @@ public class DumpFields {
 	 * @throws ClassNotFoundException
 	 * @throws IOException
 	 */
-	public static ArrayList<String> getClassesNames(String packageName) throws ClassNotFoundException, IOException {
+	public static ArrayList<String> getClassesNames(String packageName)
+			throws ClassNotFoundException, IOException {
 		ArrayList<String> result = new ArrayList<String>();
 
-		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+		ClassLoader classLoader = Thread.currentThread()
+				.getContextClassLoader();
 		assert classLoader != null;
 		String path = packageName.replace('.', '/');
 		Enumeration<URL> resources = classLoader.getResources(path);
@@ -241,7 +347,7 @@ public class DumpFields {
 		}
 
 		for (Class class1 : classes) {
-			result.add(class1.getSimpleName().replace("ViewController", "").toLowerCase());
+			result.add(class1.getSimpleName());
 		}
 		return result;
 	}
@@ -257,7 +363,8 @@ public class DumpFields {
 	 * @return The classes
 	 * @throws ClassNotFoundException
 	 */
-	private static List<Class> findClasses(File directory, String packageName) throws ClassNotFoundException {
+	private static List<Class> findClasses(File directory, String packageName)
+			throws ClassNotFoundException {
 		List<Class> classes = new ArrayList<Class>();
 		if (!directory.exists()) {
 			return classes;
@@ -266,18 +373,21 @@ public class DumpFields {
 		for (File file : files) {
 			if (file.isDirectory()) {
 				assert !file.getName().contains(".");
-				classes.addAll(findClasses(file, packageName + "." + file.getName()));
+				classes.addAll(findClasses(file,
+						packageName + "." + file.getName()));
 			} else if (file.getName().endsWith(".class")) {
-				classes.add(
-						Class.forName(packageName + '.' + file.getName().substring(0, file.getName().length() - 6)));
+				classes.add(Class.forName(packageName
+						+ '.'
+						+ file.getName().substring(0,
+								file.getName().length() - 6)));
 			}
 		}
 		return classes;
 	}
 
-	public static <T> T createContentsWithId(Integer id, Class<T> clazz) {
+	public static <T> T createContentsWithId(Long id, Class<T> clazz) {
 		try {
-			return clazz.getConstructor(Integer.class).newInstance(id);
+			return clazz.getConstructor(Long.class).newInstance(id);
 		} catch (InstantiationException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
@@ -314,15 +424,20 @@ public class DumpFields {
 	}
 
 	public static boolean isSetter(Method method) {
-		return Modifier.isPublic(method.getModifiers()) && method.getReturnType().equals(void.class)
-				&& method.getParameterTypes().length == 1 && method.getName().matches("^set[A-Z].*");
+		return Modifier.isPublic(method.getModifiers())
+				&& method.getReturnType().equals(void.class)
+				&& method.getParameterTypes().length == 1
+				&& method.getName().matches("^set[A-Z].*");
 	}
 
 	public static boolean isGetter(Method method) {
-		if (Modifier.isPublic(method.getModifiers()) && method.getParameterTypes().length == 0) {
-			if (method.getName().matches("^get[A-Z].*") && !method.getReturnType().equals(void.class))
+		if (Modifier.isPublic(method.getModifiers())
+				&& method.getParameterTypes().length == 0) {
+			if (method.getName().matches("^get[A-Z].*")
+					&& !method.getReturnType().equals(void.class))
 				return true;
-			if (method.getName().matches("^is[A-Z].*") && method.getReturnType().equals(boolean.class))
+			if (method.getName().matches("^is[A-Z].*")
+					&& method.getReturnType().equals(boolean.class))
 				return true;
 		}
 		return false;
@@ -353,8 +468,10 @@ public class DumpFields {
 	public static Method getSetter(Field field) {
 		// MZ: Find the correct method
 		for (Method method : DumpFields.getSetter(field.getDeclaringClass())) {
-			if ((method.getName().startsWith("set")) && (method.getName().length() == (field.getName().length() + 3))) {
-				if (method.getName().toLowerCase().endsWith(field.getName().toLowerCase())) {
+			if ((method.getName().startsWith("set"))
+					&& (method.getName().length() == (field.getName().length() + 3))) {
+				if (method.getName().toLowerCase()
+						.endsWith(field.getName().toLowerCase())) {
 					return method;
 				}
 			}
@@ -372,8 +489,10 @@ public class DumpFields {
 	public static Method getGetter(Field field) {
 		// MZ: Find the correct method
 		for (Method method : DumpFields.getGetter(field.getDeclaringClass())) {
-			if ((method.getName().startsWith("get")) && (method.getName().length() == (field.getName().length() + 3))) {
-				if (method.getName().toLowerCase().endsWith(field.getName().toLowerCase())) {
+			if ((method.getName().startsWith("get"))
+					&& (method.getName().length() == (field.getName().length() + 3))) {
+				if (method.getName().toLowerCase()
+						.endsWith(field.getName().toLowerCase())) {
 					return method;
 				}
 			}

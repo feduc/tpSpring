@@ -21,6 +21,30 @@ import com.poeicgi.nikosmileweb.utils.DumpFields;
 
 public abstract class ViewBaseController<T extends DataBaseItem> extends BaseController<T>{
 
+	protected String basePath;
+
+	protected String basePage;
+
+	protected String createView;
+	protected String createRedirect;
+
+	protected String deleteView;
+	protected String deleteRedirect;
+
+	protected String updateView;
+	protected String updateRedirect;
+
+	protected String showView;
+	protected String showRedirect;
+
+	protected String listView;
+	protected String listRedirect;
+	protected String baseView;
+
+
+
+
+
 	private String baseName;
 	private String baseUrl;
 

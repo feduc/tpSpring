@@ -22,11 +22,15 @@ public class Project extends DataBaseItem {
 
 	@Transient
 	public static final String TABLE = "projet";
-	
+
+	@Transient
+	public static final String[] FIELDS = { "id", "nom_projet", "Chef_de_projet", "verticale", "date_debut", "date_fin",
+		"projet_anonyme", "projet_cache"};
+
 	@Override
 	public ArrayList<Map<String,Object>> getMyFields() {
 		ArrayList<Map<String,Object>> myFields = new ArrayList<Map<String,Object>>();
-		
+
 		myFields.add(new HashMap<String,Object>());
 		(myFields.get(0)).put("name", "id");
 		(myFields.get(0)).put("type", "Long");
@@ -48,7 +52,7 @@ public class Project extends DataBaseItem {
 		myFields.add(new HashMap<String,Object>());
 		(myFields.get(6)).put("name", "isHidden");
 		(myFields.get(6)).put("type", "boolean");
-		
+
 		return myFields;
 	}
 
@@ -159,15 +163,15 @@ public class Project extends DataBaseItem {
 	}
 
 	public Project() {
-		
-		super(Project.TABLE);
+
+		super(Project.TABLE, Project.FIELDS);
 		this.setIsAnonymous(true);
 		this.setIsHidden(false);
 //		for (User user : team) {
 //			user.getProjects().add(this);
 //		}
 
-		
+
 
 	}
 
