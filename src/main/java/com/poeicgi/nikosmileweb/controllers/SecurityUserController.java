@@ -103,20 +103,6 @@ public class SecurityUserController extends AntoineViewBaseController<SecurityUs
 
 	protected final static String PATH_INDEX = PATH_BASE + PATH + index;
 
-	protected final static String PATH_TEAMS = PATH_BASE + PATH
-			+ associationMultiShow;
-	protected final static String PATH_TEAMSLINKS = PATH_BASE + PATH
-			+ associationMultiEdit;
-	protected final static String PATH_TEAMSLINKS_REDIRECT = REDIRECT + PATH
-			+ ROUTE_REDIRECT + PATH + index;
-
-	protected final static String PATH_MOODS = PATH_BASE + PATH
-			+ associationMultiShow;
-	protected final static String PATH_MOODSLINKS = PATH_BASE + PATH
-			+ associationMultiEdit;
-	protected final static String PATH_MOODSLINKS_REDIRECT = REDIRECT
-			+ PATH + ROUTE_REDIRECT + PATH + index;
-
 	protected final static String PATH_SECURITYROLES = PATH_BASE + PATH
 			+ associationMultiShow;
 	protected final static String PATH_SECURITYROLESLINKS = PATH_BASE + PATH

@@ -50,9 +50,6 @@
                     </td>
                 </tr>
             </#list>
-            <input type="hidden"
-               name="${_csrf.parameterName}"
-               value="${_csrf.token}"/>
             <tr>
                 <td>
                     <input id="0" type="hidden"

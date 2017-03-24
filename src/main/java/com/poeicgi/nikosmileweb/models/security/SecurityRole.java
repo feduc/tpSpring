@@ -29,8 +29,8 @@ public class SecurityRole extends DataBaseItem{
 	
 	@ManyToMany
 	@JoinTable(name = "users_securityroles",
-				joinColumns = @JoinColumn(name= "security_id"),
-				inverseJoinColumns = @JoinColumn(name = "role_id"))
+				joinColumns = @JoinColumn(name= "role_id"),
+				inverseJoinColumns = @JoinColumn(name = "security_id"))
 	private Set<SecurityUser> securities;
 	
 	public ArrayList<Map<String,Object>> getMyFields() {
