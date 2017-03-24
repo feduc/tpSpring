@@ -27,7 +27,7 @@ public class User extends DataBaseItem{
 	public static final String TABLE = "utilisateur";
 
 	@Transient
-	public static final String[] FIELDS = { "id", "nom", "prenom", "matricule_CGI", "verticale", "Agence"};
+	public static final String[] FIELDS =  {"id", "nom", "prenom", "matricule_CGI", "verticale", "agence"};
 
 
 	@Override

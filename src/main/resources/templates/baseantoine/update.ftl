@@ -10,9 +10,7 @@
     <h1>${page}</h1>
     <form id="updateForm" action="" method="POST">
         <#include "../includable/formUpdateContent.ftl">
-        <input type="hidden"
-           name="${_csrf.parameterName}"
-           value="${_csrf.token}"/>
+
         <br>
             <input type="submit" value="update"/>
         </br>

@@ -54,6 +54,7 @@ public abstract class DataBaseItem {
 	public DataBaseItem(String table, String[] fields) {
 		this.table = table;
 		this.fields = fields;
+
 	}
 
 	public abstract ArrayList<Map<String,Object>> getMyFields();

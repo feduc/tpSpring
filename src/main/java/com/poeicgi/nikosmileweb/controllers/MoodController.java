@@ -44,16 +44,6 @@ public class MoodController extends ViewBaseController<Mood> {
 
 	public final static String BASE_URL = "/mood";
 
-	@RequestMapping(path = "/admin/vote/", method = RequestMethod.GET)
-	public String adminVoteGet(Model model, @ModelAttribute User user, @ModelAttribute("child") User child,
-			final BindingResult childBindingResult, final Model model2, final RedirectAttributes redirectAttributes) {
-
-		child = userCrud.findOne(user.getId());
-		redirectAttributes.addAttribute("child", child);
-		return REDIRECT + MoodController.BASE_URL + "/vote";
-
-	}
-
 	// value is the address to enter in the browser to launch index(), it can be
 	// more than one when writing value = {"/path1", "/path2"}
 	@RequestMapping(path = "/vote", method = RequestMethod.GET)
@@ -504,16 +494,12 @@ public class MoodController extends ViewBaseController<Mood> {
 				green = 255;
 				blue = 0;
 			}
-
 			}
-
 			days.get(i-1).put("red",red);
 			days.get(i-1).put("green",green);
 			days.get(i-1).put("blue",blue);
 			days.get(i-1).put("med", med);
-
 		}
-
 		model.addAttribute("days",days);
 		model.addAttribute("mois", String.format("%02d", Month+1));
 		model.addAttribute("debutmois", String.format("%02d", dayBeginMonth));
@@ -537,7 +523,7 @@ public class MoodController extends ViewBaseController<Mood> {
 			sd = new Date(date);
 
 			cd.setTime(sd);
-			cd.add(Calendar.DATE, -7);
+			cd.add(Calendar.MONTH, -1);
 			sd = new Date(cd.getTimeInMillis());
 		}
 		else if (changeMonth.equals("next")){
@@ -545,7 +531,7 @@ public class MoodController extends ViewBaseController<Mood> {
 			sd = new Date(date);
 
 			cd.setTime(sd);
-			cd.add(Calendar.DATE, 7);
+			cd.add(Calendar.MONTH, 1);
 			sd = new Date(cd.getTimeInMillis());
 		}
 		else {

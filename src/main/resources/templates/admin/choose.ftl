@@ -91,38 +91,13 @@
       </div>
       <div class="col-xs-12 col-sm-8 col-md-8">
          <div class="changeavis">
-            <font color = "white"><h1> ${page} </h1> </font>
-                <form action="${path}/create/do" method="POST" id = "renseignement">
-                    <#list fields as field>
-                        <#if field["name"]=="id">
-                        <#elseif field["type"]== "boolean">
-                        <font color = "white"><th>${field["name"]} :</th></br></font>
-                            <input type="text" name="${field["name"]}" pattern="(true|false)"
-                                 title="boolean : true/false" required="required"/>
-                                 </br>
-                        <#elseif field["type"] == "Date">
-                        <font color = "white"> <th>${field["name"]} :</th></br></font>
-                      <input type="text" name="${field["name"]}" required="required" title="Date : YYYY/MM/DD HH:MM:SS"
-                                 pattern="[0-9][0-9][0-9][0-9]\/((02\/(0[1-9]|[12][0-9]))|((0[469]|11)\/(0[1-9]|[12][0-9]|30))|((0[13578]|1[02])\/(0[1-9]|[12][0-9]|3[01])))\s([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]"/>
-                        </br>
-                        <#elseif field["type"] == "int">
-                        <font color = "white"> <th>${field["name"]} :</th></br></font>
-                          <input type="text" name="${field["name"]}" pattern="(-?[0-9]+)" title="integer"
-                                  required="required"/>
-                         </br>
-                        <#elseif field["type"] == "Long">
-                        <font color = "white"> <th>${field["name"]} :</th></br></font>
-                            <input type="text" name="${field["name"]}" pattern="(-?[0-9])+" title="integer"
-                                  required="required"/>
-                         </br>
-                        <#else>
-                        <font color = "white"> <th>${field["name"]} :</th></br></font>
-                        <input type="text" name="${field["name"]}" required="required"/>
-                        </br>
-                       </#if>
-                    </#list>
+            <font color = "white"><h1> Choisissez un projet </h1> </font>
+                <form action="admin/choose/" method="GET" >
+                    <font color = "white"> <th>Nom du projet :</th></br></font>
+                    <input type="text" name="projectName" placeholder="entrez le nom du projet"/>
+                    
                </br>
-                <button type="submit" value="submit">Create</button>
+                <button type="submit" value="submit">Chercher</button>
             </form>
              </div>
         </div>

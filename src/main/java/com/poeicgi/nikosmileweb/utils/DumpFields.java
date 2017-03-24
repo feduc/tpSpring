@@ -519,3 +519,4 @@ public class DumpFields {
 		return DBManagerClass;
 	}
 }
+

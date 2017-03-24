@@ -6,18 +6,18 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.Entity;
-import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.poeicgi.nikosmileweb.models.Mood;
 import com.poeicgi.nikosmileweb.models.User;
 import com.poeicgi.nikosmileweb.models.modelbase.DataBaseItem;
 
 @Entity
-@Table(name = "security_role")
+@Table(name= SecurityRole.TABLE)
 public class SecurityRole extends DataBaseItem{
 
 	@Transient
@@ -25,6 +25,8 @@ public class SecurityRole extends DataBaseItem{
 
 	@Transient
 	public static final String[] FIELDS = { "id", "role"};
+
+	private String role;
 
 	public ArrayList<Map<String,Object>> getMyFields() {
 		ArrayList<Map<String,Object>> myFields = new ArrayList<Map<String,Object>>();
@@ -39,8 +41,6 @@ public class SecurityRole extends DataBaseItem{
 		return myFields;
 	}
 
-	private String role;
-
 	@ManyToMany
 	@JoinTable(name = "users_securityroles",
     	joinColumns = @JoinColumn(name = "role_id"),
@@ -50,6 +50,7 @@ public class SecurityRole extends DataBaseItem{
 	/**
 	 * @return the role
 	 */
+
 	public String getRole() {
 		return role;
 	}
@@ -75,12 +76,13 @@ public class SecurityRole extends DataBaseItem{
 		this.securities = securities;
 	}
 
-	public SecurityRole(String table, String role, String[] fields) {
-		super(table, fields);
+	public SecurityRole(String table,String[] fields, String role) {
+		super(table,fields);
+
 		this.role = role;
 	}
 
 	public SecurityRole() {
-		super(TABLE, FIELDS);
+		super(SecurityRole.TABLE, SecurityRole.FIELDS);
 	}
 }

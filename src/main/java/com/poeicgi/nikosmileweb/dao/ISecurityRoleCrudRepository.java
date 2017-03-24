@@ -6,5 +6,5 @@ import com.poeicgi.nikosmileweb.models.security.SecurityRole;
 
 public interface ISecurityRoleCrudRepository extends IBaseCrudRepository<SecurityRole>{
 
-
 }
+

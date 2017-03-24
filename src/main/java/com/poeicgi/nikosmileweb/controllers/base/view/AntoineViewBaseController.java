@@ -10,8 +10,6 @@ import com.poeicgi.nikosmileweb.controllers.base.AntoineBaseController;
 import com.poeicgi.nikosmileweb.models.modelbase.DataBaseItem;
 import com.poeicgi.nikosmileweb.utils.DumpFields;
 
-
-
 public abstract class AntoineViewBaseController<T extends DataBaseItem> extends
 		AntoineBaseController<T> {
 

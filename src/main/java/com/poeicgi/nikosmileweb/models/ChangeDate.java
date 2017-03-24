@@ -21,7 +21,7 @@ public class ChangeDate extends DataBaseItem{
 	public static final String TABLE = "date_modif";
 
 	@Transient
-	public static final String FIELDS[] = { "id", "date_modif"};
+	public static final String[] FIELDS = { "id", "date_modif"};
 
 	@Override
 	public ArrayList<Map<String,Object>> getMyFields() {

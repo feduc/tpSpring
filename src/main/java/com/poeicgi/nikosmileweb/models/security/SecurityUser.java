@@ -26,7 +26,7 @@ public class SecurityUser extends DataBaseItem {
 	public static final String TABLE = "securite";
 
 	@Transient
-	public static final String FIELDS[] = { "id", "mot_de_passe", "statut"};
+	public static final String[] FIELDS =  {"id", "login", "mot_de_passe", "statut", "enable"};
 
 	public ArrayList<Map<String,Object>> getMyFields() {
 		ArrayList<Map<String,Object>> myFields = new ArrayList<Map<String,Object>>();
@@ -67,7 +67,6 @@ public class SecurityUser extends DataBaseItem {
     	inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<SecurityRole> roles;
 
-
 	/**
 	 * @return the login
 	 */
@@ -105,6 +104,22 @@ public class SecurityUser extends DataBaseItem {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public Boolean getEnable() {
+		return enable;
+	}
+
+	public void setEnable(Boolean enable) {
+		this.enable = enable;
+	}
+
+	public Set<SecurityRole> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<SecurityRole> roles) {
+		this.roles = roles;
 	}
 
 	public SecurityUser(String login, String password) {

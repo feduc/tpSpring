@@ -12,10 +12,10 @@
         <img src="/img/BaniereCGI.jpg">
     </header>
     <div align = right><a href ="page de vote.html"><img src="/img/parametre.png" alt="exemple" width="5%"></a>
-                    <a href ="page_accueil.html"><img src="/img/logout.jpg" alt="exemple" width="5%"></a></div>
+                    <a href =/security/login/><img src="/img/logout.jpg" alt="exemple" width="5%"></a></div>
 
               <div class="col-xs-12 col-sm-1 col-md-12">
-                <form action="/mood/week/change" method="GET">
+                <form action="/mood/month/change" method="GET">
                     <input type="hidden" name="id" value="${child["id"]}" />
                     <input type="hidden" name="agency" value="${child["agency"]}" />
                     <input type="hidden" name="firstName" value="${child["firstName"]}" />
@@ -31,7 +31,7 @@
             </div>
   <h1 align="center"> Mois du ${debutmois} / ${mois} au ${finmois} / ${mois} / ${annee}  </h1>
               <div class="col-xs-12 col-sm-1 col-md-12">
-                <form action="/mood/week/change" method="GET">
+                <form action="/mood/month/change" method="GET">
                     <input type="hidden" name="id" value="${child["id"]}" />
                     <input type="hidden" name="agency" value="${child["agency"]}" />
                     <input type="hidden" name="firstName" value="${child["firstName"]}" />

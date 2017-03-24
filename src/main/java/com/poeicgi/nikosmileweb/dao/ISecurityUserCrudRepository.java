@@ -10,9 +10,7 @@ import com.poeicgi.nikosmileweb.models.security.SecurityUser;
 
 public interface ISecurityUserCrudRepository extends IBaseCrudRepository<SecurityUser>{
 
-	@Query("SELECT security FROM SecurityUser security "
-			+ " WHERE security.login = :login ")
-	SecurityUser getSecurityTest(@Param("login") String login);
+	SecurityUser findByLogin(String login);
 
-	
+
 }
