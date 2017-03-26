@@ -177,7 +177,10 @@ public class MoodController extends ViewBaseController<Mood> {
 
 	@RequestMapping(path = "/week", method = RequestMethod.GET)
 	public String weekView(Model model,@ModelAttribute("child") User child,
-			@ModelAttribute("date") Long date,@ModelAttribute("projectName") String projectName) {
+			@ModelAttribute("date") Long date,
+			@ModelAttribute("projectName") String projectName)
+
+	{
 
 		Date sd = new Date(date);
 		Calendar cd = Calendar.getInstance();
@@ -195,6 +198,7 @@ public class MoodController extends ViewBaseController<Mood> {
 		Integer mois = null;
 		Integer mois1 = null;
 		Integer annee = null;
+
 
 		if (cd.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY) {
 			jour = "Lundi";
@@ -418,8 +422,6 @@ public class MoodController extends ViewBaseController<Mood> {
 		Calendar cd = Calendar.getInstance();
 		cd.setTime(sd);
 
-		String jour = "";
-
 		Integer dayBeginMonth = 01;
 		Integer dayEndMonth = cd.getActualMaximum(Calendar.DAY_OF_MONTH);
 		Integer Month = cd.get(Calendar.MONTH);
@@ -431,7 +433,12 @@ public class MoodController extends ViewBaseController<Mood> {
 		int i =0;
 		for (i=1; i<=dayEndMonth ; i++){
 			days.add(new HashMap<String, Object>());
+			cd.set(GregorianCalendar.DAY_OF_MONTH,i);
+			sd = new Date(cd.getTimeInMillis());
+
+			model.addAttribute("date", sd.getTime());
 			days.get(i-1).put("jour", i);
+
 			GregorianCalendar todayTest = new GregorianCalendar();
 
 			todayTest.set(GregorianCalendar.DAY_OF_MONTH, i);
@@ -440,31 +447,47 @@ public class MoodController extends ViewBaseController<Mood> {
 			todayTest.set(GregorianCalendar.YEAR, annee);
 			Integer joursem = todayTest.get(GregorianCalendar.DAY_OF_WEEK);
 
+			days.get(i-1).put("joursem", joursem);
+
+
 			String nomjour = "";
 
 			if (joursem == 2){
 				nomjour = "Lundi";
+				days.get(i-1).put("debutsemaine", i);
+				days.get(i-1).put("finsemaine", i + 4);
 			}
 			else if (joursem == 3){
 				nomjour = "Mardi";
+				days.get(i-1).put("debutsemaine", i - 1);
+				days.get(i-1).put("finsemaine", i + 3);
 			}
 			else if (joursem == 4){
 				nomjour = "Mercredi";
+				days.get(i-1).put("debutsemaine", i - 2);
+				days.get(i-1).put("finsemaine", i + 2);
 			}
 			else if (joursem == 5){
 				nomjour = "Jeudi";
+				days.get(i-1).put("debutsemaine", i - 3);
+				days.get(i-1).put("finsemaine", i + 1);
 			}
 			else if (joursem == 6){
 				nomjour = "Vendredi";
+				days.get(i-1).put("debutsemaine", i - 4);
+				days.get(i-1).put("finsemaine", i);
 			}
 			else if (joursem == 7){
 				nomjour = "Samedi";
+				days.get(i-1).put("debutsemaine", i - 5);
+				days.get(i-1).put("finsemaine", i - 1);
 			}
 			else if (joursem == 1){
 				nomjour = "Dimanche";
+				days.get(i-1).put("debutsemaine", i - 6);
+				days.get(i-1).put("finsemaine", i - 2);
 			}
 
-			days.get(i-1).put("joursem", joursem);
 			days.get(i-1).put("nomjour", nomjour);
 			todayTest.set(GregorianCalendar.HOUR_OF_DAY, 00);
 			todayTest.set(GregorianCalendar.MINUTE, 00);
@@ -537,15 +560,17 @@ public class MoodController extends ViewBaseController<Mood> {
 			sd = new Date(date);
 
 			cd.setTime(sd);
-			cd.add(Calendar.DATE, -7);
+			cd.set(Calendar.DAY_OF_MONTH, 1);
+			cd.add(Calendar.MONTH, -1);
 			sd = new Date(cd.getTimeInMillis());
 		}
 		else if (changeMonth.equals("next")){
 
 			sd = new Date(date);
-
+			Integer dayEndMonth = cd.getActualMaximum(Calendar.DAY_OF_MONTH);
 			cd.setTime(sd);
-			cd.add(Calendar.DATE, 7);
+			cd.add(Calendar.MONTH, 1);
+			cd.set(Calendar.DAY_OF_MONTH, 1);
 			sd = new Date(cd.getTimeInMillis());
 		}
 		else {

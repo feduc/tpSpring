@@ -229,3 +229,27 @@ header {
     background-image: url(/img/arrow_left.png);
     background-size: contain;
 }
+
+#nextMonth {
+    display: block;
+margin-left: auto;
+margin-right: auto;
+    width : 40px;
+    height : 40px;
+    border : none;
+    background-color: #f7f7f7;
+    background-image: url(/img/arrow_right.png);
+    background-size: contain;
+}
+
+#previousMonth {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width : 40px;
+    height : 40px;
+    border : none;
+    background-color: #f7f7f7;
+    background-image: url(/img/arrow_left.png);
+    background-size: contain;
+}
