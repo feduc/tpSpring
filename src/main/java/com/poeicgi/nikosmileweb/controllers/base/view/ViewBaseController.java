@@ -60,6 +60,7 @@ public abstract class ViewBaseController<T extends DataBaseItem> extends BaseCon
 		model.addAttribute("items", DumpFields.listFielder(items));
 		model.addAttribute("fields", fields);
 		model.addAttribute("page", pageName);
+		model.addAttribute("items", DumpFields.listFielder(super.getItems()));
 
 		return "base/list";
 	}
@@ -69,7 +70,7 @@ public abstract class ViewBaseController<T extends DataBaseItem> extends BaseCon
 		return null;
 	}
 
-	@RequestMapping(path = "/{id}/show", method = RequestMethod.GET)
+	@RequestMapping(path = "{id}/show", method = RequestMethod.GET)
 	public String showOne(Model model,@PathVariable long id){
 
 		T item = (T) baseCrud.findOne(id);
@@ -79,6 +80,7 @@ public abstract class ViewBaseController<T extends DataBaseItem> extends BaseCon
 		model.addAttribute("item", DumpFields.fielder(item));
 		model.addAttribute("fields", DumpFields.createContentsEmpty(super.getClazz()).getMyFields());
 		model.addAttribute("page", pageName);
+		model.addAttribute("currentItem", DumpFields.fielder(super.getItem(id)));
 
 		return "base/show";
 	}

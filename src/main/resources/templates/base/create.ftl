@@ -21,7 +21,7 @@
         <div class="col-xs-12 col-sm-4 col-md-4">
          <div class="changeavis">
             <p style="align:center" ><font color="white"><b>Creation/Modification</b></font></p>
-            
+
             <form id= "formid" action="/user/create/" method="get">
             <input type="hidden" name="id" value="${child["id"]}" />
             <input type="hidden" name="agency" value="${child["agency"]}" />
@@ -61,11 +61,11 @@
             <input type="hidden" name="verticale" value="${child["verticale"]}" />
             <input style="width:75%" type="submit" value="Membres d'un projet"/>
             </form>
-            
+
             <hr style= "width:75%"/>
-            
+
             <p style="align:center" ><font color="white"><b>Perso</b></font></p>
-            
+
             <form id= "formid" action="/user/resume/" method="get">
             <input type="hidden" name="id" value="${child["id"]}" />
             <input type="hidden" name="agency" value="${child["agency"]}" />
@@ -124,6 +124,16 @@
                     <#include "../includable/security/securityToken.ftl">
                </br>
                 <button type="submit" value="submit">Create</button>
+            </form>
+
+            <form id= "formid" action="/user/list/" method="get">
+            <input type="hidden" name="id" value="${child["id"]}" />
+            <input type="hidden" name="agency" value="${child["agency"]}" />
+            <input type="hidden" name="firstName" value="${child["firstName"]}" />
+            <input type="hidden" name="lastName" value="${child["lastName"]}" />
+            <input type="hidden" name="registrationCGI" value="${child["registrationCGI"]}" />
+            <input type="hidden" name="verticale" value="${child["verticale"]}" />
+            <input style="width:7%" type="submit" value="Liste"/>
             </form>
              </div>
         </div>

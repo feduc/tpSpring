@@ -10,14 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @Configuration
 @EnableWebSecurity
 @EnableAutoConfiguration
-<<<<<<< HEAD
-@EnableGlobalMethodSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-			http
-=======
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
@@ -25,7 +18,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	protected void configure(HttpSecurity http) throws Exception {
 		//impose that to request anything you need to be authenticated
 		http
->>>>>>> c79c90bbed6d0157adab534d48c89dfab99db84a
+
 				.authorizeRequests()
 				.anyRequest()
 				.authenticated()
@@ -36,12 +29,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 					.passwordParameter("password")
 					.permitAll();
 	}
-<<<<<<< HEAD
-
-
-=======
-	
-	
->>>>>>> c79c90bbed6d0157adab534d48c89dfab99db84a
 
 }

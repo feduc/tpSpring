@@ -27,17 +27,7 @@ public class SecurityRole extends DataBaseItem{
 	public static final String[] FIELDS = { "id", "role"};
 
 	private String role;
-<<<<<<< HEAD
 
-=======
-	
-	@ManyToMany
-	@JoinTable(name = "users_securityroles",
-				joinColumns = @JoinColumn(name= "role_id"),
-				inverseJoinColumns = @JoinColumn(name = "security_id"))
-	private Set<SecurityUser> securities;
-	
->>>>>>> c79c90bbed6d0157adab534d48c89dfab99db84a
 	public ArrayList<Map<String,Object>> getMyFields() {
 		ArrayList<Map<String,Object>> myFields = new ArrayList<Map<String,Object>>();
 

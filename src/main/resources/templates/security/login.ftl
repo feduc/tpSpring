@@ -2,11 +2,8 @@
 <html>
 <head>
   <meta charset="UTF8">
-<<<<<<< HEAD
-  <title>Niko Niko</title>
-=======
+
   <title>Niko Smile</title>
->>>>>>> c79c90bbed6d0157adab534d48c89dfab99db84a
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
       <link rel="stylesheet" href="/css/main.css">
 
@@ -20,15 +17,6 @@
 
   <div id="main">
 
-<<<<<<< HEAD
-    <form action="/login" method="POST">
-        <input type="text" name="username" required="required"/>
-        <input type="password" name="password" required="required"/>
-        <#include "../includable/security/securityToken.ftl">
-        <input type="submit" value="validate"/>
-    </form>
-
-=======
     <form action="/login" method="post">
     <div>
         <label for="login">Login:</label>
@@ -47,7 +35,7 @@
 </form>
 
   </div>
->>>>>>> c79c90bbed6d0157adab534d48c89dfab99db84a
+
 
   <footer>
     <img src="/img/basdepage.jpg">
