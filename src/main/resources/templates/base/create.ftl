@@ -121,6 +121,7 @@
                         </br>
                        </#if>
                     </#list>
+                    <#include "../includable/security/securityToken.ftl">
                </br>
                 <button type="submit" value="submit">Create</button>
             </form>

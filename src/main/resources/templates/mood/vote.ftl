@@ -51,6 +51,7 @@
         <input type="hidden" name="logDate" value="${date?string('yyyy/MM/dd HH:mm:ss')}" />
         <input type="hidden" name="voteDate" value="${voteDate?string('yyyy/MM/dd HH:mm:ss')}" />
         <input type="hidden" name="MoodID" value="${MoodId}" />
+        <#include "../includable/security/securityToken.ftl">
         <div class="button">
             <button type="submit" value="submit">Voter</button>
         </div>
