@@ -28,7 +28,7 @@ public class SecurityController {
 
 	@RequestMapping(path = "/login", method = RequestMethod.GET)
 	public String login() {
-		return "security/login";
+		return "user/login";
 	}
 
 	@RequestMapping(path = "/logout", method = RequestMethod.GET)

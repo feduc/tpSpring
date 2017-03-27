@@ -45,22 +45,17 @@ public class AdminController extends ViewBaseController<User>{
 	}
 	
 	@RequestMapping(path = "/vote/", method = RequestMethod.GET)
-	public String adminVoteGet(Model model, @ModelAttribute User user, @ModelAttribute("child") User child,
-			final BindingResult childBindingResult, final Model model2, final RedirectAttributes redirectAttributes) {
+	public String adminVoteGet(Model model) {
 
-		child = userCrud.findOne(user.getId());
-		redirectAttributes.addAttribute("child", child);
 		return REDIRECT + MoodController.BASE_URL + "/vote";
 
 	}
 	  
 	@RequestMapping(path = "/choose/", method = RequestMethod.GET)
-	public String chooseView(Model model,@ModelAttribute("child") User child,
+	public String chooseView(Model model,
 			@ModelAttribute("projectName") String projectName) {
 
 		List<Project> projects = projectCrud.findProjectByName(projectName);
-
-		model.addAttribute("child", child);
 
 		model.addAttribute("projectName", projectName);
 		

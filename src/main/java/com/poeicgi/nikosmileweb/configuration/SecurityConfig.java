@@ -27,7 +27,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 					.loginPage("/login")
 					.usernameParameter("username")
 					.passwordParameter("password")
-					.permitAll();
+					.permitAll()
+					.defaultSuccessUrl("/security/login/do",true);
 	}
 
 }

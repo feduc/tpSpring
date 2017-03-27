@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.poeicgi.nikosmileweb.controllers.base.view.ViewBaseController;
+import com.poeicgi.nikosmileweb.controllers.security.SecurityController;
 import com.poeicgi.nikosmileweb.dao.IMoodCrudRepository;
 import com.poeicgi.nikosmileweb.dao.IUserCrudRepository;
 import com.poeicgi.nikosmileweb.models.ChangeDate;
@@ -38,6 +39,9 @@ public class MoodController extends ViewBaseController<Mood> {
 
 	@Autowired
 	private ChangeDateController changeCont;
+	
+	@Autowired
+	private SecurityController securityController;
 
 	public MoodController() {
 		super(Mood.class, BASE_URL);
@@ -58,7 +62,9 @@ public class MoodController extends ViewBaseController<Mood> {
 	// value is the address to enter in the browser to launch index(), it can be
 	// more than one when writing value = {"/path1", "/path2"}
 	@RequestMapping(path = "/vote", method = RequestMethod.GET)
-	public String voteView(Model model, @ModelAttribute("child") final User child) {
+	public String voteView(Model model) {
+		
+		User child = securityController.getConnectedUser();
 
 		Long id = 0L;
 		// creation d'une date d'aujourd'hui
@@ -128,8 +134,6 @@ public class MoodController extends ViewBaseController<Mood> {
 
 		model.addAttribute("voteDate", voteDate);
 		model.addAttribute("MoodId", id);
-		// en mode cache on recupere toutes les infos du child associe
-		model.addAttribute("child", child);
 
 		return "mood/vote";
 
@@ -289,8 +293,6 @@ public class MoodController extends ViewBaseController<Mood> {
 
 		model.addAttribute("date", sd.getTime());
 
-		model.addAttribute("child", child);
-
 		model.addAttribute("projectName", projectName);
 
 		int nbChoice = 3;
@@ -330,7 +332,7 @@ public class MoodController extends ViewBaseController<Mood> {
 
 	@RequestMapping(path = "/week/change", method = RequestMethod.GET)
 	public String weekChange(Model model,@ModelAttribute User child,
-			@ModelAttribute("date") Long date,@ModelAttribute("projectName") String projectName,@ModelAttribute("changeWeek") String changeWeek, @ModelAttribute("child") User userChild,
+			@ModelAttribute("date") Long date,@ModelAttribute("projectName") String projectName,@ModelAttribute("changeWeek") String changeWeek,
 			final BindingResult childBindingResult, final Model model2, final RedirectAttributes redirectAttributes) {
 
 			Date sd= new Date();
@@ -363,8 +365,6 @@ public class MoodController extends ViewBaseController<Mood> {
 			sd = new Date(cd.getTimeInMillis());
 		}
 
-		userChild = userCrud.findOne(child.getId());
-		redirectAttributes.addAttribute("child", userChild);
 		redirectAttributes.addAttribute("projectName", projectName);
 		redirectAttributes.addAttribute("date", sd.getTime());
 
@@ -373,7 +373,7 @@ public class MoodController extends ViewBaseController<Mood> {
 	}
 
 	@RequestMapping(path = "/day/", method = RequestMethod.GET)
-	public String dayView(Model model,@ModelAttribute("child") User child,
+	public String dayView(Model model,
 			@ModelAttribute("date") Long date,@ModelAttribute("projectName") String projectName) {
 
 			Date sd= new Date();
@@ -390,8 +390,6 @@ public class MoodController extends ViewBaseController<Mood> {
 			model.addAttribute("annee", String.format("%04d", annee));
 
 			model.addAttribute("date", date);
-
-			model.addAttribute("child", child);
 
 			model.addAttribute("projectName", projectName);
 
@@ -416,7 +414,7 @@ public class MoodController extends ViewBaseController<Mood> {
 	}
 
 	@RequestMapping(path = "/month", method = RequestMethod.GET)
-	public String MonthView(Model model,@ModelAttribute("child") User child,
+	public String MonthView(Model model,
 			@ModelAttribute("date") Long date,@ModelAttribute("projectName") String projectName) {
 
 		Date sd = new Date(date);
@@ -535,8 +533,8 @@ public class MoodController extends ViewBaseController<Mood> {
 	}
 
 	@RequestMapping(path = "/month/change", method = RequestMethod.GET)
-	public String monthChange(Model model,@ModelAttribute User child,
-		@ModelAttribute("date") Long date,@ModelAttribute("projectName") String projectName,@ModelAttribute("changeMonth") String changeMonth, @ModelAttribute("child") User userChild,
+	public String monthChange(Model model,
+		@ModelAttribute("date") Long date,@ModelAttribute("projectName") String projectName,@ModelAttribute("changeMonth") String changeMonth, 
 		final BindingResult childBindingResult, final Model model2, final RedirectAttributes redirectAttributes) {
 
 		Date sd= new Date();
@@ -571,8 +569,6 @@ public class MoodController extends ViewBaseController<Mood> {
 			sd = new Date(cd.getTimeInMillis());
 		}
 
-		userChild = userCrud.findOne(child.getId());
-		redirectAttributes.addAttribute("child", userChild);
 		redirectAttributes.addAttribute("projectName", projectName);
 		redirectAttributes.addAttribute("date", sd.getTime());
 
