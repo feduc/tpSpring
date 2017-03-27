@@ -434,10 +434,11 @@ public class MoodController extends ViewBaseController<Mood> {
 		for (i=1; i<=dayEndMonth ; i++){
 			days.add(new HashMap<String, Object>());
 			cd.set(GregorianCalendar.DAY_OF_MONTH,i);
+
 			sd = new Date(cd.getTimeInMillis());
 
-			model.addAttribute("date", sd.getTime());
 			days.get(i-1).put("jour", i);
+			days.get(i-1).put("date", sd.getTime());
 
 			GregorianCalendar todayTest = new GregorianCalendar();
 
@@ -449,43 +450,28 @@ public class MoodController extends ViewBaseController<Mood> {
 
 			days.get(i-1).put("joursem", joursem);
 
-
 			String nomjour = "";
 
 			if (joursem == 2){
 				nomjour = "Lundi";
-				days.get(i-1).put("debutsemaine", i);
-				days.get(i-1).put("finsemaine", i + 4);
 			}
 			else if (joursem == 3){
 				nomjour = "Mardi";
-				days.get(i-1).put("debutsemaine", i - 1);
-				days.get(i-1).put("finsemaine", i + 3);
 			}
 			else if (joursem == 4){
 				nomjour = "Mercredi";
-				days.get(i-1).put("debutsemaine", i - 2);
-				days.get(i-1).put("finsemaine", i + 2);
 			}
 			else if (joursem == 5){
 				nomjour = "Jeudi";
-				days.get(i-1).put("debutsemaine", i - 3);
-				days.get(i-1).put("finsemaine", i + 1);
 			}
 			else if (joursem == 6){
 				nomjour = "Vendredi";
-				days.get(i-1).put("debutsemaine", i - 4);
-				days.get(i-1).put("finsemaine", i);
 			}
 			else if (joursem == 7){
 				nomjour = "Samedi";
-				days.get(i-1).put("debutsemaine", i - 5);
-				days.get(i-1).put("finsemaine", i - 1);
 			}
 			else if (joursem == 1){
 				nomjour = "Dimanche";
-				days.get(i-1).put("debutsemaine", i - 6);
-				days.get(i-1).put("finsemaine", i - 2);
 			}
 
 			days.get(i-1).put("nomjour", nomjour);
