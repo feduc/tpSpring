@@ -2,6 +2,7 @@ package com.poeicgi.nikosmileweb.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.poeicgi.nikosmileweb.controllers.base.view.AntoineViewBaseController;
 import com.poeicgi.nikosmileweb.controllers.base.view.ViewBaseController;
+import com.poeicgi.nikosmileweb.controllers.security.SecurityController;
 import com.poeicgi.nikosmileweb.dao.ISecurityUserCrudRepository;
 import com.poeicgi.nikosmileweb.models.User;
 import com.poeicgi.nikosmileweb.models.security.SecurityUser;
@@ -34,6 +36,9 @@ public class SecurityUserController extends AntoineViewBaseController<SecurityUs
 	
 	@Autowired
 	private ISecurityUserCrudRepository secuCrud;
+	
+	@Autowired
+	private SecurityController secuController;
 
 	// value is the address to enter in the browser to launch index(), it can be
 	// more than one when writing value = {"/path1", "/path2"}
@@ -52,28 +57,26 @@ public class SecurityUserController extends AntoineViewBaseController<SecurityUs
 
 	@RequestMapping(path = "/login/do", method = RequestMethod.GET)
 
-	public String logIn(Model model, SecurityUser data,
-		// fabrication d'un user et renvoyer dans redirect
-		@ModelAttribute("child") User child, final BindingResult childBindingResult, final Model model2,
-		final RedirectAttributes redirectAttributes) {
+	public String logIn(Model model) {
 
-		//creation d'un securityuser pour comparaison
-		//rempli par une requete sur le login
-		SecurityUser test = secuCrud.getSecurityTest(data.getLogin());
+		User child = secuController.getConnectedUser();	
+		
+		SecurityUser secu = secuCrud.findOne(child.getId());
 
-		//on recupere l'id pour trouver l'user
-		child = userCont.getItem(test.getId());
-		// permet de l'envoyer vers le redirect
-		redirectAttributes.addAttribute("child", child);
+		List<String> roles = securityRoleCrud.getRolesForSecurityUser(secu);
 
-		if ((test.getPassword().equals(data.getPassword())) && (test.getStatus().equals("admin"))) {
+
+		if (roles.contains("admin")) {
 			return REDIRECT+ "/user/create/";
 
-		} else if (test.getPassword().equals(data.getPassword()))  {
+		} else if (roles.contains("modo"))  {
 			return REDIRECT + MoodController.BASE_URL + "/vote";
-		}
- 		else {
- 			return "user/login";
+		} else if (roles.contains("visu"))  {
+			return REDIRECT + MoodController.BASE_URL + "/vote";
+		} else if (roles.contains("user"))  {
+			return REDIRECT + MoodController.BASE_URL + "/vote";
+ 		} else {
+ 			return "base/erreur";
  		}
 	}
 
@@ -81,7 +84,7 @@ public class SecurityUserController extends AntoineViewBaseController<SecurityUs
 	private ISecurityUserCrudRepository securityUserCrud;
 
 	@Autowired
-	private UserController userCont;
+	private IUserCrudRepository userCrud;
 
 //	public SecurityUserController() {
 //		super(SecurityUser.class, BASE_URL);

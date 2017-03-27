@@ -16,16 +16,16 @@
 
   <div id="main">
 
-    <form action="/security/login/do" method="get">
+    <form action="login" method="post">
     <div>
         <label for="login">Login:</label>
-        <input type="text" name="login" required="required"/>
+        <input type="text" name="username" required="required"/>
     </div>
     <div>
         <label for="mdp">Mot de Passe:</label>
         <input type="password" name="password" required="required"/>
     </div>
-
+    <#include "../includable/security/securityToken.ftl">
     <div class="button">
     <button type="submit" value="submit">Log In</button>
     </div>

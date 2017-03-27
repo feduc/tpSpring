@@ -58,7 +58,7 @@ public class UserController extends ViewBaseController<User> {
 
 	// vers la page de resume de l'user pour visu globale
 	@RequestMapping(path = "/resume", method = RequestMethod.GET)
-	public String resumeView(Model model, @ModelAttribute("child") User child) {
+	public String resumeView(Model model) {
 
 		GregorianCalendar todayTest = new GregorianCalendar();
 
@@ -71,9 +71,7 @@ public class UserController extends ViewBaseController<User> {
 
 		Date today = new Date(todayTest.getTimeInMillis());
 
-		//model.addAttribute("child", child);
 		User user = securityController.getConnectedUser();
-		model.addAttribute("child", user);
 		
 		model.addAttribute("date", today.getTime());
 		Integer satisfaction = null;

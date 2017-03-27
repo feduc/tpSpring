@@ -16,7 +16,7 @@
 
   <div id="main">
 
-    <form action="/login" method="post">
+    <form action="login" method="post">
     <div>
         <label for="login">Login:</label>
         <input type="text" name="username" required="required"/>
