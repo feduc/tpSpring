@@ -63,8 +63,13 @@ public class SecurityUser extends DataBaseItem {
 
 	@ManyToMany
 	@JoinTable(name = "users_securityroles",
+<<<<<<< HEAD
     	joinColumns = @JoinColumn(name = "security_id"),
     	inverseJoinColumns = @JoinColumn(name = "role_id"))
+=======
+				joinColumns = @JoinColumn(name= "security_id"),
+				inverseJoinColumns = @JoinColumn(name = "role_id"))
+>>>>>>> c79c90bbed6d0157adab534d48c89dfab99db84a
 	private Set<SecurityRole> roles;
 
 	/**

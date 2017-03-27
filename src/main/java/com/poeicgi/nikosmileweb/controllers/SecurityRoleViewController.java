@@ -72,6 +72,7 @@ public class SecurityRoleViewController extends AntoineViewBaseController<Securi
 	@Autowired
 	ISecurityUserCrudRepository securityCrud;
 
+	@Secured({"ROLE_ADMIN","ROLE_PROJECTLEADER"})
 	@RequestMapping(ROUTE_INDEX)
 	public String projects(Model model) {
 		model.addAttribute("page", "All roles");

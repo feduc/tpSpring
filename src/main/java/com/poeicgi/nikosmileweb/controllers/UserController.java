@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.poeicgi.nikosmileweb.controllers.base.view.ViewBaseController;
+import com.poeicgi.nikosmileweb.controllers.security.SecurityController;
 import com.poeicgi.nikosmileweb.dao.IMoodCrudRepository;
 import com.poeicgi.nikosmileweb.dao.IProjectCrudRepository;
 import com.poeicgi.nikosmileweb.dao.IUserCrudRepository;
@@ -38,6 +39,9 @@ public class UserController extends ViewBaseController<User> {
 		// was in templates.pages return would have to be equal to "pages/toto"
 	}
 
+	@Autowired
+	private SecurityController securityController;
+	
 	@Autowired
 	private IUserCrudRepository userCrud;
 
@@ -67,14 +71,17 @@ public class UserController extends ViewBaseController<User> {
 
 		Date today = new Date(todayTest.getTimeInMillis());
 
-		model.addAttribute("child", child);
+		//model.addAttribute("child", child);
+		User user = securityController.getConnectedUser();
+		model.addAttribute("child", user);
+		
 		model.addAttribute("date", today.getTime());
 		Integer satisfaction = null;
-		if (moodCrud.findLastVote(child).compareTo(today)<0){ satisfaction = 40;}
-		else{satisfaction=moodCrud.findSatisfaction(child, today);}
+		if (moodCrud.findLastVote(user).compareTo(today)<0){ satisfaction = 40;}
+		else{satisfaction=moodCrud.findSatisfaction(user, today);}
 		model.addAttribute("smile", satisfaction);
 
-		List<String> actualProjectsNames = projectCrud.findActualProjectsByUser(child, today);
+		List<String> actualProjectsNames = projectCrud.findActualProjectsByUser(user, today);
 		ArrayList<Map<String,Object>> actualProjectsInfo = new ArrayList<Map<String,Object>>();
 		
 		int i=0;
@@ -88,7 +95,7 @@ public class UserController extends ViewBaseController<User> {
 	
 		}
 
-		List<String> oldProjectsNames = projectCrud.findOldProjectsByUser(child, today);
+		List<String> oldProjectsNames = projectCrud.findOldProjectsByUser(user, today);
 
 		model.addAttribute("actualProjectsInfo", actualProjectsInfo);
 		model.addAttribute("actualProjectsNames", actualProjectsNames);

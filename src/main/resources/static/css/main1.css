@@ -100,16 +100,16 @@ header {
   .calendjour {
   background-color: #a00000;
   border-radius: 20px;
-  margin: 30px 0;
-  padding: 50px 0 50px;
+  margin: 10px 0;
+  padding: 5px 0 10px;
   position: relative;
   text-align: center; }
 
   .weekend{
   background-color: #808080;
   border-radius: 20px;
-  margin: 30px 0;
-  padding: 50px 0 50px;
+  margin: 10px 0;
+  padding: 5px 0 10px;
   position: relative;
   text-align: center; }
 
@@ -222,6 +222,30 @@ header {
 
 #previousWeek {
     margin : 0px;
+    width : 40px;
+    height : 40px;
+    border : none;
+    background-color: #f7f7f7;
+    background-image: url(/img/arrow_left.png);
+    background-size: contain;
+}
+
+#nextMonth {
+    display: block;
+margin-left: auto;
+margin-right: auto;
+    width : 40px;
+    height : 40px;
+    border : none;
+    background-color: #f7f7f7;
+    background-image: url(/img/arrow_right.png);
+    background-size: contain;
+}
+
+#previousMonth {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
     width : 40px;
     height : 40px;
     border : none;
