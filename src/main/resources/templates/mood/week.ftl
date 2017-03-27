@@ -19,7 +19,7 @@
   <div id="main">
      <div class="container">
       <div class="row">
-      
+
           <div class="col-xs-12 col-sm-1 col-md-1">
                 <form action="/mood/week/change" method="GET">
                     <input type="hidden" name="id" value="${child["id"]}" />
@@ -30,7 +30,7 @@
                     <input type="hidden" name="verticale" value="${child["verticale"]}" />
                     <input type="hidden" name="date" value="${date?c}" />
                     <input type="hidden" name="projectName" value="${projectName}" />
-            
+
                         <button id="previousWeek" type="submit" name="changeWeek" value="previous"></button>
 
                 </form>
@@ -141,7 +141,7 @@
                     <input type="hidden" name="verticale" value="${child["verticale"]}" />
                     <input type="hidden" name="date" value="${date?c}" />
                     <input type="hidden" name="projectName" value="${projectName}" />
-                    
+
                         <button id="nextWeek" type="submit" name="changeWeek" value="next"></button>
 
                 </form>
@@ -149,7 +149,7 @@
            </div>
         </div>
         </br>
-        <form id= 'formid' action='/mood/month/change' method='get'>
+        <form id= 'formid' action='/mood/month/' method='get'>
                   <input type='hidden' name='id' value='${child['id']}' />
                   <input type='hidden' name='agency' value='${child['agency']}' />
                   <input type='hidden' name='firstName' value='${child['firstName']}' />
