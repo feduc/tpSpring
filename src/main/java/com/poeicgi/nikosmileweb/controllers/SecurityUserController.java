@@ -33,10 +33,10 @@ import com.poeicgi.nikosmileweb.utils.DumpFields;
 public class SecurityUserController extends AntoineViewBaseController<SecurityUser> {
 
 	public final static String BASE_URL = "/security";
-	
+
 	@Autowired
 	private ISecurityUserCrudRepository secuCrud;
-	
+
 	@Autowired
 	private SecurityController secuController;
 
@@ -59,8 +59,8 @@ public class SecurityUserController extends AntoineViewBaseController<SecurityUs
 
 	public String logIn(Model model) {
 
-		User child = secuController.getConnectedUser();	
-		
+		User child = secuController.getConnectedUser();
+
 		SecurityUser secu = secuCrud.findOne(child.getId());
 
 		List<String> roles = securityRoleCrud.getRolesForSecurityUser(secu);
@@ -90,7 +90,7 @@ public class SecurityUserController extends AntoineViewBaseController<SecurityUs
 //		super(SecurityUser.class, BASE_URL);
 //
 //	}
-	
+
 //	public final static String BASE_URL = "/admin/user";
 
 	public final static String ROUTE_REDIRECT = "security";
@@ -153,7 +153,7 @@ public class SecurityUserController extends AntoineViewBaseController<SecurityUs
 		SecurityUser security = super.getItem(securityId);
 
 		model.addAttribute("page",
-				security.getLogin() 
+				security.getLogin()
 						+ " roles linker");
 		model.addAttribute("fields", SecurityRole.FIELDS);
 		model.addAttribute("currentItem", DumpFields.fielder(security));

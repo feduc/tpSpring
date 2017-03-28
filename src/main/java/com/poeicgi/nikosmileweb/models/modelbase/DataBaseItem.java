@@ -12,11 +12,13 @@ import javax.persistence.Transient;
 
 @MappedSuperclass
 public abstract class DataBaseItem {
-	
+
 	@Transient
-	public String table;	
+	public String table;
+
 	@Transient
 	public String[] fields;
+
 	@Transient
 	public ArrayList<Map<String,Object>> myFields = new ArrayList<Map<String,Object>>();
 
@@ -46,14 +48,15 @@ public abstract class DataBaseItem {
 		}else {
 			this.id = 0;
 		}
-		
+
 	}
 
 	public DataBaseItem(String table, String[] fields) {
 		this.table = table;
 		this.fields = fields;
-	}	
-	
+
+	}
+
 	public abstract ArrayList<Map<String,Object>> getMyFields();
-	
+
 }

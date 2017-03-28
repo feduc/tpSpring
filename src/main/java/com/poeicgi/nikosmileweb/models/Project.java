@@ -167,6 +167,7 @@ public class Project extends DataBaseItem {
 		super(Project.TABLE, Project.FIELDS);
 		this.setIsAnonymous(true);
 		this.setIsHidden(false);
+
 		// for (User user : team) {
 		// user.getProjects().add(this);
 		// }

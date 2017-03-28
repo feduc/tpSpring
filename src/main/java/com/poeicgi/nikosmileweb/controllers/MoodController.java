@@ -38,7 +38,7 @@ public class MoodController extends ViewBaseController<Mood> {
 
 	@Autowired
 	private ChangeDateController changeCont;
-	
+
 	@Autowired
 	private SecurityController securityController;
 
@@ -52,7 +52,7 @@ public class MoodController extends ViewBaseController<Mood> {
 	// more than one when writing value = {"/path1", "/path2"}
 	@RequestMapping(path = "/vote", method = RequestMethod.GET)
 	public String voteView(Model model) {
-		
+
 		User child = securityController.getConnectedUser();
 
 		Long id = 0L;
@@ -520,7 +520,7 @@ public class MoodController extends ViewBaseController<Mood> {
 
 	@RequestMapping(path = "/month/change", method = RequestMethod.GET)
 	public String monthChange(Model model,
-		@ModelAttribute("date") Long date,@ModelAttribute("projectName") String projectName,@ModelAttribute("changeMonth") String changeMonth, 
+		@ModelAttribute("date") Long date,@ModelAttribute("projectName") String projectName,@ModelAttribute("changeMonth") String changeMonth,
 		final BindingResult childBindingResult, final Model model2, final RedirectAttributes redirectAttributes) {
 
 		Date sd= new Date();

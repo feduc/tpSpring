@@ -34,7 +34,9 @@
                         </#if>
                     </#list>
                 </#list>
+
                 <td><a href="${item["id"]}/show">Select</a></td>
+
                 <td>
                     <form action="${item["id"]}/delete" method="POST">
                         <input type="hidden" name="id" value="${item["id"]}">

@@ -21,6 +21,30 @@ import com.poeicgi.nikosmileweb.utils.DumpFields;
 
 public abstract class ViewBaseController<T extends DataBaseItem> extends BaseController<T>{
 
+	protected String basePath;
+
+	protected String basePage;
+
+	protected String createView;
+	protected String createRedirect;
+
+	protected String deleteView;
+	protected String deleteRedirect;
+
+	protected String updateView;
+	protected String updateRedirect;
+
+	protected String showView;
+	protected String showRedirect;
+
+	protected String listView;
+	protected String listRedirect;
+	protected String baseView;
+
+
+
+
+
 	private String baseName;
 	private String baseUrl;
 
@@ -36,6 +60,7 @@ public abstract class ViewBaseController<T extends DataBaseItem> extends BaseCon
 		model.addAttribute("items", DumpFields.listFielder(items));
 		model.addAttribute("fields", fields);
 		model.addAttribute("page", pageName);
+		model.addAttribute("items", DumpFields.listFielder(super.getItems()));
 
 		return "base/list";
 	}
@@ -45,7 +70,7 @@ public abstract class ViewBaseController<T extends DataBaseItem> extends BaseCon
 		return null;
 	}
 
-	@RequestMapping(path = "/{id}/show", method = RequestMethod.GET)
+	@RequestMapping(path = "{id}/show", method = RequestMethod.GET)
 	public String showOne(Model model,@PathVariable long id){
 
 		T item = (T) baseCrud.findOne(id);
@@ -55,6 +80,7 @@ public abstract class ViewBaseController<T extends DataBaseItem> extends BaseCon
 		model.addAttribute("item", DumpFields.fielder(item));
 		model.addAttribute("fields", DumpFields.createContentsEmpty(super.getClazz()).getMyFields());
 		model.addAttribute("page", pageName);
+		model.addAttribute("currentItem", DumpFields.fielder(super.getItem(id)));
 
 		return "base/show";
 	}
@@ -158,8 +184,6 @@ public abstract class ViewBaseController<T extends DataBaseItem> extends BaseCon
 
 		return "base/updateChild";
 	}
-
-
 
 	@Autowired
 	private IBaseCrudRepository<T> baseCrud;

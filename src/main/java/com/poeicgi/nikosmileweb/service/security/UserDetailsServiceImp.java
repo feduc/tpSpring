@@ -13,10 +13,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.poeicgi.nikosmileweb.dao.ISecurityUserCrudRepository;
+
+import com.poeicgi.nikosmileweb.dao.IUserCrudRepository;
+
 import com.poeicgi.nikosmileweb.models.security.SecurityRole;
 import com.poeicgi.nikosmileweb.models.security.SecurityUser;
 
 @Service
+@Transactional(readOnly = true)
 public class UserDetailsServiceImp implements UserDetailsService {
 
 	@Autowired
@@ -41,3 +45,4 @@ public class UserDetailsServiceImp implements UserDetailsService {
 	}
 
 }
+

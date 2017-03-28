@@ -26,6 +26,7 @@ public class SecurityRoleViewController extends AntoineViewBaseController<Securi
 
 	public final static String ROUTE_BASE = "securityrole";
 	public final static String ROUTE_REDIRECT = "admin/securityrole";
+
 	public final static String PATH_BASE = "baseantoine";
 
 	public final static String index = "index";
@@ -36,6 +37,7 @@ public class SecurityRoleViewController extends AntoineViewBaseController<Securi
 	protected final static String associationMultiShow = "associationMutliShow";
 	protected final static String associationMultiEdit = "associationMultiEdit";
 
+
 	protected final static String PATH_INDEX = PATH_BASE + PATH + index;
 
 	protected final static String PATH_USERS = PATH_BASE + PATH + associationMultiShow;
@@ -44,8 +46,10 @@ public class SecurityRoleViewController extends AntoineViewBaseController<Securi
 	protected final static String PATH_USERSLINKS_REDIRECT = REDIRECT + PATH
 			+ ROUTE_REDIRECT + PATH + index;
 
+
 	protected final static String PROJECT_ID = "{securityRoleId}";
 	protected final static String ROUTE_INDEX = index;
+
 
 	protected final static String ROUTE_USERS = PROJECT_ID + PATH + securities;
 	protected final static String ROUTE_USERSLINKS = PROJECT_ID + PATH
@@ -54,6 +58,7 @@ public class SecurityRoleViewController extends AntoineViewBaseController<Securi
 	public SecurityRoleViewController() {
 		super(SecurityRole.class, BASE_URL);
 		this.basePage = index;
+
 		this.createRedirect = REDIRECT + this.basePath + PATH + ROUTE_INDEX;
 		this.deleteRedirect = REDIRECT + this.basePath + PATH + ROUTE_INDEX;
 		this.updateRedirect = REDIRECT + this.basePath + PATH + ROUTE_INDEX;

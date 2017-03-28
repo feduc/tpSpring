@@ -22,12 +22,6 @@
 
           <div class="col-xs-12 col-sm-1 col-md-1">
                 <form action="/mood/week/change" method="GET">
-                    <input type="hidden" name="id" value="${child["id"]}" />
-                    <input type="hidden" name="agency" value="${child["agency"]}" />
-                    <input type="hidden" name="firstName" value="${child["firstName"]}" />
-                    <input type="hidden" name="lastName" value="${child["lastName"]}" />
-                    <input type="hidden" name="registrationCGI" value="${child["registrationCGI"]}" />
-                    <input type="hidden" name="verticale" value="${child["verticale"]}" />
                     <input type="hidden" name="date" value="${date?c}" />
                     <input type="hidden" name="projectName" value="${projectName}" />
 
@@ -38,12 +32,6 @@
           <div class="col-xs-12 col-sm-2 col-md-2">
               <div class="semaine">
                 <form id= 'formid' action='/mood/day/' method='get'>
-                  <input type='hidden' name='id' value='${child['id']}' />
-                  <input type='hidden' name='agency' value='${child['agency']}' />
-                  <input type='hidden' name='firstName' value='${child['firstName']}' />
-                  <input type='hidden' name='lastName' value='${child['lastName']}' />
-                  <input type='hidden' name='registrationCGI' value='${child['registrationCGI']}' />
-                  <input type='hidden' name='verticale' value='${child['verticale']}' />
                   <input type='hidden' name='projectName' value='${projectName}' />
                   <input type='hidden' name='date' value='${lundi?c}'/>
                   <button type='submit' value='submit'>Lundi</button>
@@ -57,12 +45,6 @@
           <div class="col-xs-12 col-sm-2 col-md-2">
               <div class="semaine">
                 <form id= 'formid' action='/mood/day/' method='get'>
-                  <input type='hidden' name='id' value='${child['id']}' />
-                  <input type='hidden' name='agency' value='${child['agency']}' />
-                  <input type='hidden' name='firstName' value='${child['firstName']}' />
-                  <input type='hidden' name='lastName' value='${child['lastName']}' />
-                  <input type='hidden' name='registrationCGI' value='${child['registrationCGI']}' />
-                  <input type='hidden' name='verticale' value='${child['verticale']}' />
                   <input type='hidden' name='projectName' value='${projectName}' />
                   <input type='hidden' name='date' value='${mardi?c}'/>
                   <button type='submit' value='submit'>Mardi</button>
@@ -76,12 +58,6 @@
            <div class="col-xs-12 col-sm-2 col-md-2">
                 <div class="semaine">
                 <form id= 'formid' action='/mood/day/' method='get'>
-                  <input type='hidden' name='id' value='${child['id']}' />
-                  <input type='hidden' name='agency' value='${child['agency']}' />
-                  <input type='hidden' name='firstName' value='${child['firstName']}' />
-                  <input type='hidden' name='lastName' value='${child['lastName']}' />
-                  <input type='hidden' name='registrationCGI' value='${child['registrationCGI']}' />
-                  <input type='hidden' name='verticale' value='${child['verticale']}' />
                   <input type='hidden' name='projectName' value='${projectName}' />
                   <input type='hidden' name='date' value='${mercredi?c}'/>
                   <button type='submit' value='submit'>Mercredi</button>
@@ -95,12 +71,6 @@
             <div class="col-xs-12 col-sm-2 col-md-2">
                 <div class="semaine">
                 <form id= 'formid' action='/mood/day/' method='get'>
-                  <input type='hidden' name='id' value='${child['id']}' />
-                  <input type='hidden' name='agency' value='${child['agency']}' />
-                  <input type='hidden' name='firstName' value='${child['firstName']}' />
-                  <input type='hidden' name='lastName' value='${child['lastName']}' />
-                  <input type='hidden' name='registrationCGI' value='${child['registrationCGI']}' />
-                  <input type='hidden' name='verticale' value='${child['verticale']}' />
                   <input type='hidden' name='projectName' value='${projectName}' />
                   <input type='hidden' name='date' value='${jeudi?c}'/>
                   <button type='submit' value='submit'>Jeudi</button>
@@ -114,12 +84,6 @@
            <div class="col-xs-12 col-sm-2 col-md-2">
                 <div class="semaine">
                 <form id= 'formid' action='/mood/day/' method='get'>
-                  <input type='hidden' name='id' value='${child['id']}' />
-                  <input type='hidden' name='agency' value='${child['agency']}' />
-                  <input type='hidden' name='firstName' value='${child['firstName']}' />
-                  <input type='hidden' name='lastName' value='${child['lastName']}' />
-                  <input type='hidden' name='registrationCGI' value='${child['registrationCGI']}' />
-                  <input type='hidden' name='verticale' value='${child['verticale']}' />
                   <input type='hidden' name='projectName' value='${projectName}' />
                   <input type='hidden' name='date' value='${vendredi?c}'/>
                   <button type='submit' value='submit'>Vendredi</button>
@@ -133,12 +97,6 @@
 
            <div class="col-xs-12 col-sm-1 col-md-1">
                 <form action="/mood/week/change" method="GET">
-                    <input type="hidden" name="id" value="${child["id"]}" />
-                    <input type="hidden" name="agency" value="${child["agency"]}" />
-                    <input type="hidden" name="firstName" value="${child["firstName"]}" />
-                    <input type="hidden" name="lastName" value="${child["lastName"]}" />
-                    <input type="hidden" name="registrationCGI" value="${child["registrationCGI"]}" />
-                    <input type="hidden" name="verticale" value="${child["verticale"]}" />
                     <input type="hidden" name="date" value="${date?c}" />
                     <input type="hidden" name="projectName" value="${projectName}" />
 
@@ -150,12 +108,6 @@
         </div>
         </br>
         <form id= 'formid' action='/mood/month/' method='get'>
-                  <input type='hidden' name='id' value='${child['id']}' />
-                  <input type='hidden' name='agency' value='${child['agency']}' />
-                  <input type='hidden' name='firstName' value='${child['firstName']}' />
-                  <input type='hidden' name='lastName' value='${child['lastName']}' />
-                  <input type='hidden' name='registrationCGI' value='${child['registrationCGI']}' />
-                  <input type='hidden' name='verticale' value='${child['verticale']}' />
                   <input type='hidden' name='projectName' value='${projectName}' />
                   <input type='hidden' name='date' value='${date?c}'/>
                   <input type='hidden' name='changeMonth'/>

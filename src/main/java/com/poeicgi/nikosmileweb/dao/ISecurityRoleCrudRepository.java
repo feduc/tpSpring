@@ -9,6 +9,7 @@ import com.poeicgi.nikosmileweb.dao.base.IBaseCrudRepository;
 import com.poeicgi.nikosmileweb.models.security.SecurityRole;
 import com.poeicgi.nikosmileweb.models.security.SecurityUser;
 
+
 public interface ISecurityRoleCrudRepository extends IBaseCrudRepository<SecurityRole>{
 
 	@Query("SELECT role.role FROM SecurityRole AS role "
@@ -16,3 +17,4 @@ public interface ISecurityRoleCrudRepository extends IBaseCrudRepository<Securit
 			+ " WHERE secu = :secu ")
 	List<String> getRolesForSecurityUser(@Param("secu") SecurityUser secu);
 }
+

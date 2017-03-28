@@ -20,16 +20,17 @@ import com.poeicgi.nikosmileweb.models.modelbase.DataBaseItem;
 @Entity
 @Table(name="securite")
 public class SecurityUser extends DataBaseItem {
-	
+
+
 	@Transient
 	public static final String TABLE = "securite";
-	
+
 	@Transient
 	public static final String[] FIELDS =  {"id", "login", "mot_de_passe", "statut", "enable"};
-	
+
 	public ArrayList<Map<String,Object>> getMyFields() {
 		ArrayList<Map<String,Object>> myFields = new ArrayList<Map<String,Object>>();
-		
+
 		myFields.add(new HashMap<String,Object>());
 		(myFields.get(0)).put("name", "id");
 		(myFields.get(0)).put("type", "Long");
@@ -45,26 +46,29 @@ public class SecurityUser extends DataBaseItem {
 		myFields.add(new HashMap<String,Object>());
 		(myFields.get(4)).put("name", "enable");
 		(myFields.get(4)).put("type", "Boolean");
-		
+
 		return myFields;
 	}
 
 	private String login;
-	
+
 	@Column(name="mot_de_passe")
 	private String password;
-	
+
 	@Column(name="statut")
 	private String status;
-	
+
 	private Boolean enable;
-	
+
+
 	@ManyToMany
 	@JoinTable(name = "users_securityroles",
+
 				joinColumns = @JoinColumn(name= "security_id"),
 				inverseJoinColumns = @JoinColumn(name = "role_id"))
+
 	private Set<SecurityRole> roles;
-	
+
 	/**
 	 * @return the login
 	 */
@@ -95,7 +99,7 @@ public class SecurityUser extends DataBaseItem {
 		this.password = password;
 	}
 
-	
+
 	public String getStatus() {
 		return status;
 	}
@@ -103,7 +107,7 @@ public class SecurityUser extends DataBaseItem {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	
+
 	public Boolean getEnable() {
 		return enable;
 	}

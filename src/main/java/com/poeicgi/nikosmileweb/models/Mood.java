@@ -27,7 +27,7 @@ public class Mood extends DataBaseItem {
 
 	@Transient
 	public static final String TABLE = "avis";
-	
+
 	@Transient
 	public static final String[] FIELDS = { "id", "avis_journee", "date_jour", "date_vote", "texte_jour"};
 

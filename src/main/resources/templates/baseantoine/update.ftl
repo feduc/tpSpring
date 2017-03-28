@@ -10,6 +10,7 @@
     <h1>${page}</h1>
     <form id="updateForm" action="" method="POST">
         <#include "../includable/formUpdateContent.ftl">
+
         <br>
             <input type="submit" value="update"/>
         </br>

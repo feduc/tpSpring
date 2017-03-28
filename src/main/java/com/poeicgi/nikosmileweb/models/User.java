@@ -22,17 +22,18 @@ import com.poeicgi.nikosmileweb.models.modelbase.DataBaseItem;
 @Entity
 @Table(name="utilisateur")
 public class User extends DataBaseItem{
-	
+
 	@Transient
 	public static final String TABLE = "utilisateur";
-	
+
 	@Transient
 	public static final String[] FIELDS =  {"id", "nom", "prenom", "matricule_CGI", "verticale", "agence"};
+
 
 	@Override
 	public ArrayList<Map<String,Object>> getMyFields() {
 		ArrayList<Map<String,Object>> myFields = new ArrayList<Map<String,Object>>();
-		
+
 		myFields.add(new HashMap<String,Object>());
 		(myFields.get(0)).put("name", "id");
 		(myFields.get(0)).put("type", "Long");
@@ -51,34 +52,34 @@ public class User extends DataBaseItem{
 		myFields.add(new HashMap<String,Object>());
 		(myFields.get(5)).put("name", "agency");
 		(myFields.get(5)).put("type", "String");
-		
+
 		return myFields;
 	}
-	
+
 	@Column(name="nom")
 	private String lastName;
-	
+
 	@Column(name="prenom")
 	private String firstName;
-	
+
 	@Column(name="matricule_CGI")
 	private String registrationCGI;
-	
+
 	private String verticale;
-	
+
 	@Column(name="agence")
 	private String agency;
-	
+
 	@OneToMany(targetEntity=Mood.class)
 	private Set<Mood> moods;
-	
+
 	@ManyToMany(targetEntity=Project.class)
 	private Set<Project> projects;
-	
+
 	@OneToOne(targetEntity=SecurityUser.class)
 	private SecurityUser security;
 
-	
+
 	public String getAgency() {
 		return agency;
 	}
@@ -87,7 +88,7 @@ public class User extends DataBaseItem{
 		this.agency = agency;
 	}
 
-	
+
 	public String getVerticale() {
 		return verticale;
 	}
@@ -95,43 +96,43 @@ public class User extends DataBaseItem{
 	public void setVerticale(String verticale) {
 		this.verticale = verticale;
 	}
-	
+
 	public String getLastName() {
 		return lastName;
 	}
-	
+
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	
+
 	public String getFirstName() {
 		return firstName;
 	}
-	
+
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
-	
+
 	public String getRegistrationCGI() {
 		return registrationCGI;
 	}
-	
+
 	public void setRegistrationCGI(String registrationCGI) {
 		this.registrationCGI = registrationCGI;
 	}
-	
+
 	public Set<Project> getProjects() {
 		return projects;
 	}
-	
+
 	public void setProjects(Set<Project> projects) {
 		this.projects =  projects;
 	}
-	
+
 	public Set<Mood> getMoods() {
 		return moods;
 	}
-	
+
 	public void setMoods(Set<Mood> moods) {
 		this.moods = moods;
 	}
@@ -152,7 +153,7 @@ public class User extends DataBaseItem{
 		this.firstName = firstname;
 		this.registrationCGI = registration_cgi;
 	}
-	
+
 	public User() {
 		super(User.TABLE, User.FIELDS);
 	}
@@ -162,8 +163,8 @@ public class User extends DataBaseItem{
 		return "User [lastName=" + lastName + ", firstName=" + firstName + ", registrationCGI=" + registrationCGI
 				+ ", verticale=" + verticale + ", agency=" + agency + "]";
 	}
-	
-	
+
+
 
 }
 

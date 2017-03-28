@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -18,18 +19,18 @@ import com.poeicgi.nikosmileweb.models.security.SecurityUser;
 
 @Controller
 public class SecurityController {
-	
+
 	@Autowired
 	private ISecurityUserCrudRepository secuCrud;
 
 	@Autowired
 	private IUserCrudRepository userCrud;
-	
+
 	@RequestMapping(path = "/login", method = RequestMethod.GET)
 	public String login() {
 		return "user/login";
 	}
-	
+
 	@RequestMapping(path = "/logout", method = RequestMethod.GET)
 	public String logout(HttpServletRequest request, HttpServletResponse response) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -38,7 +39,7 @@ public class SecurityController {
 		}
 		return "redirect:/login?logout";
 	}
-	
+
 	public User getConnectedUser() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		org.springframework.security.core.userdetails.User userDetail = (org.springframework.security.core.userdetails.User) auth.getPrincipal();
