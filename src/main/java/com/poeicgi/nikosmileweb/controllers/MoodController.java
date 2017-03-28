@@ -131,9 +131,8 @@ public class MoodController extends ViewBaseController<Mood> {
 	}
 
 	@RequestMapping(path = "/create/done", method = RequestMethod.POST)
-	public String create(Model model, @ModelAttribute Mood item, @ModelAttribute User child,
-			@ModelAttribute("MoodID") String MoodID, @ModelAttribute("child") User userChild,
-			final BindingResult childBindingResult, final Model model2, final RedirectAttributes redirectAttributes) {
+	public String create(Model model, @ModelAttribute Mood item,
+			@ModelAttribute("MoodID") String MoodID) {
 		Map<String, Object> map = model.asMap();
 
 		Long id = Long.parseLong(MoodID);
@@ -151,7 +150,7 @@ public class MoodController extends ViewBaseController<Mood> {
 
 		insertItem(item);
 
-		User user = userCrud.findOne(child.getId());
+		User user = securityController.getConnectedUser();
 		user.getMoods().add(item);
 		userCrud.save(user);
 		item.setUser(user);
@@ -163,14 +162,12 @@ public class MoodController extends ViewBaseController<Mood> {
 		user.setMoods(list);
 		userCrud.save(user);
 
-		userChild = userCrud.findOne(user.getId());
-		redirectAttributes.addAttribute("child", userChild);
 
 		return REDIRECT + UserController.BASE_URL + "/resume";
 	}
 
 	@RequestMapping(path = "/week", method = RequestMethod.GET)
-	public String weekView(Model model,@ModelAttribute("child") User child,
+	public String weekView(Model model,
 			@ModelAttribute("date") Long date,
 			@ModelAttribute("projectName") String projectName)
 
