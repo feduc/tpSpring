@@ -21,68 +21,32 @@
         <div class="col-xs-12 col-sm-4 col-md-4">
          <div class="changeavis">
             <p style="align:center" ><font color="white"><b>Creation/Modification</b></font></p>
-            
+
             <form id= "formid" action="/user/create/" method="get">
-            <input type="hidden" name="id" value="${child["id"]}" />
-            <input type="hidden" name="agency" value="${child["agency"]}" />
-            <input type="hidden" name="firstName" value="${child["firstName"]}" />
-            <input type="hidden" name="lastName" value="${child["lastName"]}" />
-            <input type="hidden" name="registrationCGI" value="${child["registrationCGI"]}" />
-            <input type="hidden" name="verticale" value="${child["verticale"]}" />
             <input style="width:75%" type="submit" value="Utilisateur"/>
             </form>
 
             <form id= "formid" action="/security/create/" method="get">
-            <input type="hidden" name="id" value="${child["id"]}" />
-            <input type="hidden" name="agency" value="${child["agency"]}" />
-            <input type="hidden" name="firstName" value="${child["firstName"]}" />
-            <input type="hidden" name="lastName" value="${child["lastName"]}" />
-            <input type="hidden" name="registrationCGI" value="${child["registrationCGI"]}" />
-            <input type="hidden" name="verticale" value="${child["verticale"]}" />
             <input style="width:75%" type="submit" value="Login/mdp/status"/>
             </form>
 
             <form id= "formid" action="/project/create/" method="get">
-            <input type="hidden" name="id" value="${child["id"]}" />
-            <input type="hidden" name="agency" value="${child["agency"]}" />
-            <input type="hidden" name="firstName" value="${child["firstName"]}" />
-            <input type="hidden" name="lastName" value="${child["lastName"]}" />
-            <input type="hidden" name="registrationCGI" value="${child["registrationCGI"]}" />
-            <input type="hidden" name="verticale" value="${child["verticale"]}" />
             <input style="width:75%" type="submit" value="Projet"/>
             </form>
 
             <form id= "formid" action="/admin/choose/" method="get">
-            <input type="hidden" name="id" value="${child["id"]}" />
-            <input type="hidden" name="agency" value="${child["agency"]}" />
-            <input type="hidden" name="firstName" value="${child["firstName"]}" />
-            <input type="hidden" name="lastName" value="${child["lastName"]}" />
-            <input type="hidden" name="registrationCGI" value="${child["registrationCGI"]}" />
-            <input type="hidden" name="verticale" value="${child["verticale"]}" />
             <input style="width:75%" type="submit" value="Membres d'un projet"/>
             </form>
-            
+
             <hr style= "width:75%"/>
-            
+
             <p style="align:center" ><font color="white"><b>Perso</b></font></p>
-            
+
             <form id= "formid" action="/user/resume/" method="get">
-            <input type="hidden" name="id" value="${child["id"]}" />
-            <input type="hidden" name="agency" value="${child["agency"]}" />
-            <input type="hidden" name="firstName" value="${child["firstName"]}" />
-            <input type="hidden" name="lastName" value="${child["lastName"]}" />
-            <input type="hidden" name="registrationCGI" value="${child["registrationCGI"]}" />
-            <input type="hidden" name="verticale" value="${child["verticale"]}" />
             <input style="width:75%" type="submit" value="Ma page perso"/>
             </form>
 
             <form id= "formid" action="/mood/vote/" method="get">
-            <input type="hidden" name="id" value="${child["id"]}" />
-            <input type="hidden" name="agency" value="${child["agency"]}" />
-            <input type="hidden" name="firstName" value="${child["firstName"]}" />
-            <input type="hidden" name="lastName" value="${child["lastName"]}" />
-            <input type="hidden" name="registrationCGI" value="${child["registrationCGI"]}" />
-            <input type="hidden" name="verticale" value="${child["verticale"]}" />
             <input style="width:75%" type="submit" value="Voter"/>
             </form>
             <br/>
@@ -95,7 +59,7 @@
                 <form action="admin/choose/" method="GET" >
                     <font color = "white"> <th>Nom du projet :</th></br></font>
                     <input type="text" name="projectName" placeholder="entrez le nom du projet"/>
-                    
+
                </br>
                 <button type="submit" value="submit">Chercher</button>
             </form>

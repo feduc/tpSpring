@@ -52,16 +52,13 @@
                 <font color="white"><p> ${projectName}</p></font>
                 <div style="align:center" id='donutchart${projectName}' style='width: 300px; height: 200px;' ></div>
                 <form id= 'formid' action='/mood/week/change' method='get'>
-                  <input type='hidden' name='id' value='${child['id']}' />
-                  <input type='hidden' name='agency' value='${child['agency']}' />
-                  <input type='hidden' name='firstName' value='${child['firstName']}' />
-                  <input type='hidden' name='lastName' value='${child['lastName']}' />
-                  <input type='hidden' name='registrationCGI' value='${child['registrationCGI']}' />
-                  <input type='hidden' name='verticale' value='${child['verticale']}' />
                   <input type='hidden' name='projectName' value='${projectName}' />
                   <input type='hidden' name='date' value='${date?c}'/>
                   <input type='hidden' name='changeWeek'/>
                   <button type='submit' style='width:300px' value='submit'>Voir</button>
+                      <div>
+        <#include "../includable/security/securityToken.ftl">
+    </div>
                 </form>
               </div>
             </div>
@@ -84,12 +81,9 @@
 
               </br>
               <form id= 'formid' action='/mood/vote/' method='get'>
-                <input type='hidden' name='id' value='${child['id']}' />
-                <input type='hidden' name='agency' value='${child['agency']}' />
-                <input type='hidden' name='firstName' value='${child['firstName']}' />
-                <input type='hidden' name='lastName' value='${child['lastName']}' />
-                <input type='hidden' name='registrationCGI' value='${child['registrationCGI']}' />
-                <input type='hidden' name='verticale' value='${child['verticale']}' />
+                  <div>
+        <#include "../includable/security/securityToken.ftl">
+    </div>
                 <font color='black'><input type='submit' color = 'black' name='Repondre 'style='width:200px'value="Changer d'avis"/>
                 </font>
               </form>
@@ -102,26 +96,19 @@
               <#list oldProjectsNames as projectName>
                     <p> <FONT color='white'>${projectName}</font></p>
                     <form id= 'formid' action='/mood/week/change' method='get'>
-                        <input type='hidden' name='id' value='${child['id']}' />
-                        <input type='hidden' name='agency' value='${child['agency']}' />
-                        <input type='hidden' name='firstName' value='${child['firstName']}' />
-                        <input type='hidden' name='lastName' value='${child['lastName']}' />
-                        <input type='hidden' name='registrationCGI' value='${child['registrationCGI']}' />
-                        <input type='hidden' name='verticale' value='${child['verticale']}' />
-                        <input type='hidden' name='projectName' value='${projectName}' />
                         <input type='hidden' name='date' value='${date?c}'/>
                         <input type='hidden' name='changeWeek'/>
                         <button type='submit' style='width:300px' value='submit'>Voir</button>
+                            <div>
+        <#include "../includable/security/securityToken.ftl">
+    </div>
                     </form>
                     </br>
               </#list>
               <form action='/project/choose' method='get'>
-                <input type='hidden' name='id' value='${child['id']}' />
-                <input type='hidden' name='agency' value='${child['agency']}' />
-                <input type='hidden' name='firstName' value='${child['firstName']}' />
-                <input type='hidden' name='lastName' value='${child['lastName']}' />
-                <input type='hidden' name='registrationCGI' value='${child['registrationCGI']}' />
-                <input type='hidden' name='verticale' value='${child['verticale']}' />
+                  <div>
+        <#include "../includable/security/securityToken.ftl">
+    </div>
                 <button type='submit' style='width:300px' value='submit'>Vers la selection de projet</button>
               </form>
             </div>

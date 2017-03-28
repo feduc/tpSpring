@@ -32,7 +32,6 @@ import com.poeicgi.nikosmileweb.utils.DumpFields;
 @RequestMapping(path = SecurityUserController.BASE_URL)
 public class SecurityUserController extends AntoineViewBaseController<SecurityUser> {
 
-
 	public final static String BASE_URL = "/security";
 
 	@Autowired
@@ -64,9 +63,7 @@ public class SecurityUserController extends AntoineViewBaseController<SecurityUs
 
 		SecurityUser secu = secuCrud.findOne(child.getId());
 
-
 		List<String> roles = securityRoleCrud.getRolesForSecurityUser(secu);
-
 
 
 		if (roles.contains("admin")) {

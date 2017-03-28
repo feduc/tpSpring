@@ -185,8 +185,6 @@ public abstract class ViewBaseController<T extends DataBaseItem> extends BaseCon
 		return "base/updateChild";
 	}
 
-
-
 	@Autowired
 	private IBaseCrudRepository<T> baseCrud;
 

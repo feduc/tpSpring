@@ -17,12 +17,6 @@
     <div class="main-content">
     <div class="body-exercice">
     <form id= "formid" action="/mood/create/done" method="post">
-    <input type="hidden" name="id" value="${child["id"]}" />
-    <input type="hidden" name="agency" value="${child["agency"]}" />
-    <input type="hidden" name="firstName" value="${child["firstName"]}" />
-    <input type="hidden" name="lastName" value="${child["lastName"]}" />
-    <input type="hidden" name="registrationCGI" value="${child["registrationCGI"]}" />
-    <input type="hidden" name="verticale" value="${child["verticale"]}" />
 
         <div class = "bon">
         <label for="bon">
@@ -45,7 +39,7 @@
     </br>
     </br>
 
-        
+
 
       <textarea form = "formid" name="commentSat" id="message" cols="29" rows="2"  placeholder="Un commentaire ?"></textarea>
         <input type="hidden" name="logDate" value="${date?string('yyyy/MM/dd HH:mm:ss')}" />
@@ -56,15 +50,9 @@
             <button type="submit" value="submit">Voter</button>
         </div>
       </form>
-    
-      
+
+
     <form id= "formid" action="/user/resume/" method="get">
-    <input type="hidden" name="id" value="${child["id"]}" />
-    <input type="hidden" name="agency" value="${child["agency"]}" />
-    <input type="hidden" name="firstName" value="${child["firstName"]}" />
-    <input type="hidden" name="lastName" value="${child["lastName"]}" />
-    <input type="hidden" name="registrationCGI" value="${child["registrationCGI"]}" />
-    <input type="hidden" name="verticale" value="${child["verticale"]}" />
     <input type="submit" value="Je ne veux pas voter"/></a>
     </form>
     </br>

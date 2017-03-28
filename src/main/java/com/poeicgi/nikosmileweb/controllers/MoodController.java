@@ -9,7 +9,6 @@ import java.util.Calendar;
 import java.util.Map;
 import java.util.Set;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,7 +38,7 @@ public class MoodController extends ViewBaseController<Mood> {
 
 	@Autowired
 	private ChangeDateController changeCont;
-	
+
 	@Autowired
 	private SecurityController securityController;
 
@@ -49,21 +48,11 @@ public class MoodController extends ViewBaseController<Mood> {
 
 	public final static String BASE_URL = "/mood";
 
-	@RequestMapping(path = "/admin/vote/", method = RequestMethod.GET)
-	public String adminVoteGet(Model model, @ModelAttribute User user, @ModelAttribute("child") User child,
-			final BindingResult childBindingResult, final Model model2, final RedirectAttributes redirectAttributes) {
-
-		child = userCrud.findOne(user.getId());
-		redirectAttributes.addAttribute("child", child);
-		return REDIRECT + MoodController.BASE_URL + "/vote";
-
-	}
-
 	// value is the address to enter in the browser to launch index(), it can be
 	// more than one when writing value = {"/path1", "/path2"}
 	@RequestMapping(path = "/vote", method = RequestMethod.GET)
 	public String voteView(Model model) {
-		
+
 		User child = securityController.getConnectedUser();
 
 		Long id = 0L;
@@ -534,7 +523,7 @@ public class MoodController extends ViewBaseController<Mood> {
 
 	@RequestMapping(path = "/month/change", method = RequestMethod.GET)
 	public String monthChange(Model model,
-		@ModelAttribute("date") Long date,@ModelAttribute("projectName") String projectName,@ModelAttribute("changeMonth") String changeMonth, 
+		@ModelAttribute("date") Long date,@ModelAttribute("projectName") String projectName,@ModelAttribute("changeMonth") String changeMonth,
 		final BindingResult childBindingResult, final Model model2, final RedirectAttributes redirectAttributes) {
 
 		Date sd= new Date();
