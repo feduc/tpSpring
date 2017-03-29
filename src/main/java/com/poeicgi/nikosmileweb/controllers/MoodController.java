@@ -16,11 +16,13 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.poeicgi.nikosmileweb.controllers.base.view.ViewBaseController;
 import com.poeicgi.nikosmileweb.controllers.security.SecurityController;
 import com.poeicgi.nikosmileweb.dao.IMoodCrudRepository;
+import com.poeicgi.nikosmileweb.dao.IProjectCrudRepository;
 import com.poeicgi.nikosmileweb.dao.IUserCrudRepository;
 import com.poeicgi.nikosmileweb.models.ChangeDate;
 import com.poeicgi.nikosmileweb.models.Mood;
@@ -35,6 +37,9 @@ public class MoodController extends ViewBaseController<Mood> {
 
 	@Autowired
 	private IUserCrudRepository userCrud;
+
+	@Autowired
+	private IProjectCrudRepository projectCrud;
 
 	@Autowired
 	private ChangeDateController changeCont;
@@ -132,7 +137,8 @@ public class MoodController extends ViewBaseController<Mood> {
 
 	@RequestMapping(path = "/create/done", method = RequestMethod.POST)
 	public String create(Model model, @ModelAttribute Mood item,
-			@ModelAttribute("MoodID") String MoodID) {
+			@RequestParam("MoodID") String MoodID) {
+
 		Map<String, Object> map = model.asMap();
 
 		Long id = Long.parseLong(MoodID);
@@ -162,12 +168,11 @@ public class MoodController extends ViewBaseController<Mood> {
 		user.setMoods(list);
 		userCrud.save(user);
 
-
 		return REDIRECT + UserController.BASE_URL + "/resume";
 	}
 
 	@RequestMapping(path = "/week", method = RequestMethod.GET)
-	public String weekView(Model model,
+	public String weekView(Model model,@ModelAttribute("child") User child,
 			@ModelAttribute("date") Long date,
 			@ModelAttribute("projectName") String projectName)
 
@@ -190,7 +195,6 @@ public class MoodController extends ViewBaseController<Mood> {
 		Integer mois1 = null;
 		Integer annee = null;
 
-
 		if (cd.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY) {
 			jour = "Lundi";
 			debutsemaine = cd.get(Calendar.DAY_OF_MONTH);
@@ -199,6 +203,7 @@ public class MoodController extends ViewBaseController<Mood> {
 			mois = cd.get(Calendar.MONTH);
 			cd.add(Calendar.DATE, 4);
 			finsemaine = cd.get(Calendar.DAY_OF_MONTH);
+
 		}
 
 		else if (cd.get(Calendar.DAY_OF_WEEK) == Calendar.TUESDAY) {
@@ -266,8 +271,6 @@ public class MoodController extends ViewBaseController<Mood> {
 			cd.add(Calendar.DATE, 4);
 			finsemaine = cd.get(Calendar.DAY_OF_MONTH);
 		}
-
-
 		mois1 = cd.get(Calendar.MONTH);
 		annee = cd.get(Calendar.YEAR);
 		model.addAttribute("date", jour);
@@ -283,35 +286,191 @@ public class MoodController extends ViewBaseController<Mood> {
 
 		int nbChoice = 3;
 
+		Date startDate = projectCrud.findProjectStartDatebyName(projectName);
+		Date endDate = projectCrud.findProjectEndDatebyName(projectName);
+
 		for (int j = 1; j <= 5; j++) {
 			for (int i = 0; i < nbChoice; i++) {
 				String nom = "jour" + j + "satis" + i;
 				int satis = i - (nbChoice / 2);
-				model.addAttribute(nom, moodCrud.countMoodsBySatisfactionForSummary(projectName, sd, satis));
+
+				if(endDate!=null){
+
+					if ((startDate.compareTo(sd) == -1) && (sd.compareTo(endDate))==-1) {
+						model.addAttribute(nom, moodCrud.countMoodsBySatisfactionForSummary(projectName, sd, satis));
+					}
+
+					if ((startDate.compareTo(sd) == 0) || (sd.compareTo(endDate))==0){
+						model.addAttribute(nom, moodCrud.countMoodsBySatisfactionForSummary(projectName, sd, satis));
+					}
+
+					if (startDate.compareTo(sd)  == 1 ||(sd.compareTo(endDate))==1) {
+						model.addAttribute(nom, moodCrud.countMoodsBySatisfactionForSummary(projectName, sd, -2));
+					}
+				}
+				else
+					{
+					if ((startDate.compareTo(sd) == -1)){
+						model.addAttribute(nom, moodCrud.countMoodsBySatisfactionForSummary(projectName, sd, satis));
+					}
+
+					if ((startDate.compareTo(sd) == 0)){
+						model.addAttribute(nom, moodCrud.countMoodsBySatisfactionForSummary(projectName, sd, satis));
+					}
+
+					if (startDate.compareTo(sd)  == 1) {
+						model.addAttribute(nom, moodCrud.countMoodsBySatisfactionForSummary(projectName, sd, -2));
+					}
+					}
 			}
+
 			cd.setTime(sd);
 			cd.add(Calendar.DATE, 1);
 			sd.setTime(cd.getTimeInMillis());
 		}
 
 		model.addAttribute("lundi", lundi.getTime());
-
+		String encourslundi="";
+		if(endDate!=null){
+			if ((startDate.compareTo(lundi) == -1) && (lundi.compareTo(endDate))==-1) {
+				encourslundi="ok";
+			}
+			if ((startDate.compareTo(lundi) == 0) || (lundi.compareTo(endDate))==0){
+				encourslundi="ok";
+			}
+			if (startDate.compareTo(lundi)  == 1 ||(lundi.compareTo(endDate))==1) {
+				encourslundi="PasEnCours";
+			}
+		}
+		else
+			{
+			if ((startDate.compareTo(lundi) == -1)){
+				encourslundi="ok";
+			}
+			if ((startDate.compareTo(lundi) == 0)){
+				encourslundi="ok";
+			}
+			if (startDate.compareTo(lundi)  == 1) {
+				encourslundi="PasEnCours";
+			}
+			}
+		model.addAttribute("encourslundi", encourslundi);
 		cd.setTime(lundi);
 		cd.add(Calendar.DATE, 1);
 		mardi = new Date(cd.getTimeInMillis());
 		model.addAttribute("mardi", mardi.getTime());
+		String encoursmardi="";
+		if(endDate!=null){
+			if ((startDate.compareTo(mardi) == -1) && (mardi.compareTo(endDate))==-1) {
+				encoursmardi="ok";
+			}
+			if ((startDate.compareTo(mardi) == 0) || (mardi.compareTo(endDate))==0){
+				encoursmardi="ok";
+			}
+			if (startDate.compareTo(mardi)  == 1 ||(mardi.compareTo(endDate))==1) {
+				encoursmardi="PasEnCours";
+			}
+		}
+		else
+			{
+			if ((startDate.compareTo(mardi) == -1)){
+				encoursmardi="ok";
+			}
+			if ((startDate.compareTo(mardi) == 0)){
+				encoursmardi="ok";
+			}
+			if (startDate.compareTo(mardi)  == 1) {
+				encoursmardi="PasEnCours";
+			}
+			}
+		model.addAttribute("encoursmardi", encoursmardi);
 
 		cd.add(Calendar.DATE, 1);
 		mercredi = new Date(cd.getTimeInMillis());
 		model.addAttribute("mercredi", mercredi.getTime());
+		String encoursmercredi="";
+		if(endDate!=null){
+			if ((startDate.compareTo(mercredi) == -1) && (mercredi.compareTo(endDate))==-1) {
+				encoursmercredi="ok";
+			}
+			if ((startDate.compareTo(mercredi) == 0) || (mercredi.compareTo(endDate))==0){
+				encoursmercredi="ok";
+			}
+			if (startDate.compareTo(mercredi)  == 1 ||(mercredi.compareTo(endDate))==1) {
+				encoursmercredi="PasEnCours";
+			}
+		}
+		else
+			{
+			if ((startDate.compareTo(mercredi) == -1)){
+				encoursmercredi="ok";
+			}
+			if ((startDate.compareTo(mercredi) == 0)){
+				encoursmercredi="ok";
+			}
+			if (startDate.compareTo(mercredi)  == 1) {
+				encoursmercredi="PasEnCours";
+			}
+			}
+		model.addAttribute("encoursmercredi", encoursmercredi);
 
 		cd.add(Calendar.DATE, 1);
 		jeudi = new Date(cd.getTimeInMillis());
 		model.addAttribute("jeudi", jeudi.getTime());
+		String encoursjeudi="";
+		if(endDate!=null){
+			if ((startDate.compareTo(jeudi) == -1) && (jeudi.compareTo(endDate))==-1) {
+				encoursjeudi="ok";
+			}
+			if ((startDate.compareTo(jeudi) == 0) || (jeudi.compareTo(endDate))==0){
+				encoursjeudi="ok";
+			}
+			if (startDate.compareTo(jeudi)  == 1 ||(jeudi.compareTo(endDate))==1) {
+				encoursjeudi="PasEnCours";
+			}
+		}
+		else
+			{
+			if ((startDate.compareTo(jeudi) == -1)){
+				encoursjeudi="ok";
+			}
+			if ((startDate.compareTo(jeudi) == 0)){
+				encoursjeudi="ok";
+			}
+			if (startDate.compareTo(jeudi)  == 1) {
+				encoursjeudi="PasEnCours";
+			}
+			}
+		model.addAttribute("encoursjeudi", encoursjeudi);
 
 		cd.add(Calendar.DATE, 1);
 		vendredi = new Date(cd.getTimeInMillis());
 		model.addAttribute("vendredi", vendredi.getTime());
+		String encoursvendredi="";
+		if(endDate!=null){
+			if ((startDate.compareTo(vendredi) == -1) && (vendredi.compareTo(endDate))==-1) {
+				encoursvendredi="ok";
+			}
+			if ((startDate.compareTo(vendredi) == 0) || (vendredi.compareTo(endDate))==0){
+				encoursvendredi="ok";
+			}
+			if (startDate.compareTo(vendredi)  == 1 ||(vendredi.compareTo(endDate))==1) {
+				encoursvendredi="PasEnCours";
+			}
+		}
+		else
+			{
+			if ((startDate.compareTo(vendredi) == -1)){
+				encoursvendredi="ok";
+			}
+			if ((startDate.compareTo(vendredi) == 0)){
+				encoursvendredi="ok";
+			}
+			if (startDate.compareTo(vendredi)  == 1) {
+				encoursvendredi="PasEnCours";
+			}
+			}
+		model.addAttribute("encoursvendredi", encoursvendredi);
 
 		return "mood/week";
 	}
@@ -415,15 +574,49 @@ public class MoodController extends ViewBaseController<Mood> {
 
 		ArrayList<Map<String,Object>> days = new ArrayList<Map<String,Object>>();
 
+		Date startDate = projectCrud.findProjectStartDatebyName(projectName);
+		Date endDate = projectCrud.findProjectEndDatebyName(projectName);
+
+		String encours = "";
+
 		int i =0;
 		for (i=1; i<=dayEndMonth ; i++){
 			days.add(new HashMap<String, Object>());
 			cd.set(GregorianCalendar.DAY_OF_MONTH,i);
-
 			sd = new Date(cd.getTimeInMillis());
+
+			if(endDate!=null){
+
+				if ((startDate.compareTo(sd) == -1) && (sd.compareTo(endDate))==-1) {
+					encours="ok";
+				}
+
+				if ((startDate.compareTo(sd) == 0) || (sd.compareTo(endDate))==0){
+					encours="ok";
+				}
+
+				if (startDate.compareTo(sd)  == 1 ||(sd.compareTo(endDate))==1) {
+					encours="PasEnCours";
+				}
+			}
+			else
+				{
+				if ((startDate.compareTo(sd) == -1)){
+					encours="ok";
+				}
+
+				if ((startDate.compareTo(sd) == 0)){
+					encours="ok";
+				}
+
+				if (startDate.compareTo(sd)  == 1) {
+					encours="PasEnCours";
+				}
+				}
 
 			days.get(i-1).put("jour", i);
 			days.get(i-1).put("date", sd.getTime());
+			days.get(i-1).put("encours",encours);
 
 			GregorianCalendar todayTest = new GregorianCalendar();
 
@@ -506,8 +699,9 @@ public class MoodController extends ViewBaseController<Mood> {
 			days.get(i-1).put("blue",blue);
 			days.get(i-1).put("med", med);
 
-		}
 
+		}
+		model.addAttribute("encours",encours);
 		model.addAttribute("days",days);
 		model.addAttribute("mois", String.format("%02d", Month+1));
 		model.addAttribute("debutmois", String.format("%02d", dayBeginMonth));

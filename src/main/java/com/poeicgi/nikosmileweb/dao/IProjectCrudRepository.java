@@ -30,4 +30,12 @@ public interface IProjectCrudRepository extends IBaseCrudRepository<Project>{
 				+ " WHERE project.name like %:name% ")
 		List<Project> findProjectByName(@Param("name") String name);
 
+		@Query("SELECT project.startDate FROM Project project "
+				+ " WHERE project.name = :name ")
+		Date findProjectStartDatebyName(@Param("name") String name);
+
+		@Query("SELECT project.endDate FROM Project project "
+				+ " WHERE project.name = :name ")
+		Date findProjectEndDatebyName(@Param("name") String name);
+
 }

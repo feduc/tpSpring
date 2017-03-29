@@ -48,12 +48,10 @@
             <div "col-xs-12 col-sm-12 col-md-12">
 
                 <form id= 'formid' action='/mood/week/change' method='get'>
-                  <input type='hidden' name='id' value='${child['id']}' />
-                  <input type='hidden' name='agency' value='${child['agency']}' />
-                  <input type='hidden' name='firstName' value='${child['firstName']}' />
-                  <input type='hidden' name='lastName' value='${child['lastName']}' />
-                  <input type='hidden' name='registrationCGI' value='${child['registrationCGI']}' />
-                  <input type='hidden' name='verticale' value='${child['verticale']}' />
+
+                    <div>
+                        <#include "../includable/security/securityToken.ftl">
+                    </div>
                   <input type='hidden' name='projectName' value='${projectName}' />
                   <input type='hidden' name='date' value='${date?c}'/>
                   <input type='hidden' name='changeWeek'/>

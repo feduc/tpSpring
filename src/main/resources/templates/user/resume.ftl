@@ -57,8 +57,8 @@
                   <input type='hidden' name='changeWeek'/>
                   <button type='submit' style='width:300px' value='submit'>Voir</button>
                       <div>
-        <#include "../includable/security/securityToken.ftl">
-    </div>
+                            <#include "../includable/security/securityToken.ftl">
+                      </div>
                 </form>
               </div>
             </div>
@@ -81,9 +81,9 @@
 
               </br>
               <form id= 'formid' action='/mood/vote/' method='get'>
-                  <div>
-        <#include "../includable/security/securityToken.ftl">
-    </div>
+                    <div>
+                        <#include "../includable/security/securityToken.ftl">
+                    </div>
                 <font color='black'><input type='submit' color = 'black' name='Repondre 'style='width:200px'value="Changer d'avis"/>
                 </font>
               </form>
@@ -97,18 +97,19 @@
                     <p> <FONT color='white'>${projectName}</font></p>
                     <form id= 'formid' action='/mood/week/change' method='get'>
                         <input type='hidden' name='date' value='${date?c}'/>
+                        <input type='hidden' name='projectName' value='${projectName}' />
                         <input type='hidden' name='changeWeek'/>
                         <button type='submit' style='width:300px' value='submit'>Voir</button>
                             <div>
-        <#include "../includable/security/securityToken.ftl">
-    </div>
+                                <#include "../includable/security/securityToken.ftl">
+                            </div>
                     </form>
                     </br>
               </#list>
               <form action='/project/choose' method='get'>
-                  <div>
-        <#include "../includable/security/securityToken.ftl">
-    </div>
+                    <div>
+                        <#include "../includable/security/securityToken.ftl">
+                    </div>
                 <button type='submit' style='width:300px' value='submit'>Vers la selection de projet</button>
               </form>
             </div>

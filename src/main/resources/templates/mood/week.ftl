@@ -31,11 +31,17 @@
           </div>
           <div class="col-xs-12 col-sm-2 col-md-2">
               <div class="semaine">
-                <form id= 'formid' action='/mood/day/' method='get'>
-                  <input type='hidden' name='projectName' value='${projectName}' />
-                  <input type='hidden' name='date' value='${lundi?c}'/>
-                  <button type='submit' value='submit'>Lundi</button>
+               <#if encourslundi == "ok">
+                    <form id= 'formid' action='/mood/day/' method='get'>
+                      <input type='hidden' name='projectName' value='${projectName}' />
+                      <input type='hidden' name='date' value='${lundi?c}'/>
+                      <button type='submit' value='submit'>Lundi</button>
+                    </form>
+                <#else>
+                <form>
+                <button type='button' value='submit'>Lundi</button>
                 </form>
+                </#if>
                 </br>
                 <img src="/img/niko-vert-fond blanc.png" width="50%"> ${jour1satis2} <br/>
                 <img src="/img/niko-jaune-fond blanc.png" width="50%"> ${jour1satis1} <br/>
@@ -44,11 +50,17 @@
            </div>
           <div class="col-xs-12 col-sm-2 col-md-2">
               <div class="semaine">
+               <#if encoursmardi == "ok">
                 <form id= 'formid' action='/mood/day/' method='get'>
                   <input type='hidden' name='projectName' value='${projectName}' />
                   <input type='hidden' name='date' value='${mardi?c}'/>
                   <button type='submit' value='submit'>Mardi</button>
                 </form>
+                <#else>
+                <form>
+                <button type='button' value='submit'>Mardi</button>
+                </form>
+                </#if>
                 </br>
                 <img src="/img/niko-vert-fond blanc.png" width="50%"> ${jour2satis2} <br/>
                 <img src="/img/niko-jaune-fond blanc.png" width="50%"> ${jour2satis1} <br/>
@@ -57,11 +69,17 @@
            </div>
            <div class="col-xs-12 col-sm-2 col-md-2">
                 <div class="semaine">
+                <#if encoursmercredi == "ok">
                 <form id= 'formid' action='/mood/day/' method='get'>
                   <input type='hidden' name='projectName' value='${projectName}' />
                   <input type='hidden' name='date' value='${mercredi?c}'/>
                   <button type='submit' value='submit'>Mercredi</button>
                 </form>
+                <#else>
+                <form>
+                <button type='button' value='submit'>Mercredi</button>
+                </form>
+                </#if>
                 </br>
                 <img src="/img/niko-vert-fond blanc.png" width="50%"> ${jour3satis2} <br/>
                 <img src="/img/niko-jaune-fond blanc.png" width="50%"> ${jour3satis1} <br/>
@@ -70,11 +88,17 @@
            </div>
             <div class="col-xs-12 col-sm-2 col-md-2">
                 <div class="semaine">
+                 <#if encoursjeudi == "ok">
                 <form id= 'formid' action='/mood/day/' method='get'>
                   <input type='hidden' name='projectName' value='${projectName}' />
                   <input type='hidden' name='date' value='${jeudi?c}'/>
                   <button type='submit' value='submit'>Jeudi</button>
                 </form>
+                <#else>
+                <form>
+                <button type='button' value='submit'>Jeudi</button>
+                </form>
+                </#if>
                 </br>
                 <img src="/img/niko-vert-fond blanc.png" width="50%"> ${jour4satis2} <br/>
                 <img src="/img/niko-jaune-fond blanc.png" width="50%"> ${jour4satis1} <br/>
@@ -83,11 +107,17 @@
            </div>
            <div class="col-xs-12 col-sm-2 col-md-2">
                 <div class="semaine">
+                 <#if encoursvendredi == "ok">
                 <form id= 'formid' action='/mood/day/' method='get'>
                   <input type='hidden' name='projectName' value='${projectName}' />
                   <input type='hidden' name='date' value='${vendredi?c}'/>
                   <button type='submit' value='submit'>Vendredi</button>
                 </form>
+                <#else>
+                <form>
+                 <button style = color:"red" type='button' value='submit'>Vendredi</button>
+                </form>
+                </#if>
                 </br>
                 <img src="/img/niko-vert-fond blanc.png" width="50%"> ${jour5satis2} <br/>
                 <img src="/img/niko-jaune-fond blanc.png" width="50%"> ${jour5satis1} <br/>
@@ -113,6 +143,14 @@
                   <input type='hidden' name='changeMonth'/>
                   <div style="text-align: center">
                     <button type='submit' style='width:300px' value='submit'>Vue par mois</button>
+                  </div>
+        </form>
+       <form id= 'formid' action='/user/resume/' method='get'>
+                  <input type='hidden' name='projectName' value='${projectName}' />
+                  <input type='hidden' name='date' value='${date?c}'/>
+                  <input type='hidden' name='changeMonth'/>
+                  <div style="text-align: center">
+                    <button type='submit' style='width:300px' value='submit'>Retour au resumé</button>
                   </div>
         </form>
     </div>
