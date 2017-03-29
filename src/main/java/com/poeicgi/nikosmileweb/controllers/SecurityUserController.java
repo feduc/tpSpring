@@ -3,18 +3,19 @@ package com.poeicgi.nikosmileweb.controllers;
 import java.util.List;
 
 
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import com.poeicgi.nikosmileweb.controllers.base.view.AntoineViewBaseController;
 
+import com.poeicgi.nikosmileweb.controllers.base.view.AntoineViewBaseController;
 import com.poeicgi.nikosmileweb.controllers.security.SecurityController;
 import com.poeicgi.nikosmileweb.dao.ISecurityUserCrudRepository;
 import com.poeicgi.nikosmileweb.models.User;
 import com.poeicgi.nikosmileweb.models.security.SecurityUser;
-
 import com.poeicgi.nikosmileweb.dao.ISecurityRoleCrudRepository;
 import com.poeicgi.nikosmileweb.dao.IUserCrudRepository;
 
@@ -38,6 +39,7 @@ public class SecurityUserController extends AntoineViewBaseController<SecurityUs
 	}
 
 	@RequestMapping(path = "/login/do", method = RequestMethod.GET)
+
 	public String logIn(Model model) {
 
 		User child = secuController.getConnectedUser();
@@ -47,14 +49,14 @@ public class SecurityUserController extends AntoineViewBaseController<SecurityUs
 		List<String> roles = securityRoleCrud.getRolesForSecurityUser(secu);
 
 
-		if (roles.contains("admin")) {
+		if (roles.contains("ROLE_ADMIN")) {
 			return REDIRECT+ "/user/create/";
 
-		} else if (roles.contains("modo"))  {
+		} else if (roles.contains("ROLE_MODO"))  {
 			return REDIRECT + MoodController.BASE_URL + "/vote";
-		} else if (roles.contains("visu"))  {
+		} else if (roles.contains("ROLE_VISU"))  {
 			return REDIRECT + MoodController.BASE_URL + "/vote";
-		} else if (roles.contains("user"))  {
+		} else if (roles.contains("ROLE_USER"))  {
 			return REDIRECT + MoodController.BASE_URL + "/vote";
  		} else {
  			return "base/erreur";

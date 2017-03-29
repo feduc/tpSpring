@@ -49,7 +49,7 @@ public abstract class ViewBaseController<T extends DataBaseItem> extends BaseCon
 	private String baseName;
 	private String baseUrl;
 
-	@Secured("admin")
+	@Secured("ROLE_ADMIN")
 	@RequestMapping(path = "/list/", method = RequestMethod.GET)
 	public String list(Model model) {
 
@@ -67,7 +67,7 @@ public abstract class ViewBaseController<T extends DataBaseItem> extends BaseCon
 		return "base/list";
 	}
 
-	@Secured("admin")
+	@Secured("ROLE_ADMIN")
 	@RequestMapping(path = "{id}/show", method = RequestMethod.GET)
 	public String showOne(Model model,@PathVariable long id){
 
@@ -83,7 +83,7 @@ public abstract class ViewBaseController<T extends DataBaseItem> extends BaseCon
 		return "base/show";
 	}
 
-	@Secured({"admin", "modo"})
+	@Secured({"ROLE_ADMIN", "ROLE_MODO"})
 	@RequestMapping(path = "/{id}/update", method = RequestMethod.GET)
 	public String updateView(Model model,@PathVariable long id){
 
@@ -99,7 +99,7 @@ public abstract class ViewBaseController<T extends DataBaseItem> extends BaseCon
 		return "base/update";
 	}
 
-	@Secured("admin")
+	@Secured("ROLE_ADMIN")
 	@RequestMapping(path = "/{id}/delete", method = RequestMethod.GET)
 	public String deleteView(Model model,@PathVariable long id){
 
@@ -115,7 +115,7 @@ public abstract class ViewBaseController<T extends DataBaseItem> extends BaseCon
 		return "base/delete";
 	}
 
-	@Secured({"admin", "modo"})
+	@Secured({"ROLE_ADMIN", "ROLE_MODO"})
 	@RequestMapping(path = "/create/", method = RequestMethod.GET)
 	public String createView(Model model){
 
@@ -128,7 +128,7 @@ public abstract class ViewBaseController<T extends DataBaseItem> extends BaseCon
 		return "base/create";
 	}
 
-	@Secured({"admin", "modo"})
+	@Secured({"ROLE_ADMIN", "ROLE_MODO"})
 	@RequestMapping(path = "/create/do", method = RequestMethod.POST)
 	public String create(Model model, T item){
 
@@ -143,7 +143,7 @@ public abstract class ViewBaseController<T extends DataBaseItem> extends BaseCon
 		return super.REDIRECT+baseUrl +"/list/";
 	}
 
-	@Secured({"admin", "modo"})
+	@Secured({"ROLE_ADMIN", "ROLE_MODO"})
 	@RequestMapping(path = "/{id}/update/do", method = RequestMethod.POST)
 	public String update(Model model, T item){
 
@@ -158,7 +158,7 @@ public abstract class ViewBaseController<T extends DataBaseItem> extends BaseCon
 		return super.REDIRECT+baseUrl +"/list/";
 	}
 
-	@Secured("admin")
+	@Secured("ROLE_ADMIN")
 	@RequestMapping(path = "/{id}/delete/do", method = RequestMethod.POST)
 	public String delete(Model model, T item){
 
@@ -173,7 +173,7 @@ public abstract class ViewBaseController<T extends DataBaseItem> extends BaseCon
 		return super.REDIRECT+baseUrl +"/list/";
 	}
 
-	@Secured("admin")
+	@Secured("ROLE_ADMIN")
 	@RequestMapping(path = "/{id}/update/{child}", method = RequestMethod.GET)
 	public String updateChildView(Model model,@PathVariable String child,@PathVariable Long id){
 
