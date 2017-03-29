@@ -21,44 +21,16 @@
       <#include "../includable/adminNav.ftl">
       <div class="col-xs-12 col-sm-8 col-md-8">
          <div class="changeavis">
-            <font color = "white"><h1> Choisissez un projet </h1> </font>
-                <form action="/admin/choose" method="GET" >
+            <font color = "white"><h1> Choisissez un utilisateur </h1> </font>
+                <form action="admin/choose/" method="GET" >
                     <font color = "white"> <th>Nom du projet :</th></br></font>
-                    <input type="text" name="projectName" placeholder="entrez le nom du projet" value="${projectName}"/>
+                    <input type="text" name="userRegistration" placeholder="entrez le matricule de l'utilisateur"/>
 
                </br>
                 <button type="submit" value="submit">Chercher</button>
             </form>
              </div>
         </div>
-      <div class="col-xs-12 col-sm-8 col-md-8">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Nom du projet</th>
-                    <th>Date de début</th>
-                    <th>Date de fin</th>
-                </tr>
-            </thead>
-            <tbody>
-                <#if projects??>
-                <#list projects as project>
-                    <tr>
-                        <td>
-                            <form action="/admin/${project["id"]}/members" method ="GET">
-                            <input type="submit" name = "projectName" value="${project["name"]}"/>
-                            </form>
-                        </td>
-                        <td>${project["startDate"]}</td>
-                        <#if project["endDate"]??>
-                            <td>${project["endDate"]}</td>
-                        </#if>
-                    </tr>
-                </#list>
-                </#if>
-            </tbody>
-        </table>
-      </div>
       </div>
       </div>
  <footer>

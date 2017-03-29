@@ -27,7 +27,7 @@ public interface IProjectCrudRepository extends IBaseCrudRepository<Project>{
 		List<String> findOldProjectsByUser(@Param("user") User user, @Param("date") Date dateTest);
 
 		@Query("SELECT project FROM Project project "
-				+ " WHERE project.name like %:name% ")
-		List<Project> findProjectByName(@Param("name") String name);
+				+ " WHERE project.name like :name ")
+		List<Project> findProjectsByName(@Param("name") String name);
 
 }

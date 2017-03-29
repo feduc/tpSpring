@@ -11,7 +11,7 @@
         <img src="/img/BaniereCGI.jpg">
     </header>
 <div align = right><a href ="page de vote.html"><img src="/img/parametre.png" alt="exemple" width="5%"></a>
-                    <a href =/logout><img src="/img/logout.jpg" alt="exemple" width="5%"></a></div>
+                    <a href =/security/login/><img src="/img/logout.jpg" alt="exemple" width="5%"></a></div>
   <h1 align="center"> Page d'administration</h1>
 
   <div id="main">
@@ -22,7 +22,7 @@
       <div class="col-xs-12 col-sm-8 col-md-8">
          <div class="changeavis">
             <font color = "white"><h1> ${page} </h1> </font>
-                <form action="${path}/create/do" method="POST" id = "renseignement">
+                <form action="${path}/create/do" method="POST" >
                     <#list fields as field>
                         <#if field["name"]=="id">
                         <#elseif field["type"]== "boolean">
@@ -51,22 +51,10 @@
                         </br>
                        </#if>
                     </#list>
-                    <#include "../includable/security/securityToken.ftl">
                </br>
                 <button type="submit" value="submit">Create</button>
-
-                    <div>
-        <#include "../includable/security/securityToken.ftl">
-    </div>
             </form>
-
-            <form id= "formid" action="/user/list/" method="get">
-    <div>
-        <#include "../includable/security/securityToken.ftl">
-    </div>
-            <input style="width:7%" type="submit" value="Liste"/>
-            </form>
-            </div>
+             </div>
         </div>
       </div>
       </div>

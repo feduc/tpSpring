@@ -16,6 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.poeicgi.nikosmileweb.controllers.base.view.ViewBaseController;
@@ -132,8 +133,7 @@ public class MoodController extends ViewBaseController<Mood> {
 
 	@RequestMapping(path = "/create/done", method = RequestMethod.POST)
 	public String create(Model model, @ModelAttribute Mood item,
-			@ModelAttribute("MoodID") String MoodID) {
-		Map<String, Object> map = model.asMap();
+			@RequestParam("MoodID") String MoodID) {
 
 		Long id = Long.parseLong(MoodID);
 

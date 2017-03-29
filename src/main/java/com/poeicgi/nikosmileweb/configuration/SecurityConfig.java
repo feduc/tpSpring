@@ -18,7 +18,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	protected void configure(HttpSecurity http) throws Exception {
 		//impose that to request anything you need to be authenticated
 		http
-
 				.authorizeRequests()
 				.anyRequest()
 				.authenticated()
@@ -29,6 +28,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 					.passwordParameter("password")
 					.permitAll()
 					.defaultSuccessUrl("/security/login/do",true);
+//			.and()
+//				.authorizeRequests().anyRequest().anonymous()
+//				.antMatchers("/demo","/demo/**")
+//				.permitAll();
 	}
 
 }

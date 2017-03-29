@@ -18,113 +18,78 @@
 
 <div class="container">
       <div class="row">
-        <div class="col-xs-12 col-sm-4 col-md-4">
-         <div class="changeavis">
-            <p style="align:center" ><font color="white"><b>Creation/Modification</b></font></p>
-            
-            <form id= "formid" action="/user/create/" method="get">
-            <input type="hidden" name="id" value="${child["id"]}" />
-            <input type="hidden" name="agency" value="${child["agency"]}" />
-            <input type="hidden" name="firstName" value="${child["firstName"]}" />
-            <input type="hidden" name="lastName" value="${child["lastName"]}" />
-            <input type="hidden" name="registrationCGI" value="${child["registrationCGI"]}" />
-            <input type="hidden" name="verticale" value="${child["verticale"]}" />
-            <input style="width:75%" type="submit" value="Utilisateur"/>
-            </form>
-
-            <form id= "formid" action="/security/create/" method="get">
-            <input type="hidden" name="id" value="${child["id"]}" />
-            <input type="hidden" name="agency" value="${child["agency"]}" />
-            <input type="hidden" name="firstName" value="${child["firstName"]}" />
-            <input type="hidden" name="lastName" value="${child["lastName"]}" />
-            <input type="hidden" name="registrationCGI" value="${child["registrationCGI"]}" />
-            <input type="hidden" name="verticale" value="${child["verticale"]}" />
-            <input style="width:75%" type="submit" value="Login/mdp/status"/>
-            </form>
-
-            <form id= "formid" action="/project/create/" method="get">
-            <input type="hidden" name="id" value="${child["id"]}" />
-            <input type="hidden" name="agency" value="${child["agency"]}" />
-            <input type="hidden" name="firstName" value="${child["firstName"]}" />
-            <input type="hidden" name="lastName" value="${child["lastName"]}" />
-            <input type="hidden" name="registrationCGI" value="${child["registrationCGI"]}" />
-            <input type="hidden" name="verticale" value="${child["verticale"]}" />
-            <input style="width:75%" type="submit" value="Projet"/>
-            </form>
-
-            <form id= "formid" action="/admin/choose/" method="get">
-            <input type="hidden" name="id" value="${child["id"]}" />
-            <input type="hidden" name="agency" value="${child["agency"]}" />
-            <input type="hidden" name="firstName" value="${child["firstName"]}" />
-            <input type="hidden" name="lastName" value="${child["lastName"]}" />
-            <input type="hidden" name="registrationCGI" value="${child["registrationCGI"]}" />
-            <input type="hidden" name="verticale" value="${child["verticale"]}" />
-            <input style="width:75%" type="submit" value="Membres d'un projet"/>
-            </form>
-            
-            <hr style= "width:75%"/>
-            
-            <p style="align:center" ><font color="white"><b>Perso</b></font></p>
-            
-            <form id= "formid" action="/user/resume/" method="get">
-            <input type="hidden" name="id" value="${child["id"]}" />
-            <input type="hidden" name="agency" value="${child["agency"]}" />
-            <input type="hidden" name="firstName" value="${child["firstName"]}" />
-            <input type="hidden" name="lastName" value="${child["lastName"]}" />
-            <input type="hidden" name="registrationCGI" value="${child["registrationCGI"]}" />
-            <input type="hidden" name="verticale" value="${child["verticale"]}" />
-            <input style="width:75%" type="submit" value="Ma page perso"/>
-            </form>
-
-            <form id= "formid" action="/mood/vote/" method="get">
-            <input type="hidden" name="id" value="${child["id"]}" />
-            <input type="hidden" name="agency" value="${child["agency"]}" />
-            <input type="hidden" name="firstName" value="${child["firstName"]}" />
-            <input type="hidden" name="lastName" value="${child["lastName"]}" />
-            <input type="hidden" name="registrationCGI" value="${child["registrationCGI"]}" />
-            <input type="hidden" name="verticale" value="${child["verticale"]}" />
-            <input style="width:75%" type="submit" value="Voter"/>
-            </form>
-            <br/>
-
-          </div>
-      </div>
+      <#include "../includable/adminNav.ftl">
       <div class="col-xs-12 col-sm-8 col-md-8">
          <div class="changeavis">
-            <font color = "white"><h1> ${page} </h1> </font>
-                <form action="${path}/create/do" method="POST" >
-                    <#list fields as field>
-                        <#if field["name"]=="id">
-                        <#elseif field["type"]== "boolean">
-                        <font color = "white"><th>${field["name"]} :</th></br></font>
-                            <input type="text" name="${field["name"]}" pattern="(true|false)"
-                                 title="boolean : true/false" required="required"/>
-                                 </br>
-                        <#elseif field["type"] == "Date">
-                        <font color = "white"> <th>${field["name"]} :</th></br></font>
-                      <input type="text" name="${field["name"]}" required="required" title="Date : YYYY/MM/DD HH:MM:SS"
-                                 pattern="[0-9][0-9][0-9][0-9]\/((02\/(0[1-9]|[12][0-9]))|((0[469]|11)\/(0[1-9]|[12][0-9]|30))|((0[13578]|1[02])\/(0[1-9]|[12][0-9]|3[01])))\s([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]"/>
-                        </br>
-                        <#elseif field["type"] == "int">
-                        <font color = "white"> <th>${field["name"]} :</th></br></font>
-                          <input type="text" name="${field["name"]}" pattern="(-?[0-9]+)" title="integer"
-                                  required="required"/>
-                         </br>
-                        <#elseif field["type"] == "Long">
-                        <font color = "white"> <th>${field["name"]} :</th></br></font>
-                            <input type="text" name="${field["name"]}" pattern="(-?[0-9])+" title="integer"
-                                  required="required"/>
-                         </br>
-                        <#else>
-                        <font color = "white"> <th>${field["name"]} :</th></br></font>
-                        <input type="text" name="${field["name"]}" required="required"/>
-                        </br>
-                       </#if>
-                    </#list>
+            <font color = "white"><h1> Choisissez un projet </h1> </font>
+                <form action="/admin/${projectId}/members" method="GET" >
+                    <font color = "white"> <th>Nom de l'utilisateur :</th></br></font>
+                    <input type="hidden" name="projectName" value="${projectName}"/>
+                    <input type="text" name="userRegistration" placeholder="entrez le matricule de l'utilisateur" value="${userRegistration}"/>
+
                </br>
-                <button type="submit" value="submit">Create</button>
+                <button type="submit" value="submit">Chercher</button>
             </form>
              </div>
+        </div>
+      <div class="col-xs-12 col-sm-8 col-md-8 pull-right">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Prénom</th>
+                    <th>Nom</th>
+                    <th>Matricule</th>
+                    <th>Ajouter au Projet</th>
+                </tr>
+            </thead>
+            <tbody>
+                <#if users??>
+                <#list users as user>
+                    <tr>
+                        <td>${user["firstName"]}</td>
+                        <td>${user["lastName"]}</td>
+                        <td>${user["registrationCGI"]}</td>
+                        <td>
+                            <form action="/admin/${projectId}/members/${user["id"]}/add" method ="POST">
+                            <input type="hidden" value="${projectName}"/>
+                            <input type="submit" value="Ajouter"/>
+                            </form>
+                        </td>
+                    </tr>
+                </#list>
+                </#if>
+            </tbody>
+        </table>
+      </div>
+      <div class="col-xs-12 col-sm-8 col-md-8 pull-right">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Prénom</th>
+                    <th>Nom</th>
+                    <th>Matricule</th>
+                    <th>Retirer du Projet</th>
+                </tr>
+            </thead>
+            <tbody>
+                <#if members??>
+                <#list members as member>
+                    <tr>
+                        <td>${member["firstName"]}</td>
+                        <td>${member["lastName"]}</td>
+                        <td>${member["registrationCGI"]}</td>
+                        <td>
+                            <form action="/admin/${projectId}/members/${member["id"]}/remove" method ="POST">
+                            <input type="hidden" value="${projectName}"/>
+                            <input type="submit" value="Retirer"/>
+                            </form>
+                        </td>
+                    </tr>
+                </#list>
+                </#if>
+            </tbody>
+        </table>
+      </div>
         </div>
       </div>
       </div>
