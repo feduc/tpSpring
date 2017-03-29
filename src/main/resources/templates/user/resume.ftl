@@ -107,9 +107,11 @@
                     </br>
               </#list>
               <form action='/project/choose' method='get'>
+
                     <div>
                         <#include "../includable/security/securityToken.ftl">
                     </div>
+                <input type='hidden' name='date' value='${date?c}'/>
                 <button type='submit' style='width:300px' value='submit'>Vers la selection de projet</button>
               </form>
             </div>

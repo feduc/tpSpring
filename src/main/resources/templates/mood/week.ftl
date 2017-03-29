@@ -39,7 +39,7 @@
                     </form>
                 <#else>
                 <form>
-                <button type='button' value='submit'>Lundi</button>
+                <button style = "background-color:red ; font-weight:bold; color:white"type='button' value='submit'>Lundi</button>
                 </form>
                 </#if>
                 </br>
@@ -58,7 +58,7 @@
                 </form>
                 <#else>
                 <form>
-                <button type='button' value='submit'>Mardi</button>
+                <button style = "background-color:red ; font-weight:bold; color:white"type='button' value='submit'>Mardi</button>
                 </form>
                 </#if>
                 </br>
@@ -77,7 +77,7 @@
                 </form>
                 <#else>
                 <form>
-                <button type='button' value='submit'>Mercredi</button>
+                <button style = "background-color:red ; font-weight:bold; color:white"type='button' value='submit'>Mercredi</button>
                 </form>
                 </#if>
                 </br>
@@ -96,7 +96,7 @@
                 </form>
                 <#else>
                 <form>
-                <button type='button' value='submit'>Jeudi</button>
+                <button style = "background-color:red ; font-weight:bold; color:white"type='button' value='submit'>Jeudi</button>
                 </form>
                 </#if>
                 </br>
@@ -115,7 +115,7 @@
                 </form>
                 <#else>
                 <form>
-                 <button style = color:"red" type='button' value='submit'>Vendredi</button>
+                 <button style = "background-color:red ; font-weight:bold; color:white"type='button' value='submit'>Vendredi</button>
                 </form>
                 </#if>
                 </br>
