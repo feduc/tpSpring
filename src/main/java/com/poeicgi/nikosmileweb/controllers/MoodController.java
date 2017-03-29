@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -55,6 +56,7 @@ public class MoodController extends ViewBaseController<Mood> {
 
 	// value is the address to enter in the browser to launch index(), it can be
 	// more than one when writing value = {"/path1", "/path2"}
+	@Secured("user")
 	@RequestMapping(path = "/vote", method = RequestMethod.GET)
 	public String voteView(Model model) {
 
@@ -135,6 +137,7 @@ public class MoodController extends ViewBaseController<Mood> {
 		// was in templates.pages return would have to be equal to "pages/toto"
 	}
 
+	@Secured("user")
 	@RequestMapping(path = "/create/done", method = RequestMethod.POST)
 	public String create(Model model, @ModelAttribute Mood item,
 			@RequestParam("MoodID") String MoodID) {
@@ -169,6 +172,7 @@ public class MoodController extends ViewBaseController<Mood> {
 		return REDIRECT + UserController.BASE_URL + "/resume";
 	}
 
+	@Secured("user")
 	@RequestMapping(path = "/week", method = RequestMethod.GET)
 	public String weekView(Model model,@ModelAttribute("child") User child,
 			@ModelAttribute("date") Long date,
@@ -473,6 +477,7 @@ public class MoodController extends ViewBaseController<Mood> {
 		return "mood/week";
 	}
 
+	@Secured("user")
 	@RequestMapping(path = "/week/change", method = RequestMethod.GET)
 	public String weekChange(Model model,@ModelAttribute User child,
 			@ModelAttribute("date") Long date,@ModelAttribute("projectName") String projectName,@ModelAttribute("changeWeek") String changeWeek,
@@ -515,6 +520,7 @@ public class MoodController extends ViewBaseController<Mood> {
 
 	}
 
+	@Secured("user")
 	@RequestMapping(path = "/day/", method = RequestMethod.GET)
 	public String dayView(Model model,
 			@ModelAttribute("date") Long date,@ModelAttribute("projectName") String projectName) {
@@ -556,6 +562,7 @@ public class MoodController extends ViewBaseController<Mood> {
 
 	}
 
+	@Secured("user")
 	@RequestMapping(path = "/month", method = RequestMethod.GET)
 	public String MonthView(Model model,
 			@ModelAttribute("date") Long date,@ModelAttribute("projectName") String projectName) {
@@ -710,6 +717,7 @@ public class MoodController extends ViewBaseController<Mood> {
 		return "mood/month";
 	}
 
+	@Secured("user")
 	@RequestMapping(path = "/month/change", method = RequestMethod.GET)
 	public String monthChange(Model model,
 		@ModelAttribute("date") Long date,@ModelAttribute("projectName") String projectName,@ModelAttribute("changeMonth") String changeMonth,

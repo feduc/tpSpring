@@ -23,7 +23,7 @@
          <div class="changeavis">
             <font color = "white"><h1> Choisissez un utilisateur </h1> </font>
                 <form action="/admin/${projectId}/members" method="GET" >
-                    <font color = "white"> <th>Nom de l'utilisateur :</th></br></font>
+                    <font color = "white"> <th>Matricule de l'utilisateur :</th></br></font>
                     <input type="hidden" name="projectName" value="${projectName}"/>
                     <input type="text" name="userRegistration" placeholder="entrez le matricule de l'utilisateur" value="${userRegistration}"/>
 

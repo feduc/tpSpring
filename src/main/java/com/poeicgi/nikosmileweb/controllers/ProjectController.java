@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,15 +27,6 @@ public class ProjectController extends ViewBaseController<Project>{
 
 	public final static String BASE_URL = "/project";
 
-	// value is the address to enter in the browser to launch index(), it can be
-	// more than one when writing value = {"/path1", "/path2"}
-	@RequestMapping(value = "/Project")
-	public String index() {
-		return "toto";
-		// return "toto" works because toto.ftl is directly in templates, if it
-		// was in templates.pages return would have to be equal to "pages/toto"
-	}
-
 	@Autowired
 	private IProjectCrudRepository projectCrud;
 
@@ -42,6 +34,7 @@ public class ProjectController extends ViewBaseController<Project>{
 		super(Project.class,BASE_URL);
 	}
 
+	@Secured("visu")
 	@RequestMapping(path = "/choose", method = RequestMethod.GET)
 	public String chooseView(Model model, @ModelAttribute("date") Long date, @RequestParam(value = "projectName", defaultValue = "") String projectName) {
 

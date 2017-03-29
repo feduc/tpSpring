@@ -1,5 +1,6 @@
 package com.poeicgi.nikosmileweb.controllers;
 
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,6 +19,7 @@ public class SessionViewController {
 
 	// function that get as param (given by user) thoughtParam and put it in the
 	// model as thought (which is defined earlier as session attribute)
+	@Secured("admin")
 	@RequestMapping(value = "/remember")
 	public ModelAndView rememberThought(@RequestParam String thoughtParam) {
 		ModelAndView modelAndView = new ModelAndView();
