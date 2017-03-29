@@ -6,38 +6,33 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-
-
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
-@Table(name="demo_greeeting")
+@Table(name="demo_greeting")
 public class Greeting {
 
 	@Id
-	@GeneratedValue(strategy= GenerationType.IDENTITY)
-	@JsonInclude
-    private Long id=null;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id =null;
 
-	@JsonProperty(value="mysuper")
+	@JsonProperty(value = "my_super_content")
     private String content;
 
-	public Greeting(){
-
-	}
-
-	public Greeting(String content)
-	{
-		this.content = content;
-	}
-
-    public Greeting(long id, String content) {
+    public Greeting(Long id, String content) {
         this.id = id;
         this.content = content;
     }
+
+    public Greeting(String content) {
+        this.content = content;
+    }
+
+    public Greeting(){
+
+    }
+
 
     public Long getId() {
         return id;
@@ -51,5 +46,6 @@ public class Greeting {
     	this.content = content;
     	return this;
     }
+
 
 }

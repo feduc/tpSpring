@@ -22,7 +22,14 @@
       <div class="col-xs-12 col-sm-8 col-md-8">
          <div class="changeavis">
             <font color = "white"><h1> ${page} </h1> </font>
-                <form action="${path}/create/do" method="POST" id = "renseignement">
+                <form action="/user/create/done" method="POST" id = "renseignement">
+                        <font color = "white"><th>Login :</th></br></font>
+                        <input type="text" name="login" required="required"/>
+                        </br>
+                                 
+                        <font color = "white"><th>Mot de Passe :</th></br></font>
+                        <input type="text" name="password" required="required"/>
+                        </br>
                     <#list fields as field>
                         <#if field["name"]=="id">
                         <#elseif field["type"]== "boolean">

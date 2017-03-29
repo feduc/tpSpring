@@ -139,8 +139,6 @@ public class MoodController extends ViewBaseController<Mood> {
 	public String create(Model model, @ModelAttribute Mood item,
 			@RequestParam("MoodID") String MoodID) {
 
-		Map<String, Object> map = model.asMap();
-
 		Long id = Long.parseLong(MoodID);
 
 		item.setId(id);

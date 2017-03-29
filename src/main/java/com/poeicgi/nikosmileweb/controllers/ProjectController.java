@@ -32,24 +32,6 @@ public class ProjectController extends ViewBaseController<Project>{
 		// was in templates.pages return would have to be equal to "pages/toto"
 	}
 
-	@RequestMapping(path = "/project/do", method = RequestMethod.GET)
-	public String FindProject(Model model, Project project,
-		// fabrication d'un user et renvoyer dans redirect
-		@ModelAttribute("child") User child, final BindingResult childBindingResult, final Model model2,
-		final RedirectAttributes redirectAttributes) {
-
-		//creation d'un securityuser pour comparaison
-		//rempli par une requete sur le login
-		Project projectest= (Project) projectCrud.findProjectByName(project.getName());
-
-		if ((projectest.getName().equals(project.getName()))) {
-			return REDIRECT+ "/user/create/";
-		}
- 		else {
- 			return "project/list";
- 		}
-	}
-
 	@Autowired
 	private IProjectCrudRepository projectCrud;
 

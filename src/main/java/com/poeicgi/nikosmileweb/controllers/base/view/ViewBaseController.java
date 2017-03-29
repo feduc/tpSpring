@@ -116,14 +116,13 @@ public abstract class ViewBaseController<T extends DataBaseItem> extends BaseCon
 	}
 
 	@RequestMapping(path = "/create/", method = RequestMethod.GET)
-	public String createView(Model model, @ModelAttribute("child")User child){
+	public String createView(Model model){
 
 		String pageName = "Create a "+ baseName;
 
 		model.addAttribute("fields", DumpFields.createContentsEmpty(super.getClazz()).getMyFields());
 		model.addAttribute("page", pageName);
 		model.addAttribute("path", baseUrl);
-		model.addAttribute("child", child);
 
 		return "base/create";
 	}

@@ -44,45 +44,45 @@ public class RestGreetingController {
 		return this.greetingcrud.findAll(pageable);
     }
 
-	@RequestMapping(path ="/demo/greeting", method=RequestMethod.POST)
-	public Greeting createAction(HttpServletResponse response,
-			@RequestParam (required = true) String content) throws IOException{
-		return this.newOrEdit(response, content, new Greeting());
-	}
-
-	@RequestMapping(path ="/demo/greeting/{id}/edit", method=RequestMethod.PUT)
-	public Greeting editAction(
-			HttpServletResponse response,
-			@PathVariable ("id") Long id,
-
-			@RequestParam(value = "content", required = true)
-			String content) throws IOException{
-
-		return this.newOrEdit(response, content, this.greetingcrud.findOne(id));
-	}
-
-	private Greeting newOrEdit(HttpServletResponse response, String content, Greeting greeting) throws IOException{
-
-		if (content.equals("")){
-			response.sendError(HttpStatus.BAD_REQUEST.value(), "Required name");
-			return null;
-		}
-
-		if(!content.toLowerCase().contains("hello")){
-			content = "Hello" + content;
-		}
-
-		greeting.setContent(content);
-
-		if (greeting.getId()==null){
-		response.setStatus(HttpStatus.CREATED.value());
-		}
-		greeting = new Greeting (content) ;
-
-		this.greetingcrud.save(greeting);
-
-		return greeting;
-	}
+//	@RequestMapping(path ="/demo/greeting", method=RequestMethod.POST)
+//	public Greeting createAction(HttpServletResponse response,
+//			@RequestParam (required = true) String content) throws IOException{
+//		return this.newOrEdit(response, content, new Greeting());
+//	}
+//
+//	@RequestMapping(path ="/demo/greeting/{id}/edit", method=RequestMethod.PUT)
+//	public Greeting editAction(
+//			HttpServletResponse response,
+//			@PathVariable ("id") Long id,
+//
+//			@RequestParam(value = "content", required = true)
+//			String content) throws IOException{
+//
+//		return this.newOrEdit(response, content, this.greetingcrud.findOne(id));
+//	}
+//
+//	private Greeting newOrEdit(HttpServletResponse response, String content, Greeting greeting) throws IOException{
+//
+//		if (content.equals("")){
+//			response.sendError(HttpStatus.BAD_REQUEST.value(), "Required name");
+//			return null;
+//		}
+//
+//		if(!content.toLowerCase().contains("hello")){
+//			content = "Hello" + content;
+//		}
+//
+//		greeting.setContent(content);
+//
+//		if (greeting.getId()==null){
+//		response.setStatus(HttpStatus.CREATED.value());
+//		}
+//		greeting = new Greeting (content) ;
+//
+//		this.greetingcrud.save(greeting);
+//
+//		return greeting;
+//	}
 
 	@RequestMapping(path ="/demo/greeting/{id}/show", method = RequestMethod.GET)
 	public Greeting showAction(
