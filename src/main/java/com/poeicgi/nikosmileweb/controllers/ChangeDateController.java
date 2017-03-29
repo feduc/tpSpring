@@ -13,19 +13,10 @@ import com.poeicgi.nikosmileweb.models.ChangeDate;
 public class ChangeDateController extends ViewBaseController<ChangeDate>{
 
 	public final static String BASE_URL = "/changedate";
-	
-	// value is the address to enter in the browser to launch index(), it can be
-	// more than one when writing value = {"/path1", "/path2"}
-	@RequestMapping(value = "/ChangeDate")
-	public String index() {
-		return "toto";
-		// return "toto" works because toto.ftl is directly in templates, if it
-		// was in templates.pages return would have to be equal to "pages/toto"
-	}
-	
+
 	@Autowired
 	private IChangeDateCrudRepository changeDateCrud;
-	
+
 	public ChangeDateController() {
 		super(ChangeDate.class,BASE_URL);
 	}

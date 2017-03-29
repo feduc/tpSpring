@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -46,7 +47,7 @@ public class UserController extends ViewBaseController<User> {
 
 	@Autowired
 	private SecurityController securityController;
-	
+
 	@Autowired
 	private IUserCrudRepository userCrud;
 
@@ -55,7 +56,7 @@ public class UserController extends ViewBaseController<User> {
 
 	@Autowired
 	private IMoodCrudRepository moodCrud;
-	
+
 	@Autowired
 	private ISecurityUserCrudRepository secuCrud;
 
@@ -63,7 +64,7 @@ public class UserController extends ViewBaseController<User> {
 		super(User.class, BASE_URL);
 
 	}
-
+	@Secured("user")
 	// vers la page de resume de l'user pour visu globale
 	@RequestMapping(path = "/resume", method = RequestMethod.GET)
 	public String resumeView(Model model) {
@@ -80,7 +81,7 @@ public class UserController extends ViewBaseController<User> {
 		Date today = new Date(todayTest.getTimeInMillis());
 
 		User user = securityController.getConnectedUser();
-		
+
 		model.addAttribute("date", today.getTime());
 		Integer satisfaction = null;
 		if (moodCrud.findLastVote(user).compareTo(today)<0){ satisfaction = 40;}
@@ -89,7 +90,7 @@ public class UserController extends ViewBaseController<User> {
 
 		List<String> actualProjectsNames = projectCrud.findActualProjectsByUser(user, today);
 		ArrayList<Map<String,Object>> actualProjectsInfo = new ArrayList<Map<String,Object>>();
-		
+
 		int i=0;
 		for (String projectName : actualProjectsNames) {
 			actualProjectsInfo.add(new HashMap<String,Object>());
@@ -98,7 +99,7 @@ public class UserController extends ViewBaseController<User> {
 			(actualProjectsInfo.get(i)).put("Normal", moodCrud.countMoodsBySatisfactionForSummary(projectName, today, 0));
 			(actualProjectsInfo.get(i)).put("Mecontent", moodCrud.countMoodsBySatisfactionForSummary(projectName, today, -1));
 			i++;
-	
+
 		}
 
 		List<String> oldProjectsNames = projectCrud.findOldProjectsByUser(user, today);
@@ -109,7 +110,7 @@ public class UserController extends ViewBaseController<User> {
 
 		return "user/resume";
 	}
-	
+	@Secured("admin")
 	@Override
 	@RequestMapping(path = "/create/", method = RequestMethod.GET)
 	public String createView(Model model){
@@ -121,7 +122,7 @@ public class UserController extends ViewBaseController<User> {
 
 		return "admin/createUser";
 	}
-	
+	@Secured("admin")
 	@RequestMapping(path = "/create/done", method = RequestMethod.POST)
 	public String create(Model model, @ModelAttribute User item, @ModelAttribute SecurityUser security) {
 
@@ -129,9 +130,9 @@ public class UserController extends ViewBaseController<User> {
 
 		security.setId(item.getId());
 		security.setEnable(true);
-		
+
 		secuCrud.save(security);
-		
+
 		item.setSecurity(security);
 
 		updateItem(item);
