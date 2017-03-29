@@ -27,7 +27,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 					.usernameParameter("username")
 					.passwordParameter("password")
 					.permitAll()
-					.defaultSuccessUrl("/security/login/do",false);
+					.defaultSuccessUrl("/security/login/do",true);
 //			.and()
 //				.authorizeRequests().anyRequest().anonymous()
 //				.antMatchers("/demo","/demo/**")
