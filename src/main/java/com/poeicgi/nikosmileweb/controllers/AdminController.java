@@ -7,6 +7,7 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,9 +23,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.poeicgi.nikosmileweb.controllers.base.view.ViewBaseController;
 import com.poeicgi.nikosmileweb.dao.IMoodCrudRepository;
 import com.poeicgi.nikosmileweb.dao.IProjectCrudRepository;
+import com.poeicgi.nikosmileweb.dao.ISecurityRoleCrudRepository;
+import com.poeicgi.nikosmileweb.dao.ISecurityUserCrudRepository;
 import com.poeicgi.nikosmileweb.dao.IUserCrudRepository;
 import com.poeicgi.nikosmileweb.models.Project;
 import com.poeicgi.nikosmileweb.models.User;
+import com.poeicgi.nikosmileweb.models.security.SecurityRole;
+import com.poeicgi.nikosmileweb.models.security.SecurityUser;
 
 @Controller
 @RequestMapping(path = AdminController.BASE_URL)
@@ -40,6 +45,12 @@ public class AdminController extends ViewBaseController<User> {
 
 	@Autowired
 	private IMoodCrudRepository moodCrud;
+	
+	@Autowired
+	private ISecurityUserCrudRepository secuCrud;
+	
+	@Autowired
+	private ISecurityRoleCrudRepository roleCrud;
 
 	public AdminController() {
 		super(User.class, BASE_URL);
@@ -67,11 +78,26 @@ public class AdminController extends ViewBaseController<User> {
 
 		return "admin/choose";
 	}
+	
+	@RequestMapping(path = "/chooseUser", method = RequestMethod.GET)
+	public String chooseUserView(Model model, @RequestParam(value = "userRegistration", defaultValue = "") String userRegistration) {
+
+		List<User> users = null;
+		if (!userRegistration.equals(null) && !userRegistration.equals("")) {
+			users = userCrud.findUsersByRegistration("%" + userRegistration + "%");
+		}
+		
+		model.addAttribute("users", users);
+		
+		model.addAttribute("userRegistration", userRegistration);
+
+		return "admin/chooseUser";
+	}
 
 	@RequestMapping(path = "/{projectId}/members", method = RequestMethod.GET)
 	public String membersView(Model model, 
 			@PathVariable(value = "projectId") String projectId,
-			@RequestParam(value = "projectName") String projectName,
+			@RequestParam(value = "projectName", defaultValue = "") String projectName,
 			@RequestParam(value = "userRegistration", defaultValue = "") String userRegistration) {
 
 		List<User> users = null;
@@ -96,20 +122,90 @@ public class AdminController extends ViewBaseController<User> {
 		return "admin/members";
 	}
 	
-	@RequestMapping(path = "/{projectId}/members/{userId}/remove", method = RequestMethod.GET)
+	@RequestMapping(path = "/{userId}/roles", method = RequestMethod.GET)
+	public String rolesView(Model model, 
+			@PathVariable(value = "userId") String userId,
+			@RequestParam(value = "userRegistration", defaultValue = "") String userRegistration) {
+		
+		Set<SecurityRole> roles = null;
+
+		roles = (secuCrud.findOne(Long.parseLong(userId))).getRoles();
+
+		model.addAttribute("userId", userId);
+		
+		model.addAttribute("userRegistration", userRegistration);
+
+		model.addAttribute("roles", roles);
+
+		return "admin/roles";
+	}
+	
+	@RequestMapping(path = "/{projectId}/members/{userId}/remove", method = RequestMethod.POST)
 	public String memberRemove(Model model, 
 			@PathVariable(value = "projectId") String projectId,
 			@PathVariable(value = "userId") String userId,
-			@RequestParam(value = "projectName", defaultValue = "") String projectName,
-			final BindingResult childBindingResult, final Model model2, 
-			final RedirectAttributes redirectAttributes) {
+			@RequestParam(value = "projectName") String projectName) {
 
-
+		Project project = projectCrud.findOne(Long.parseLong(projectId));
+		User user = userCrud.findOne(Long.parseLong(userId));
+		user.getProjects().remove(project);
+		project.getTeam().remove(user);
 		
-		redirectAttributes.addAttribute("projectName", projectName);
-		
+		userCrud.save(user);
+		projectCrud.save(project);
 
-		return REDIRECT + BASE_URL + "/" + projectId +"/members";
+		return REDIRECT + BASE_URL + "/" + projectId +"/members?projectName="+projectName;
+	}
+	
+	@RequestMapping(path = "/{userId}/roles/{roleId}/remove", method = RequestMethod.POST)
+	public String roleRemove(Model model, 
+			@PathVariable(value = "roleId") String roleId,
+			@PathVariable(value = "userId") String userId,
+			@RequestParam(value = "userRegistration") String userRegistration) {
+
+		SecurityUser secu = secuCrud.findOne(Long.parseLong(userId));
+		SecurityRole role = roleCrud.findOne(Long.parseLong(roleId));
+		secu.getRoles().remove(role);
+		role.getSecurities().remove(secu);
+		
+		secuCrud.save(secu);
+		roleCrud.save(role);
+
+		return REDIRECT + BASE_URL + "/" + userId +"/roles?userRegistration="+userRegistration;
+	}
+	
+	@RequestMapping(path = "/{projectId}/members/{userId}/add", method = RequestMethod.POST)
+	public String memberAdd(Model model, 
+			@PathVariable(value = "projectId") String projectId,
+			@PathVariable(value = "userId") String userId,
+			@RequestParam(value = "projectName") String projectName) {
+
+		Project project = projectCrud.findOne(Long.parseLong(projectId));
+		User user = userCrud.findOne(Long.parseLong(userId));
+		user.getProjects().add(project);
+		project.getTeam().add(user);
+		
+		userCrud.save(user);
+		projectCrud.save(project);
+
+		return REDIRECT + BASE_URL + "/" + projectId +"/members?projectName="+projectName;
+	}
+	
+	@RequestMapping(path = "/{userId}/roles/{roleId}/add", method = RequestMethod.POST)
+	public String roleAdd(Model model, 
+			@PathVariable(value = "roleId") String roleId,
+			@PathVariable(value = "userId") String userId,
+			@RequestParam(value = "userRegistration") String userRegistration) {
+
+		SecurityUser secu = secuCrud.findOne(Long.parseLong(userId));
+		SecurityRole role = roleCrud.findOne(Long.parseLong(roleId));
+		secu.getRoles().add(role);
+		role.getSecurities().add(secu);
+		
+		secuCrud.save(secu);
+		roleCrud.save(role);
+
+		return REDIRECT + BASE_URL + "/" + userId +"/roles?userRegistration="+userRegistration;
 	}
 	
 }

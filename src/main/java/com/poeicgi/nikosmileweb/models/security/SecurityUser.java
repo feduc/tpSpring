@@ -62,11 +62,6 @@ public class SecurityUser extends DataBaseItem {
 
 
 	@ManyToMany
-	@JoinTable(name = "users_securityroles",
-
-				joinColumns = @JoinColumn(name= "security_id"),
-				inverseJoinColumns = @JoinColumn(name = "role_id"))
-
 	private Set<SecurityRole> roles;
 
 	/**

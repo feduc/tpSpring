@@ -21,7 +21,7 @@
       <#include "../includable/adminNav.ftl">
       <div class="col-xs-12 col-sm-8 col-md-8">
          <div class="changeavis">
-            <font color = "white"><h1> Choisissez un projet </h1> </font>
+            <font color = "white"><h1> Choisissez un utilisateur </h1> </font>
                 <form action="/admin/${projectId}/members" method="GET" >
                     <font color = "white"> <th>Nom de l'utilisateur :</th></br></font>
                     <input type="hidden" name="projectName" value="${projectName}"/>
@@ -51,7 +51,8 @@
                         <td>${user["registrationCGI"]}</td>
                         <td>
                             <form action="/admin/${projectId}/members/${user["id"]}/add" method ="POST">
-                            <input type="hidden" value="${projectName}"/>
+                            <input type="hidden" name="projectName" value="${projectName}"/>
+                            <#include "../includable/security/securityToken.ftl">
                             <input type="submit" value="Ajouter"/>
                             </form>
                         </td>
@@ -80,7 +81,8 @@
                         <td>${member["registrationCGI"]}</td>
                         <td>
                             <form action="/admin/${projectId}/members/${member["id"]}/remove" method ="POST">
-                            <input type="hidden" value="${projectName}"/>
+                            <input type="hidden" name="projectName" value="${projectName}"/>
+                            <#include "../includable/security/securityToken.ftl">
                             <input type="submit" value="Retirer"/>
                             </form>
                         </td>
