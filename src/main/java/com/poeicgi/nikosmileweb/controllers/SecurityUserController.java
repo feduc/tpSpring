@@ -41,21 +41,13 @@ public class SecurityUserController extends AntoineViewBaseController<SecurityUs
 	@Autowired
 	private SecurityController secuController;
 
-	// value is the address to enter in the browser to launch index(), it can be
-	// more than one when writing value = {"/path1", "/path2"}
-	@RequestMapping(value = "/Security")
-	public String index() {
-		return "toto";
-		// return "toto" works because toto.ftl is directly in templates, if it
-		// was in templates.pages return would have to be equal to "pages/toto"
-	}
-	@Secured({"user", "modo", "admin","visu"})
 	@RequestMapping(path = "/login", method = RequestMethod.GET)
 	public String logInView(Model model) {
 
 		return "user/login";
 	}
-	@Secured({"user", "modo", "admin","visu"})
+	
+	@Secured({"ROLE_ADMIN","ROLE_MODO","ROLE_VISU","ROLE_USER"})
 	@RequestMapping(path = "/login/do", method = RequestMethod.GET)
 
 	public String logIn(Model model) {
@@ -67,14 +59,14 @@ public class SecurityUserController extends AntoineViewBaseController<SecurityUs
 		List<String> roles = securityRoleCrud.getRolesForSecurityUser(secu);
 
 
-		if (roles.contains("admin")) {
+		if (roles.contains("ROLE_ADMIN")) {
 			return REDIRECT+ "/user/create/";
 
-		} else if (roles.contains("modo"))  {
+		} else if (roles.contains("ROLE_MODO"))  {
 			return REDIRECT + MoodController.BASE_URL + "/vote";
-		} else if (roles.contains("visu"))  {
+		} else if (roles.contains("ROLE_VISU"))  {
 			return REDIRECT + MoodController.BASE_URL + "/vote";
-		} else if (roles.contains("user"))  {
+		} else if (roles.contains("ROLE_USER"))  {
 			return REDIRECT + MoodController.BASE_URL + "/vote";
  		} else {
  			return "base/erreur";

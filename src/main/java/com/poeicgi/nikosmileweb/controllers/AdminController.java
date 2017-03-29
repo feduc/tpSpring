@@ -58,7 +58,7 @@ public class AdminController extends ViewBaseController<User> {
 
 	}
 
-	@Secured("admin")
+	@Secured("ROLE_ADMIN")
 	@RequestMapping(path = "/vote/", method = RequestMethod.GET)
 	public String adminVoteGet(Model model) {
 
@@ -66,7 +66,7 @@ public class AdminController extends ViewBaseController<User> {
 
 	}
 
-	@Secured("admin")
+	@Secured("ROLE_ADMIN")
 	@RequestMapping(path = "/choose", method = RequestMethod.GET)
 	public String chooseView(Model model, @RequestParam(value = "projectName", defaultValue = "") String projectName) {
 
@@ -82,7 +82,7 @@ public class AdminController extends ViewBaseController<User> {
 		return "admin/choose";
 	}
 
-	@Secured("admin")
+	@Secured("ROLE_ADMIN")
 	@RequestMapping(path = "/chooseUser", method = RequestMethod.GET)
 	public String chooseUserView(Model model, @RequestParam(value = "userRegistration", defaultValue = "") String userRegistration) {
 
@@ -98,7 +98,7 @@ public class AdminController extends ViewBaseController<User> {
 		return "admin/chooseUser";
 	}
 
-	@Secured("admin")
+	@Secured("ROLE_ADMIN")
 	@RequestMapping(path = "/{projectId}/members", method = RequestMethod.GET)
 	public String membersView(Model model,
 			@PathVariable(value = "projectId") String projectId,
@@ -127,7 +127,7 @@ public class AdminController extends ViewBaseController<User> {
 		return "admin/members";
 	}
 
-	@Secured("admin")
+	@Secured("ROLE_ADMIN")
 	@RequestMapping(path = "/{userId}/roles", method = RequestMethod.GET)
 	public String rolesView(Model model,
 			@PathVariable(value = "userId") String userId,
@@ -146,7 +146,7 @@ public class AdminController extends ViewBaseController<User> {
 		return "admin/roles";
 	}
 
-	@Secured({"admin","modo"})
+	@Secured({"ROLE_ADMIN","ROLE_MODO"})
 	@RequestMapping(path = "/{projectId}/members/{userId}/remove", method = RequestMethod.POST)
 	public String memberRemove(Model model,
 			@PathVariable(value = "projectId") String projectId,
@@ -164,7 +164,7 @@ public class AdminController extends ViewBaseController<User> {
 		return REDIRECT + BASE_URL + "/" + projectId +"/members?projectName="+projectName;
 	}
 
-	@Secured("admin")
+	@Secured("ROLE_ADMIN")
 	@RequestMapping(path = "/{userId}/roles/{roleId}/remove", method = RequestMethod.POST)
 	public String roleRemove(Model model,
 			@PathVariable(value = "roleId") String roleId,
@@ -182,7 +182,7 @@ public class AdminController extends ViewBaseController<User> {
 		return REDIRECT + BASE_URL + "/" + userId +"/roles?userRegistration="+userRegistration;
 	}
 
-	@Secured({"admin","modo"})
+	@Secured({"ROLE_ADMIN","ROLE_MODO"})
 	@RequestMapping(path = "/{projectId}/members/{userId}/add", method = RequestMethod.POST)
 	public String memberAdd(Model model,
 			@PathVariable(value = "projectId") String projectId,
@@ -200,7 +200,7 @@ public class AdminController extends ViewBaseController<User> {
 		return REDIRECT + BASE_URL + "/" + projectId +"/members?projectName="+projectName;
 	}
 
-	@Secured("admin")
+	@Secured("ROLE_ADMIN")
 	@RequestMapping(path = "/{userId}/roles/{roleId}/add", method = RequestMethod.POST)
 	public String roleAdd(Model model,
 			@PathVariable(value = "roleId") String roleId,

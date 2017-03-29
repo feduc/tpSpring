@@ -34,7 +34,7 @@ public class ProjectController extends ViewBaseController<Project>{
 		super(Project.class,BASE_URL);
 	}
 
-	@Secured("visu")
+	@Secured("ROLE_VISU")
 	@RequestMapping(path = "/choose", method = RequestMethod.GET)
 	public String chooseView(Model model, @ModelAttribute("date") Long date, @RequestParam(value = "projectName", defaultValue = "") String projectName) {
 

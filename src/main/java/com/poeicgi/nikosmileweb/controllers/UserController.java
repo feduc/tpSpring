@@ -36,15 +36,6 @@ public class UserController extends ViewBaseController<User> {
 
 	public final static String BASE_URL = "/user";
 
-	// value is the address to enter in the browser to launch index(), it can be
-	// more than one when writing value = {"/path1", "/path2"}
-	@RequestMapping(value = "/home")
-	public String index() {
-		return "toto";
-		// return "toto" works because toto.ftl is directly in templates, if it
-		// was in templates.pages return would have to be equal to "pages/toto"
-	}
-
 	@Autowired
 	private SecurityController securityController;
 
@@ -64,7 +55,7 @@ public class UserController extends ViewBaseController<User> {
 		super(User.class, BASE_URL);
 
 	}
-	@Secured("user")
+	@Secured("ROLE_USER")
 	// vers la page de resume de l'user pour visu globale
 	@RequestMapping(path = "/resume", method = RequestMethod.GET)
 	public String resumeView(Model model) {
@@ -110,7 +101,7 @@ public class UserController extends ViewBaseController<User> {
 
 		return "user/resume";
 	}
-	@Secured("admin")
+	@Secured("ROLE_ADMIN")
 	@Override
 	@RequestMapping(path = "/create/", method = RequestMethod.GET)
 	public String createView(Model model){
@@ -122,7 +113,7 @@ public class UserController extends ViewBaseController<User> {
 
 		return "admin/createUser";
 	}
-	@Secured("admin")
+	@Secured("ROLE_ADMIN")
 	@RequestMapping(path = "/create/done", method = RequestMethod.POST)
 	public String create(Model model, @ModelAttribute User item, @ModelAttribute SecurityUser security) {
 

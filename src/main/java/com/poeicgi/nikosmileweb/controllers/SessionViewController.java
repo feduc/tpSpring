@@ -19,7 +19,7 @@ public class SessionViewController {
 
 	// function that get as param (given by user) thoughtParam and put it in the
 	// model as thought (which is defined earlier as session attribute)
-	@Secured("admin")
+	@Secured("ROLE_ADMIN")
 	@RequestMapping(value = "/remember")
 	public ModelAndView rememberThought(@RequestParam String thoughtParam) {
 		ModelAndView modelAndView = new ModelAndView();
