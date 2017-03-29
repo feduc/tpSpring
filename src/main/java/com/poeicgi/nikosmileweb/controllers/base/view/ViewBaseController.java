@@ -65,11 +65,6 @@ public abstract class ViewBaseController<T extends DataBaseItem> extends BaseCon
 		return "base/list";
 	}
 
-	private String toString(int i) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	@RequestMapping(path = "{id}/show", method = RequestMethod.GET)
 	public String showOne(Model model,@PathVariable long id){
 

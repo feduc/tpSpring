@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -52,6 +53,8 @@ public class MoodController extends ViewBaseController<Mood> {
 	}
 
 	public final static String BASE_URL = "/mood";
+
+
 
 	// value is the address to enter in the browser to launch index(), it can be
 	// more than one when writing value = {"/path1", "/path2"}
@@ -555,6 +558,7 @@ public class MoodController extends ViewBaseController<Mood> {
 		return "mood/day" ;
 
 	}
+
 
 	@RequestMapping(path = "/month", method = RequestMethod.GET)
 	public String MonthView(Model model,

@@ -72,70 +72,7 @@ public class SecurityRoleViewController extends AntoineViewBaseController<Securi
 	@Autowired
 	ISecurityUserCrudRepository securityCrud;
 
-	@Secured({"ROLE_ADMIN","ROLE_PROJECTLEADER"})
-	@RequestMapping(ROUTE_INDEX)
-	public String projects(Model model) {
-		model.addAttribute("page", "All roles");
-		model.addAttribute("fields",
-				DumpFields.createContentsEmpty(super.getClazz()).fields);
-		model.addAttribute("items", DumpFields.listFielder(super.getItems()));
-		model.addAttribute(
-				"currentItem",
-				DumpFields.fielderAdvance(
-						DumpFields.createContentsEmpty(super.getClazz()),
-						super.getClazz()));
-		return PATH_INDEX;
-	}
 
-	@RequestMapping(path = ROUTE_USERSLINKS, method = RequestMethod.GET)
-	public String setTeamsForProjectGet(Model model,
-			@PathVariable Long securityRoleId) {
-		SecurityRole securityRole = super.getItem(securityRoleId);
 
-		model.addAttribute("page", securityRole.getRole() + " securities linker");
-		model.addAttribute("fields", SecurityUser.FIELDS);
-		model.addAttribute("currentItem", DumpFields.fielder(securityRole));
 
-		List<SecurityUser> securities = (List<SecurityUser>) securityCrud.findAll();
-		model.addAttribute("items", DumpFields.<SecurityUser> listFielder(securities));
-
-		ArrayList<Long> securitiesIds = new ArrayList<Long>();
-		for (SecurityUser security : securityRole.getSecurities()) {
-			securitiesIds.add(security.getId());
-		}
-		model.addAttribute("linkedItems", securitiesIds);
-
-		return PATH_USERSLINKS;
-	}
-
-	@RequestMapping(path = ROUTE_USERSLINKS, method = RequestMethod.POST)
-	public String setTeamsForProjectPost(Model model,
-			@PathVariable Long securityRoleId,
-			@RequestParam(value = "ids[]") Long[] ids) {
-		SecurityRole securityRole = super.getItem(securityRoleId);
-
-		securityRole.getSecurities().clear();
-
-		for (Long id : ids) {
-			if (id != 0) {
-				securityRole.getSecurities().add(securityCrud.findOne(id));
-			}
-		}
-
-		securityRoleCrud.save(securityRole);
-
-		return PATH_USERSLINKS_REDIRECT;
-	}
-
-	@RequestMapping(path = ROUTE_USERS, method = RequestMethod.GET)
-	public String getTeamsForProject(Model model, @PathVariable Long securityRoleId) {
-		SecurityRole securityRole = super.getItem(securityRoleId);
-
-		model.addAttribute("page", securityRole.getRole() + " roles");
-		model.addAttribute("fields", SecurityUser.FIELDS);
-		model.addAttribute("currentItem", DumpFields.fielder(securityRole));
-		model.addAttribute("items", DumpFields
-				.<SecurityUser> listFielder(new ArrayList<SecurityUser>(securityRole.getSecurities())));
-		return PATH_USERS;
-	}
 }

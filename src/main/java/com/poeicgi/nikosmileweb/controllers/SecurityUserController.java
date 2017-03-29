@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -48,13 +49,13 @@ public class SecurityUserController extends AntoineViewBaseController<SecurityUs
 		// return "toto" works because toto.ftl is directly in templates, if it
 		// was in templates.pages return would have to be equal to "pages/toto"
 	}
-
+	@Secured({"user", "modo", "admin","visu"})
 	@RequestMapping(path = "/login", method = RequestMethod.GET)
 	public String logInView(Model model) {
 
 		return "user/login";
 	}
-
+	@Secured({"user", "modo", "admin","visu"})
 	@RequestMapping(path = "/login/do", method = RequestMethod.GET)
 
 	public String logIn(Model model) {
@@ -134,71 +135,4 @@ public class SecurityUserController extends AntoineViewBaseController<SecurityUs
 	@Autowired
 	ISecurityRoleCrudRepository securityRoleCrud;
 
-	@RequestMapping(path = ROUTE_INDEX, method = RequestMethod.GET)
-	public String securities(Model model) {
-		model.addAttribute("page", "All securities");
-		model.addAttribute("fields",
-				DumpFields.createContentsEmpty(super.getClazz()).fields);
-		model.addAttribute("items", DumpFields.listFielder(super.getItems()));
-		model.addAttribute(
-				"currentItem",
-				DumpFields.fielderAdvance(
-						DumpFields.createContentsEmpty(super.getClazz()),
-						super.getClazz()));
-		return PATH_INDEX;
-	}
-
-	@RequestMapping(path = ROUTE_SECURITYROLESLINKS, method = RequestMethod.GET)
-	public String setSecurityRolesForSecurityUserGet(Model model, @PathVariable Long securityId) {
-		SecurityUser security = super.getItem(securityId);
-
-		model.addAttribute("page",
-				security.getLogin()
-						+ " roles linker");
-		model.addAttribute("fields", SecurityRole.FIELDS);
-		model.addAttribute("currentItem", DumpFields.fielder(security));
-
-		List<SecurityRole> securityRoles = (List<SecurityRole>) securityRoleCrud.findAll();
-		model.addAttribute("items", DumpFields.<SecurityRole> listFielder(securityRoles));
-
-		ArrayList<Long> securityRolesIds = new ArrayList<Long>();
-		for (SecurityRole securityRole : security.getRoles()) {
-			securityRolesIds.add(securityRole.getId());
-		}
-		model.addAttribute("linkedItems", securityRolesIds);
-
-		return PATH_SECURITYROLESLINKS;
-	}
-
-	@RequestMapping(path = ROUTE_SECURITYROLESLINKS, method = RequestMethod.POST)
-	public String setSecurityRolesForSecurityUserPost(Model model,
-			@PathVariable Long securityId,
-			@RequestParam(value = "ids[]") Long[] ids) {
-		SecurityUser security = super.getItem(securityId);
-
-		security.getRoles().clear();
-
-		for (Long id : ids) {
-			if (id != 0) {
-				security.getRoles().add(securityRoleCrud.findOne(id));
-			}
-		}
-
-		secuCrud.save(security);
-
-		return PATH_SECURITYROLESLINKS_REDIRECT;
-	}
-
-	@RequestMapping(path = ROUTE_SECURITYROLES, method = RequestMethod.GET)
-	public String getSecurityRolesForSecurityUser(Model model, @PathVariable Long securityId) {
-		SecurityUser security = super.getItem(securityId);
-
-		model.addAttribute("page",
-				security.getLogin() + " security roles");
-		model.addAttribute("fields", SecurityRole.FIELDS);
-		model.addAttribute("currentItem", DumpFields.fielder(security));
-		model.addAttribute("items", DumpFields
-				.<SecurityRole> listFielder(new ArrayList<SecurityRole>(security.getRoles())));
-		return PATH_SECURITYROLES;
-	}
 }
