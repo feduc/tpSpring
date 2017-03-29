@@ -19,42 +19,84 @@
 <div class="container">
       <div class="row">
       <#include "../includable/adminNav.ftl">
-      <div class="col-xs-12 col-sm-8 col-md-8">
-         <div class="changeavis">
-            <font color = "white"><h1> ${page} </h1> </font>
-                <form action="${path}/create/do" method="POST" >
-                    <#list fields as field>
-                        <#if field["name"]=="id">
-                        <#elseif field["type"]== "boolean">
-                        <font color = "white"><th>${field["name"]} :</th></br></font>
-                            <input type="text" name="${field["name"]}" pattern="(true|false)"
-                                 title="boolean : true/false" required="required"/>
-                                 </br>
-                        <#elseif field["type"] == "Date">
-                        <font color = "white"> <th>${field["name"]} :</th></br></font>
-                      <input type="text" name="${field["name"]}" required="required" title="Date : YYYY/MM/DD HH:MM:SS"
-                                 pattern="[0-9][0-9][0-9][0-9]\/((02\/(0[1-9]|[12][0-9]))|((0[469]|11)\/(0[1-9]|[12][0-9]|30))|((0[13578]|1[02])\/(0[1-9]|[12][0-9]|3[01])))\s([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]"/>
-                        </br>
-                        <#elseif field["type"] == "int">
-                        <font color = "white"> <th>${field["name"]} :</th></br></font>
-                          <input type="text" name="${field["name"]}" pattern="(-?[0-9]+)" title="integer"
-                                  required="required"/>
-                         </br>
-                        <#elseif field["type"] == "Long">
-                        <font color = "white"> <th>${field["name"]} :</th></br></font>
-                            <input type="text" name="${field["name"]}" pattern="(-?[0-9])+" title="integer"
-                                  required="required"/>
-                         </br>
-                        <#else>
-                        <font color = "white"> <th>${field["name"]} :</th></br></font>
-                        <input type="text" name="${field["name"]}" required="required"/>
-                        </br>
-                       </#if>
-                    </#list>
-               </br>
-                <button type="submit" value="submit">Create</button>
-            </form>
-             </div>
+      <div class="col-xs-12 col-sm-8 col-md-8 pull-right">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Role</th>
+                    <th>Retirer à l'utilisateur</th>
+                </tr>
+            </thead>
+            <tbody>
+                <#if roles??>
+                <#list roles as role>
+                    <tr>
+                        <td>${role["role"]}</td>
+                        <td>
+                            <form action="/admin/${userId}/roles/${role["id"]}/remove" method ="POST">
+                            <input type="hidden" name="userRegistration" value="${userRegistration}"/>
+                            <#include "../includable/security/securityToken.ftl">
+                            <input type="submit" value="Retirer"/>
+                            </form>
+                        </td>
+                    </tr>
+                </#list>
+                </#if>
+            </tbody>
+        </table>
+      </div>
+      <div class="col-xs-12 col-sm-8 col-md-8 pull-right">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Role</th>
+                    <th>Ajouter à l'utilisateur</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>admin</td>
+                    <td>
+                        <form action="/admin/${userId}/roles/1/add" method ="POST">
+                            <input type="hidden" name="userRegistration" value="${userRegistration}"/>
+                            <#include "../includable/security/securityToken.ftl">
+                            <input type="submit" value="Ajouter"/>
+                        </form>
+                    </td>
+                </tr>
+                <tr>
+                    <td>modo</td>
+                    <td>
+                        <form action="/admin/${userId}/roles/2/add" method ="POST">
+                            <input type="hidden" name="userRegistration" value="${userRegistration}"/>
+                            <#include "../includable/security/securityToken.ftl">
+                            <input type="submit" value="Ajouter"/>
+                        </form>
+                    </td>
+                </tr>
+                <tr>
+                    <td>visu</td>
+                    <td>
+                        <form action="/admin/${userId}/roles/3/add" method ="POST">
+                            <input type="hidden" name="userRegistration" value="${userRegistration}"/>
+                            <#include "../includable/security/securityToken.ftl">
+                            <input type="submit" value="Ajouter"/>
+                        </form>
+                    </td>
+                </tr>
+                <tr>
+                    <td>user</td>
+                    <td>
+                        <form action="/admin/${userId}/roles/4/add" method ="POST">
+                            <input type="hidden" name="userRegistration" value="${userRegistration}"/>
+                            <#include "../includable/security/securityToken.ftl">
+                            <input type="submit" value="Ajouter"/>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+      </div>
         </div>
       </div>
       </div>

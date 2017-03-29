@@ -22,14 +22,40 @@
       <div class="col-xs-12 col-sm-8 col-md-8">
          <div class="changeavis">
             <font color = "white"><h1> Choisissez un utilisateur </h1> </font>
-                <form action="admin/choose/" method="GET" >
-                    <font color = "white"> <th>Nom du projet :</th></br></font>
-                    <input type="text" name="userRegistration" placeholder="entrez le matricule de l'utilisateur"/>
-
+                <form action="/admin/chooseUser" method="GET" >
+                    <font color = "white"> <th>Nom de l'utilisateur :</th></br></font>
+                    <input type="text" name="userRegistration" placeholder="entrez le matricule de l'utilisateur" value="${userRegistration}"/>
                </br>
                 <button type="submit" value="submit">Chercher</button>
             </form>
              </div>
+        </div>
+        <div class="col-xs-12 col-sm-8 col-md-8">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Matricule</th>
+                    <th>Prénom</th>
+                    <th>Nom</th>
+                </tr>
+            </thead>
+            <tbody>
+                <#if users??>
+                <#list users as user>
+                    <tr>
+                        <td>
+                            <form action="/admin/${user["id"]}/roles" method ="GET">
+                            <input type="submit" name = "userRegistration" value="${user["registrationCGI"]}"/>
+                            </form>
+                        </td>
+                        <td>${user["firstName"]}</td>
+                        <td>${user["lastName"]}</td>
+                    </tr>
+                </#list>
+                </#if>
+            </tbody>
+        </table>
+      </div>
         </div>
       </div>
       </div>

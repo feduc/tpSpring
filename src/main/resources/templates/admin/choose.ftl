@@ -52,6 +52,8 @@
                         <td>${project["startDate"]}</td>
                         <#if project["endDate"]??>
                             <td>${project["endDate"]}</td>
+                        <#else>
+                            <td></td>
                         </#if>
                     </tr>
                 </#list>

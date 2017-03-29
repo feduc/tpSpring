@@ -130,16 +130,14 @@ public class Project extends DataBaseItem {
 		this.isAnonymous = isAnonymous;
 	}
 
-	public ArrayList<User> getTeam() {
-		if (team == null) {
-			return new ArrayList<User>();
-		} else {
-			return (ArrayList<User>) team;
-		}
+	public Set<User> getTeam() {
+		
+			return team;
+		
 	}
 
-	public void setTeam(ArrayList<User> team) {
-		this.team = (Set<User>) team;
+	public void setTeam(Set<User> team) {
+		this.team = team;
 	}
 
 	public Boolean getIsHidden() {
