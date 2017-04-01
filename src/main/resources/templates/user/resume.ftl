@@ -37,7 +37,15 @@
       <img src='/img/BaniereCGI.jpg'>
     </header>
     <div align = right>
-      <a href ='page de vote.html'><img src='/img/parametre.png' alt='exemple' width='5%'></a>
+
+    <form id= 'formid' action='/user/parameters' method='get'>
+                      <div>
+                            <#include "../includable/security/securityToken.ftl">
+                      </div>
+      <a href =/user/parameters><img src='/img/parametre.png' alt='exemple' width='5%'></a>
+       <button type='submit' style='width:300px' value='submit'>Voir</button>
+      </form>
+
       <a href =/logout><img src='/img/logout.jpg' alt='exemple' width='5%'></a>
     </div>
     <h1 align='center'> Mes Projets en Cours</h1>
@@ -106,14 +114,16 @@
                     </form>
                     </br>
               </#list>
+            <#if visu == true>
               <form action='/project/choose' method='get'>
-
                     <div>
                         <#include "../includable/security/securityToken.ftl">
                     </div>
                 <input type='hidden' name='date' value='${date?c}'/>
                 <button type='submit' style='width:300px' value='submit'>Vers la selection de projet</button>
               </form>
+             <#else>
+             </#if>
             </div>
           </div>
         </div>

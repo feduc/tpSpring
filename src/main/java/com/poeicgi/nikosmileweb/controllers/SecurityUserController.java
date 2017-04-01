@@ -39,7 +39,6 @@ public class SecurityUserController extends AntoineViewBaseController<SecurityUs
 	}
 
 	@RequestMapping(path = "/login/do", method = RequestMethod.GET)
-
 	public String logIn(Model model) {
 
 		User child = secuController.getConnectedUser();
@@ -62,6 +61,7 @@ public class SecurityUserController extends AntoineViewBaseController<SecurityUs
  			return "base/erreur";
  		}
 	}
+	
 
 	@Autowired
 	private ISecurityUserCrudRepository securityUserCrud;

@@ -10,9 +10,12 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,6 +24,7 @@ import com.poeicgi.nikosmileweb.controllers.base.view.ViewBaseController;
 import com.poeicgi.nikosmileweb.controllers.security.SecurityController;
 import com.poeicgi.nikosmileweb.dao.IMoodCrudRepository;
 import com.poeicgi.nikosmileweb.dao.IProjectCrudRepository;
+import com.poeicgi.nikosmileweb.dao.ISecurityRoleCrudRepository;
 import com.poeicgi.nikosmileweb.dao.ISecurityUserCrudRepository;
 import com.poeicgi.nikosmileweb.dao.IUserCrudRepository;
 import com.poeicgi.nikosmileweb.models.ChangeDate;
@@ -38,6 +42,9 @@ public class UserController extends ViewBaseController<User> {
 
 	@Autowired
 	private SecurityController securityController;
+
+	@Autowired
+	ISecurityRoleCrudRepository securityRoleCrud;
 
 	@Autowired
 	private IUserCrudRepository userCrud;
@@ -59,6 +66,7 @@ public class UserController extends ViewBaseController<User> {
 	// vers la page de resume de l'user pour visu globale
 	@RequestMapping(path = "/resume", method = RequestMethod.GET)
 	public String resumeView(Model model) {
+
 
 		GregorianCalendar todayTest = new GregorianCalendar();
 
@@ -99,6 +107,18 @@ public class UserController extends ViewBaseController<User> {
 		model.addAttribute("actualProjectsNames", actualProjectsNames);
 		model.addAttribute("oldProjectsNames", oldProjectsNames);
 
+		User child = securityController.getConnectedUser();
+
+		SecurityUser secu = secuCrud.findOne(child.getId());
+
+		List<String> roles = securityRoleCrud.getRolesForSecurityUser(secu);
+		Boolean visu = false;
+
+		if (roles.contains("ROLE_VISU")) {
+			visu = true;
+		}
+		model.addAttribute("visu", visu);
+
 		return "user/resume";
 	}
 	@Secured("ROLE_ADMIN")
@@ -129,5 +149,65 @@ public class UserController extends ViewBaseController<User> {
 		updateItem(item);
 
 		return REDIRECT + UserController.BASE_URL + "/resume";
+	}
+	@Secured("ROLE_USER")
+	@RequestMapping(path = "/parameters", method = RequestMethod.GET)
+	public String parameters(Model model,
+			@RequestParam(value = "oldPassword", defaultValue = "") String oldPassword,
+			@RequestParam(value = "newPassword1", defaultValue = "") String newPassword1,
+			@RequestParam(value = "newPassword2", defaultValue = "") String newPassword2) {
+
+		model.addAttribute("oldPassword", oldPassword);
+		model.addAttribute("newPassword1", newPassword1);
+		model.addAttribute("newPassword2", newPassword2);
+
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		org.springframework.security.core.userdetails.User userDetail = (org.springframework.security.core.userdetails.User) auth.getPrincipal();
+
+		String password = userDetail.getPassword();
+		model.addAttribute("password", password);
+
+		String login = userDetail.getUsername();
+		model.addAttribute("login", login);
+
+ 			return "user/parameters";
+	}
+
+	@Secured("ROLE_USER")
+	@RequestMapping(path = "/parameters/do", method = RequestMethod.POST)
+	public String logIn(Model model,
+			@RequestParam(value = "oldPassword", defaultValue = "") String oldPassword,
+			@RequestParam(value = "newPassword1", defaultValue = "") String newPassword1,
+			@RequestParam(value = "newPassword2", defaultValue = "") String newPassword2) {
+
+		model.addAttribute("oldPassword", oldPassword);
+		model.addAttribute("newPassword1", newPassword1);
+		model.addAttribute("newPassword2", newPassword2);
+
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		org.springframework.security.core.userdetails.User userDetail = (org.springframework.security.core.userdetails.User) auth.getPrincipal();
+
+		User user = securityController.getConnectedUser();
+		String password = userDetail.getPassword();
+		model.addAttribute("password", password);
+		String login = userDetail.getUsername();
+		model.addAttribute("login", login);
+		SecurityUser security = secuCrud.findByLogin(login);
+
+		Boolean changePass = false;
+
+		if (oldPassword==password && newPassword1 == newPassword2)
+		{
+
+		security.setPassword(newPassword1);
+		secuCrud.save(security);
+		user.setSecurity(security);
+		updateItem(user);
+		changePass = true;
+		}
+
+		model.addAttribute("changePass", changePass);
+
+ 			return "user/parameters";
 	}
 }
