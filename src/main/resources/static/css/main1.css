@@ -13,6 +13,9 @@ html {
     margin: 0 auto;
 
 }
+.leadoption {
+    text-align: center;
+}
 
 .semaine{
     padding: 1em;

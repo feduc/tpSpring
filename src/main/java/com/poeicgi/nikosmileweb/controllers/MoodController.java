@@ -24,10 +24,12 @@ import com.poeicgi.nikosmileweb.controllers.base.view.ViewBaseController;
 import com.poeicgi.nikosmileweb.controllers.security.SecurityController;
 import com.poeicgi.nikosmileweb.dao.IMoodCrudRepository;
 import com.poeicgi.nikosmileweb.dao.IProjectCrudRepository;
+import com.poeicgi.nikosmileweb.dao.ISecurityUserCrudRepository;
 import com.poeicgi.nikosmileweb.dao.IUserCrudRepository;
 import com.poeicgi.nikosmileweb.models.ChangeDate;
 import com.poeicgi.nikosmileweb.models.Mood;
 import com.poeicgi.nikosmileweb.models.User;
+import com.poeicgi.nikosmileweb.models.security.SecurityUser;
 
 @Controller
 @RequestMapping(path = MoodController.BASE_URL)
@@ -47,6 +49,9 @@ public class MoodController extends ViewBaseController<Mood> {
 
 	@Autowired
 	private SecurityController securityController;
+
+	@Autowired
+	private ISecurityUserCrudRepository secuCrud;
 
 	public MoodController() {
 		super(Mood.class, BASE_URL);
@@ -181,6 +186,20 @@ public class MoodController extends ViewBaseController<Mood> {
 			@ModelAttribute("projectName") String projectName)
 
 	{
+
+		Long leaderId;
+		leaderId = projectCrud.findProjectsLeaderByName(projectName).getId();
+
+		User connect = securityController.getConnectedUser();
+
+		Boolean leader = false;
+
+		if (leaderId == connect.getId())
+		{
+			leader=true;
+		}
+
+		model.addAttribute("leader", leader);
 
 		Date sd = new Date(date);
 		Calendar cd = Calendar.getInstance();

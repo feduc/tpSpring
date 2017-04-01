@@ -15,18 +15,30 @@
                     <a href =/logout><img src="/img/logout.jpg" alt="exemple" width="5%"></a></div>
 
   <h1 align="center"> Semaine du ${debutsemaine} / ${mois} au ${finsemaine} / ${mois1} / ${annee}  </h1>
-
+      <#if leader == true>
+      <div align = center
+      <form action="/user/resume" method="POST">
+        <input type="hidden" name="date" value="${date?c}" />
+        <input type="hidden" name="projectName" value="${projectName}" />
+        <input type="checkbox" name="isHidden" value="0" unchecked > projet caché
+        <input type="checkbox" name="isAnonymous" value="0" unchecked > projet anonyme
+        <button type='submit' style='width:100px' value='submit'>Valider</button>
+      </form>
+      </div>
+      <#else>
+      </#if>
+</br>
   <div id="main">
      <div class="container">
       <div class="row">
+
+
 
           <div class="col-xs-12 col-sm-1 col-md-1">
                 <form action="/mood/week/change" method="GET">
                     <input type="hidden" name="date" value="${date?c}" />
                     <input type="hidden" name="projectName" value="${projectName}" />
-
                         <button id="previousWeek" type="submit" name="changeWeek" value="previous"></button>
-
                 </form>
           </div>
           <div class="col-xs-12 col-sm-2 col-md-2">

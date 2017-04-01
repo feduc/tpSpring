@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.poeicgi.nikosmileweb.controllers.base.view.ViewBaseController;
+import com.poeicgi.nikosmileweb.controllers.security.SecurityController;
 import com.poeicgi.nikosmileweb.dao.IMoodCrudRepository;
 import com.poeicgi.nikosmileweb.dao.IProjectCrudRepository;
 import com.poeicgi.nikosmileweb.dao.ISecurityRoleCrudRepository;
@@ -37,6 +38,9 @@ import com.poeicgi.nikosmileweb.models.security.SecurityUser;
 public class AdminController extends ViewBaseController<User> {
 
 	public final static String BASE_URL = "/admin";
+
+	@Autowired
+	private SecurityController securityController;
 
 	@Autowired
 	private IUserCrudRepository userCrud;
@@ -66,17 +70,27 @@ public class AdminController extends ViewBaseController<User> {
 
 	}
 
-	@Secured("ROLE_ADMIN")
+	@Secured({"ROLE_ADMIN","ROLE_MODO"})
 	@RequestMapping(path = "/choose", method = RequestMethod.GET)
 	public String chooseView(Model model, @RequestParam(value = "projectName", defaultValue = "") String projectName) {
 
+		//creation d'une liste de projets en remplissage du resultat de la requete
 		List<Project> projects = null;
 		if (!projectName.equals(null) && !projectName.equals("")) {
 			projects = projectCrud.findProjectsByName("%" + projectName + "%");
 		}
 
-		model.addAttribute("projects", projects);
+		//bloc de mise à jour du navigateur pour modo
+		User child = securityController.getConnectedUser();
+		SecurityUser secu = secuCrud.findOne(child.getId());
+		String admin="Non";
+		List<String> roles = roleCrud.getRolesForSecurityUser(secu);
+		if (roles.contains("ROLE_ADMIN")) {
+			admin = "Oui";
+		}
 
+		model.addAttribute("admin", admin);
+		model.addAttribute("projects", projects);
 		model.addAttribute("projectName", projectName);
 
 		return "admin/choose";
@@ -86,57 +100,69 @@ public class AdminController extends ViewBaseController<User> {
 	@RequestMapping(path = "/chooseUser", method = RequestMethod.GET)
 	public String chooseUserView(Model model, @RequestParam(value = "userRegistration", defaultValue = "") String userRegistration) {
 
+		//creation d'une liste de users en remplissage du resultat de la requete
 		List<User> users = null;
 		if (!userRegistration.equals(null) && !userRegistration.equals("")) {
 			users = userCrud.findUsersByRegistration("%" + userRegistration + "%");
 		}
 
+		//bloc de mise à jour du navigateur pour modo
+		User child = securityController.getConnectedUser();
+		SecurityUser secu = secuCrud.findOne(child.getId());
+		String admin="Non";
+		List<String> roles = roleCrud.getRolesForSecurityUser(secu);
+		if (roles.contains("ROLE_ADMIN")) {
+			admin = "Oui";
+		}
+		model.addAttribute("admin", admin);
+
 		model.addAttribute("users", users);
-
 		model.addAttribute("userRegistration", userRegistration);
-
 		return "admin/chooseUser";
 	}
 
-	@Secured("ROLE_ADMIN")
+	@Secured({"ROLE_ADMIN","ROLE_MODO"})
 	@RequestMapping(path = "/{projectId}/members", method = RequestMethod.GET)
-	public String membersView(Model model,
+	public String membersView(Model model ,@ModelAttribute("admin") String admin,
 			@PathVariable(value = "projectId") String projectId,
 			@RequestParam(value = "projectName", defaultValue = "") String projectName,
 			@RequestParam(value = "userRegistration", defaultValue = "") String userRegistration) {
 
+		//apres renseignement de l'id projet selectionné dans choose remplissage de la liste user correspondant
+		//aux caracteres rentres
 		List<User> users = null;
 		if (!userRegistration.equals(null) && !userRegistration.equals("")) {
 			users = userCrud.findUsersByRegistration("%" + userRegistration + "%");
 		}
 
+		//renseignement de la liste members de ce projet
 		List<User> members = null;
-
 		members = userCrud.findMembersByProject(projectName);
 
+		model.addAttribute("admin", admin);
+
 		model.addAttribute("projectId", projectId);
-
 		model.addAttribute("projectName", projectName);
-
 		model.addAttribute("userRegistration", userRegistration);
-
 		model.addAttribute("members", members);
-
 		model.addAttribute("users", users);
 
+		//affichage des infos dans le ftl appellé
 		return "admin/members";
 	}
 
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(path = "/{userId}/roles", method = RequestMethod.GET)
-	public String rolesView(Model model,
+	public String rolesView(Model model, @ModelAttribute("admin") String admin,
 			@PathVariable(value = "userId") String userId,
 			@RequestParam(value = "userRegistration", defaultValue = "") String userRegistration) {
 
+		//creation d'une liste nulle
 		Set<SecurityRole> roles = null;
 
+		//auquel on vient afficher les roles du user
 		roles = (secuCrud.findOne(Long.parseLong(userId))).getRoles();
-
+		model.addAttribute("admin",admin);
 		model.addAttribute("userId", userId);
 
 		model.addAttribute("userRegistration", userRegistration);
@@ -148,16 +174,21 @@ public class AdminController extends ViewBaseController<User> {
 
 	@Secured({"ROLE_ADMIN","ROLE_MODO"})
 	@RequestMapping(path = "/{projectId}/members/{userId}/remove", method = RequestMethod.POST)
-	public String memberRemove(Model model,
+	public String memberRemove(Model model,@ModelAttribute("admin") String admin,
 			@PathVariable(value = "projectId") String projectId,
 			@PathVariable(value = "userId") String userId,
 			@RequestParam(value = "projectName") String projectName) {
 
+		// recherche du projet en fonction de l'id
 		Project project = projectCrud.findOne(Long.parseLong(projectId));
+		// recherche du projet en fonction de l'id
 		User user = userCrud.findOne(Long.parseLong(userId));
+		//que l'on reture à la liste des projets associe au user
 		user.getProjects().remove(project);
+		//de même dans l'autre sens
 		project.getTeam().remove(user);
-
+		model.addAttribute("admin",admin);
+		//sauvegarde des deux objets
 		userCrud.save(user);
 		projectCrud.save(project);
 
@@ -166,7 +197,7 @@ public class AdminController extends ViewBaseController<User> {
 
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(path = "/{userId}/roles/{roleId}/remove", method = RequestMethod.POST)
-	public String roleRemove(Model model,
+	public String roleRemove(Model model,@ModelAttribute("admin") String admin,
 			@PathVariable(value = "roleId") String roleId,
 			@PathVariable(value = "userId") String userId,
 			@RequestParam(value = "userRegistration") String userRegistration) {
@@ -175,7 +206,7 @@ public class AdminController extends ViewBaseController<User> {
 		SecurityRole role = roleCrud.findOne(Long.parseLong(roleId));
 		secu.getRoles().remove(role);
 		role.getSecurities().remove(secu);
-
+		model.addAttribute("admin",admin);
 		secuCrud.save(secu);
 		roleCrud.save(role);
 
@@ -184,7 +215,7 @@ public class AdminController extends ViewBaseController<User> {
 
 	@Secured({"ROLE_ADMIN","ROLE_MODO"})
 	@RequestMapping(path = "/{projectId}/members/{userId}/add", method = RequestMethod.POST)
-	public String memberAdd(Model model,
+	public String memberAdd(Model model,@ModelAttribute("admin") String admin,
 			@PathVariable(value = "projectId") String projectId,
 			@PathVariable(value = "userId") String userId,
 			@RequestParam(value = "projectName") String projectName) {
@@ -194,6 +225,8 @@ public class AdminController extends ViewBaseController<User> {
 		user.getProjects().add(project);
 		project.getTeam().add(user);
 
+		model.addAttribute("admin",admin);
+
 		userCrud.save(user);
 		projectCrud.save(project);
 
@@ -202,16 +235,18 @@ public class AdminController extends ViewBaseController<User> {
 
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(path = "/{userId}/roles/{roleId}/add", method = RequestMethod.POST)
-	public String roleAdd(Model model,
+	public String roleAdd(Model model,@ModelAttribute("admin") String admin,
 			@PathVariable(value = "roleId") String roleId,
 			@PathVariable(value = "userId") String userId,
 			@RequestParam(value = "userRegistration") String userRegistration) {
 
 		SecurityUser secu = secuCrud.findOne(Long.parseLong(userId));
 		SecurityRole role = roleCrud.findOne(Long.parseLong(roleId));
+
 		secu.getRoles().add(role);
 		role.getSecurities().add(secu);
 
+		model.addAttribute("admin",admin);
 		secuCrud.save(secu);
 		roleCrud.save(role);
 

@@ -67,7 +67,6 @@ public class UserController extends ViewBaseController<User> {
 	@RequestMapping(path = "/resume", method = RequestMethod.GET)
 	public String resumeView(Model model) {
 
-
 		GregorianCalendar todayTest = new GregorianCalendar();
 
 		todayTest.setTime(new Date());
@@ -81,6 +80,7 @@ public class UserController extends ViewBaseController<User> {
 
 		User user = securityController.getConnectedUser();
 
+
 		model.addAttribute("date", today.getTime());
 		Integer satisfaction = null;
 		if (moodCrud.findLastVote(user).compareTo(today)<0){ satisfaction = 40;}
@@ -91,6 +91,7 @@ public class UserController extends ViewBaseController<User> {
 		ArrayList<Map<String,Object>> actualProjectsInfo = new ArrayList<Map<String,Object>>();
 
 		int i=0;
+
 		for (String projectName : actualProjectsNames) {
 			actualProjectsInfo.add(new HashMap<String,Object>());
 			(actualProjectsInfo.get(i)).put("name", projectName);
@@ -98,7 +99,6 @@ public class UserController extends ViewBaseController<User> {
 			(actualProjectsInfo.get(i)).put("Normal", moodCrud.countMoodsBySatisfactionForSummary(projectName, today, 0));
 			(actualProjectsInfo.get(i)).put("Mecontent", moodCrud.countMoodsBySatisfactionForSummary(projectName, today, -1));
 			i++;
-
 		}
 
 		List<String> oldProjectsNames = projectCrud.findOldProjectsByUser(user, today);
@@ -112,19 +112,45 @@ public class UserController extends ViewBaseController<User> {
 		SecurityUser secu = secuCrud.findOne(child.getId());
 
 		List<String> roles = securityRoleCrud.getRolesForSecurityUser(secu);
+
+		Boolean admin=false;
+
+		if (roles.contains("ROLE_ADMIN")) {
+			admin = true;
+		}
 		Boolean visu = false;
 
 		if (roles.contains("ROLE_VISU")) {
 			visu = true;
 		}
-		model.addAttribute("visu", visu);
 
+		Boolean modo = false;
+
+		if (roles.contains("ROLE_MODO")) {
+			modo = true;
+		}
+
+
+		model.addAttribute("admin", admin);
+		model.addAttribute("visu", visu);
+		model.addAttribute("modo", modo);
 		return "user/resume";
 	}
 	@Secured("ROLE_ADMIN")
 	@Override
 	@RequestMapping(path = "/create/", method = RequestMethod.GET)
 	public String createView(Model model){
+
+		User child = securityController.getConnectedUser();
+		SecurityUser secu = secuCrud.findOne(child.getId());
+
+		String admin="Non";
+		List<String> roles = securityRoleCrud.getRolesForSecurityUser(secu);
+		if (roles.contains("ROLE_ADMIN")) {
+			admin = "Oui";
+		}
+
+		model.addAttribute("admin", admin);
 
 		String pageName = "Create a User";
 
@@ -150,6 +176,7 @@ public class UserController extends ViewBaseController<User> {
 
 		return REDIRECT + UserController.BASE_URL + "/resume";
 	}
+
 	@Secured("ROLE_USER")
 	@RequestMapping(path = "/parameters", method = RequestMethod.GET)
 	public String parameters(Model model,

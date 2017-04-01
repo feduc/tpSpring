@@ -122,8 +122,28 @@
                 <input type='hidden' name='date' value='${date?c}'/>
                 <button type='submit' style='width:300px' value='submit'>Vers la selection de projet</button>
               </form>
+
              <#else>
              </#if>
+            <#if admin == true>
+                <form action='/user/create/' method='get'>
+                    <div>
+                        <#include "../includable/security/securityToken.ftl">
+                    </div>
+                <button type='submit' style='width:300px' value='submit'>Page Administrateur</button>
+              </form>
+              <#else>
+             </#if>
+            <#if modo == true>
+                <form action='/admin/choose/' method='get'>
+                    <div>
+                        <#include "../includable/security/securityToken.ftl">
+                    </div>
+                <button type='submit' style='width:300px' value='submit'>Page Modérateur</button>
+              </form>
+              <#else>
+             </#if>
+
             </div>
           </div>
         </div>

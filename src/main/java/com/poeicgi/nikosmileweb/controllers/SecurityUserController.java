@@ -4,6 +4,7 @@ import java.util.List;
 
 
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -49,6 +50,13 @@ public class SecurityUserController extends AntoineViewBaseController<SecurityUs
 
 
 		if (roles.contains("ROLE_ADMIN")) {
+
+			String admin="Non";
+			if (roles.contains("ROLE_ADMIN")) {
+				admin = "Oui";
+			}
+			model.addAttribute("admin", admin);
+
 			return REDIRECT+ "/user/create/";
 
 		} else if (roles.contains("ROLE_MODO"))  {
@@ -61,7 +69,7 @@ public class SecurityUserController extends AntoineViewBaseController<SecurityUs
  			return "base/erreur";
  		}
 	}
-	
+
 
 	@Autowired
 	private ISecurityUserCrudRepository securityUserCrud;

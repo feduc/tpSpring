@@ -3,6 +3,7 @@ package com.poeicgi.nikosmileweb.controllers.base.view;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +15,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.poeicgi.nikosmileweb.controllers.base.BaseController;
+import com.poeicgi.nikosmileweb.controllers.security.SecurityController;
 import com.poeicgi.nikosmileweb.dao.IMoodCrudRepository;
+import com.poeicgi.nikosmileweb.dao.ISecurityRoleCrudRepository;
+import com.poeicgi.nikosmileweb.dao.ISecurityUserCrudRepository;
 import com.poeicgi.nikosmileweb.dao.base.IBaseCrudRepository;
 import com.poeicgi.nikosmileweb.models.User;
 import com.poeicgi.nikosmileweb.models.modelbase.DataBaseItem;
+import com.poeicgi.nikosmileweb.models.security.SecurityUser;
 import com.poeicgi.nikosmileweb.utils.DumpFields;
 
 public abstract class ViewBaseController<T extends DataBaseItem> extends BaseController<T>{
@@ -43,7 +48,14 @@ public abstract class ViewBaseController<T extends DataBaseItem> extends BaseCon
 	protected String baseView;
 
 
+	@Autowired
+	private SecurityController securityController;
 
+	@Autowired
+	private ISecurityUserCrudRepository secuCrud;
+
+	@Autowired
+	private ISecurityRoleCrudRepository roleCrud;
 
 
 	private String baseName;
@@ -85,7 +97,7 @@ public abstract class ViewBaseController<T extends DataBaseItem> extends BaseCon
 
 	@Secured({"ROLE_ADMIN", "ROLE_MODO"})
 	@RequestMapping(path = "/{id}/update", method = RequestMethod.GET)
-	public String updateView(Model model,@PathVariable long id){
+	public String updateView(Model model,@PathVariable long id, @ModelAttribute("admin") String admin){
 
 		T item = (T) baseCrud.findOne(id);
 
@@ -115,11 +127,22 @@ public abstract class ViewBaseController<T extends DataBaseItem> extends BaseCon
 		return "base/delete";
 	}
 
-	@Secured({"ROLE_ADMIN", "ROLE_MODO"})
+	@Secured({"ROLE_ADMIN"})
 	@RequestMapping(path = "/create/", method = RequestMethod.GET)
 	public String createView(Model model){
 
 		String pageName = "Create a "+ baseName;
+
+		User child = securityController.getConnectedUser();
+		SecurityUser secu = secuCrud.findOne(child.getId());
+
+		String admin="Non";
+		List<String> roles = roleCrud.getRolesForSecurityUser(secu);
+		if (roles.contains("ROLE_ADMIN")) {
+			admin = "Oui";
+		}
+
+		model.addAttribute("admin", admin);
 
 		model.addAttribute("fields", DumpFields.createContentsEmpty(super.getClazz()).getMyFields());
 		model.addAttribute("page", pageName);
@@ -130,7 +153,7 @@ public abstract class ViewBaseController<T extends DataBaseItem> extends BaseCon
 
 	@Secured({"ROLE_ADMIN", "ROLE_MODO"})
 	@RequestMapping(path = "/create/do", method = RequestMethod.POST)
-	public String create(Model model, T item){
+	public String create(Model model, T item, @ModelAttribute("admin") String admin){
 
 		insertItem(item);
 
@@ -145,7 +168,7 @@ public abstract class ViewBaseController<T extends DataBaseItem> extends BaseCon
 
 	@Secured({"ROLE_ADMIN", "ROLE_MODO"})
 	@RequestMapping(path = "/{id}/update/do", method = RequestMethod.POST)
-	public String update(Model model, T item){
+	public String update(Model model, T item, @ModelAttribute("admin") String admin){
 
 		updateItem(item);
 
@@ -160,7 +183,7 @@ public abstract class ViewBaseController<T extends DataBaseItem> extends BaseCon
 
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(path = "/{id}/delete/do", method = RequestMethod.POST)
-	public String delete(Model model, T item){
+	public String delete(Model model, T item, @ModelAttribute("admin") String admin){
 
 		deleteItem(item);
 
@@ -175,7 +198,7 @@ public abstract class ViewBaseController<T extends DataBaseItem> extends BaseCon
 
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(path = "/{id}/update/{child}", method = RequestMethod.GET)
-	public String updateChildView(Model model,@PathVariable String child,@PathVariable Long id){
+	public String updateChildView(Model model,@PathVariable String child,@PathVariable Long id, @ModelAttribute("admin") String admin){
 
 		T item = (T) baseCrud.findOne(id);
 
