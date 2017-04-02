@@ -28,6 +28,7 @@ import com.poeicgi.nikosmileweb.dao.ISecurityUserCrudRepository;
 import com.poeicgi.nikosmileweb.dao.IUserCrudRepository;
 import com.poeicgi.nikosmileweb.models.ChangeDate;
 import com.poeicgi.nikosmileweb.models.Mood;
+import com.poeicgi.nikosmileweb.models.Project;
 import com.poeicgi.nikosmileweb.models.User;
 import com.poeicgi.nikosmileweb.models.security.SecurityUser;
 
@@ -782,4 +783,5 @@ public class MoodController extends ViewBaseController<Mood> {
 		return REDIRECT + MoodController.BASE_URL + "/month/" ;
 
 	}
+
 }

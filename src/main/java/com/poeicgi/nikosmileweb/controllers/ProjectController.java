@@ -42,12 +42,21 @@ public class ProjectController extends ViewBaseController<Project>{
 		if (!projectName.equals(null) && !projectName.equals("")) {
 			projects = projectCrud.findProjectsByName("%" + projectName + "%");
 		}
-
-		model.addAttribute("date", date);
+		model.addAttribute("projectName", projectName);
 		model.addAttribute("projects", projects);
 
 		model.addAttribute("projectName", projectName);
 
 		return "visu/choose_proj";
 	}
+
+
+	@Secured("ROLE_USER")
+	@RequestMapping(path = "/HiddenAnonymous", method = RequestMethod.POST)
+	public String projectParam(Model model, @RequestParam(value = "projectName", defaultValue = "") String projectName) {
+
+		model.addAttribute("projectName", projectName);
+		return REDIRECT + UserController.BASE_URL + "/resume";
+	}
+
 }

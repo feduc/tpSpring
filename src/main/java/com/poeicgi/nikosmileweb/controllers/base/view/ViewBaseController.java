@@ -97,7 +97,7 @@ public abstract class ViewBaseController<T extends DataBaseItem> extends BaseCon
 
 	@Secured({"ROLE_ADMIN", "ROLE_MODO"})
 	@RequestMapping(path = "/{id}/update", method = RequestMethod.GET)
-	public String updateView(Model model,@PathVariable long id, @ModelAttribute("admin") String admin){
+	public String updateView(Model model,@PathVariable long id){
 
 		T item = (T) baseCrud.findOne(id);
 
@@ -133,16 +133,17 @@ public abstract class ViewBaseController<T extends DataBaseItem> extends BaseCon
 
 		String pageName = "Create a "+ baseName;
 
+
+		//bloc de mise à jour du navigateur pour modo
 		User child = securityController.getConnectedUser();
 		SecurityUser secu = secuCrud.findOne(child.getId());
-
 		String admin="Non";
 		List<String> roles = roleCrud.getRolesForSecurityUser(secu);
 		if (roles.contains("ROLE_ADMIN")) {
 			admin = "Oui";
 		}
-
 		model.addAttribute("admin", admin);
+
 
 		model.addAttribute("fields", DumpFields.createContentsEmpty(super.getClazz()).getMyFields());
 		model.addAttribute("page", pageName);
@@ -153,7 +154,7 @@ public abstract class ViewBaseController<T extends DataBaseItem> extends BaseCon
 
 	@Secured({"ROLE_ADMIN", "ROLE_MODO"})
 	@RequestMapping(path = "/create/do", method = RequestMethod.POST)
-	public String create(Model model, T item, @ModelAttribute("admin") String admin){
+	public String create(Model model, T item){
 
 		insertItem(item);
 
@@ -168,7 +169,7 @@ public abstract class ViewBaseController<T extends DataBaseItem> extends BaseCon
 
 	@Secured({"ROLE_ADMIN", "ROLE_MODO"})
 	@RequestMapping(path = "/{id}/update/do", method = RequestMethod.POST)
-	public String update(Model model, T item, @ModelAttribute("admin") String admin){
+	public String update(Model model, T item){
 
 		updateItem(item);
 
@@ -183,7 +184,7 @@ public abstract class ViewBaseController<T extends DataBaseItem> extends BaseCon
 
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(path = "/{id}/delete/do", method = RequestMethod.POST)
-	public String delete(Model model, T item, @ModelAttribute("admin") String admin){
+	public String delete(Model model, T item){
 
 		deleteItem(item);
 
@@ -198,7 +199,7 @@ public abstract class ViewBaseController<T extends DataBaseItem> extends BaseCon
 
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(path = "/{id}/update/{child}", method = RequestMethod.GET)
-	public String updateChildView(Model model,@PathVariable String child,@PathVariable Long id, @ModelAttribute("admin") String admin){
+	public String updateChildView(Model model,@PathVariable String child,@PathVariable Long id){
 
 		T item = (T) baseCrud.findOne(id);
 

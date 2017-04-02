@@ -141,16 +141,16 @@ public class UserController extends ViewBaseController<User> {
 	@RequestMapping(path = "/create/", method = RequestMethod.GET)
 	public String createView(Model model){
 
+		//bloc de mise à jour du navigateur pour modo
 		User child = securityController.getConnectedUser();
 		SecurityUser secu = secuCrud.findOne(child.getId());
-
 		String admin="Non";
 		List<String> roles = securityRoleCrud.getRolesForSecurityUser(secu);
 		if (roles.contains("ROLE_ADMIN")) {
 			admin = "Oui";
 		}
-
 		model.addAttribute("admin", admin);
+		//
 
 		String pageName = "Create a User";
 

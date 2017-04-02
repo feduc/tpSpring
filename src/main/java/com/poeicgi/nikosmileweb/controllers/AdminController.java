@@ -123,7 +123,7 @@ public class AdminController extends ViewBaseController<User> {
 
 	@Secured({"ROLE_ADMIN","ROLE_MODO"})
 	@RequestMapping(path = "/{projectId}/members", method = RequestMethod.GET)
-	public String membersView(Model model ,@ModelAttribute("admin") String admin,
+	public String membersView(Model model ,
 			@PathVariable(value = "projectId") String projectId,
 			@RequestParam(value = "projectName", defaultValue = "") String projectName,
 			@RequestParam(value = "userRegistration", defaultValue = "") String userRegistration) {
@@ -139,6 +139,14 @@ public class AdminController extends ViewBaseController<User> {
 		List<User> members = null;
 		members = userCrud.findMembersByProject(projectName);
 
+		//bloc de mise à jour du navigateur pour modo
+		User child = securityController.getConnectedUser();
+		SecurityUser secu = secuCrud.findOne(child.getId());
+		String admin="Non";
+		List<String> roles = roleCrud.getRolesForSecurityUser(secu);
+		if (roles.contains("ROLE_ADMIN")) {
+			admin = "Oui";
+		}
 		model.addAttribute("admin", admin);
 
 		model.addAttribute("projectId", projectId);
@@ -153,16 +161,27 @@ public class AdminController extends ViewBaseController<User> {
 
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(path = "/{userId}/roles", method = RequestMethod.GET)
-	public String rolesView(Model model, @ModelAttribute("admin") String admin,
+	public String rolesView(Model model,
 			@PathVariable(value = "userId") String userId,
 			@RequestParam(value = "userRegistration", defaultValue = "") String userRegistration) {
+
 
 		//creation d'une liste nulle
 		Set<SecurityRole> roles = null;
 
 		//auquel on vient afficher les roles du user
 		roles = (secuCrud.findOne(Long.parseLong(userId))).getRoles();
-		model.addAttribute("admin",admin);
+
+		//bloc de mise à jour du navigateur pour modo
+		User child = securityController.getConnectedUser();
+		SecurityUser secu = secuCrud.findOne(child.getId());
+		String admin="Non";
+		List<String> roles2 = roleCrud.getRolesForSecurityUser(secu);
+		if (roles2.contains("ROLE_ADMIN")) {
+			admin = "Oui";
+		}
+		model.addAttribute("admin", admin);
+
 		model.addAttribute("userId", userId);
 
 		model.addAttribute("userRegistration", userRegistration);
@@ -174,7 +193,7 @@ public class AdminController extends ViewBaseController<User> {
 
 	@Secured({"ROLE_ADMIN","ROLE_MODO"})
 	@RequestMapping(path = "/{projectId}/members/{userId}/remove", method = RequestMethod.POST)
-	public String memberRemove(Model model,@ModelAttribute("admin") String admin,
+	public String memberRemove(Model model,
 			@PathVariable(value = "projectId") String projectId,
 			@PathVariable(value = "userId") String userId,
 			@RequestParam(value = "projectName") String projectName) {
@@ -183,11 +202,10 @@ public class AdminController extends ViewBaseController<User> {
 		Project project = projectCrud.findOne(Long.parseLong(projectId));
 		// recherche du projet en fonction de l'id
 		User user = userCrud.findOne(Long.parseLong(userId));
-		//que l'on reture à la liste des projets associe au user
+		//que l'on retire à la liste des projets associe au user
 		user.getProjects().remove(project);
 		//de même dans l'autre sens
 		project.getTeam().remove(user);
-		model.addAttribute("admin",admin);
 		//sauvegarde des deux objets
 		userCrud.save(user);
 		projectCrud.save(project);
@@ -197,7 +215,7 @@ public class AdminController extends ViewBaseController<User> {
 
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(path = "/{userId}/roles/{roleId}/remove", method = RequestMethod.POST)
-	public String roleRemove(Model model,@ModelAttribute("admin") String admin,
+	public String roleRemove(Model model,
 			@PathVariable(value = "roleId") String roleId,
 			@PathVariable(value = "userId") String userId,
 			@RequestParam(value = "userRegistration") String userRegistration) {
@@ -206,7 +224,6 @@ public class AdminController extends ViewBaseController<User> {
 		SecurityRole role = roleCrud.findOne(Long.parseLong(roleId));
 		secu.getRoles().remove(role);
 		role.getSecurities().remove(secu);
-		model.addAttribute("admin",admin);
 		secuCrud.save(secu);
 		roleCrud.save(role);
 
@@ -215,7 +232,7 @@ public class AdminController extends ViewBaseController<User> {
 
 	@Secured({"ROLE_ADMIN","ROLE_MODO"})
 	@RequestMapping(path = "/{projectId}/members/{userId}/add", method = RequestMethod.POST)
-	public String memberAdd(Model model,@ModelAttribute("admin") String admin,
+	public String memberAdd(Model model,
 			@PathVariable(value = "projectId") String projectId,
 			@PathVariable(value = "userId") String userId,
 			@RequestParam(value = "projectName") String projectName) {
@@ -225,8 +242,6 @@ public class AdminController extends ViewBaseController<User> {
 		user.getProjects().add(project);
 		project.getTeam().add(user);
 
-		model.addAttribute("admin",admin);
-
 		userCrud.save(user);
 		projectCrud.save(project);
 
@@ -235,7 +250,7 @@ public class AdminController extends ViewBaseController<User> {
 
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(path = "/{userId}/roles/{roleId}/add", method = RequestMethod.POST)
-	public String roleAdd(Model model,@ModelAttribute("admin") String admin,
+	public String roleAdd(Model model,
 			@PathVariable(value = "roleId") String roleId,
 			@PathVariable(value = "userId") String userId,
 			@RequestParam(value = "userRegistration") String userRegistration) {
@@ -246,7 +261,6 @@ public class AdminController extends ViewBaseController<User> {
 		secu.getRoles().add(role);
 		role.getSecurities().add(secu);
 
-		model.addAttribute("admin",admin);
 		secuCrud.save(secu);
 		roleCrud.save(role);
 
