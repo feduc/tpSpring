@@ -20,8 +20,16 @@
                  <div align = center>
                       <input type='hidden' name='projectName' value='${projectName}' />
                       <input type='hidden' name='date' value='${date?c}'/>
-                      <input type="checkbox" name="isHidden" value="0" unchecked > projet caché
-                      <input type="checkbox" name="isAnonymous" value="0" unchecked > projet anonyme
+                      <#if isHidden ==true>
+                      <input type="checkbox" name="isHidden" value="${isHidden?c}" checked > projet caché
+                      <#else>
+                      <input type="checkbox" name="isHidden" value="${isHidden?c}" unchecked> projet caché
+                      </#if>
+                      <#if isAnonymous ==true>
+                      <input type="checkbox" name="isAnonymous" value="${isAnonymous?c}" checked> projet anonyme
+                      <#else>
+                      <input type="checkbox" name="isAnonymous" value="${isAnonymous?c}" unchecked> projet anonyme
+                      </#if>
                       <#include "../includable/security/securityToken.ftl">
                       <button type='submit' style='width:100px' value='submit'>Valider</button>
                   </div>

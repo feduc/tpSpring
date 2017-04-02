@@ -496,6 +496,12 @@ public class MoodController extends ViewBaseController<Mood> {
 			}
 		model.addAttribute("encoursvendredi", encoursvendredi);
 
+		Boolean isAnonymous = projectCrud.findAnonymousStatusbyName(projectName);
+		Boolean isHidden = projectCrud.findHiddenStatusbyName(projectName);
+
+		model.addAttribute("isAnonymous", isAnonymous);
+		model.addAttribute("isHidden", isHidden);
+
 		return "mood/week";
 	}
 
@@ -538,6 +544,8 @@ public class MoodController extends ViewBaseController<Mood> {
 		redirectAttributes.addAttribute("projectName", projectName);
 		redirectAttributes.addAttribute("date", sd.getTime());
 
+
+
 		return REDIRECT + MoodController.BASE_URL + "/week/" ;
 
 	}
@@ -574,6 +582,21 @@ public class MoodController extends ViewBaseController<Mood> {
 				(dayInfos.get(i)).put("satis", mood.getSatisfaction());
 				(dayInfos.get(i)).put("comment", mood.getCommentSat());
 
+				Boolean anonymous = projectCrud.findAnonymousStatusbyName(projectName);
+
+				String FirstName = "";
+				String LastName = "";
+
+				if(anonymous=false){
+				FirstName = mood.getUser().getFirstName();
+				LastName = mood.getUser().getFirstName();
+				(dayInfos.get(i)).put("FirstName",FirstName);
+				(dayInfos.get(i)).put("LastName",LastName);
+				}
+				else if (anonymous=true) {
+				(dayInfos.get(i)).put("FirstName",FirstName);
+				(dayInfos.get(i)).put("LastName",LastName);
+				}
 				i++;
 
 			}

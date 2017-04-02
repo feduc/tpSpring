@@ -39,7 +39,8 @@
                   <#if info["comment"]?has_content>
                     <font color="white">${info["comment"]}</font>
                   </#if>
-
+                    <font color="white">${info["FirstName"]}</font>
+                    <font color="white">${info["LastName"]}</font>
                 </div>
               </div>
               </div>

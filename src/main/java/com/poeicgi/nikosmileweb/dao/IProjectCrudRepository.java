@@ -46,4 +46,12 @@ public interface IProjectCrudRepository extends IBaseCrudRepository<Project>{
 				+ " WHERE project.name = :name")
 		User findProjectsLeaderByName(@Param("name") String name);
 
+		@Query("SELECT project.isHidden FROM Project project "
+				+ " WHERE project.name = :name")
+		Boolean findHiddenStatusbyName(@Param("name") String name);
+
+		@Query("SELECT project.isAnonymous FROM Project project "
+				+ " WHERE project.name = :name")
+		Boolean findAnonymousStatusbyName(@Param("name") String name);
+
 }

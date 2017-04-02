@@ -29,7 +29,7 @@
                 <input style="width:75%" type="submit" value="Projet"/>
             </form>
             <#else>
-             </#if>
+            </#if>
 
             <form id= "formid" action="/admin/choose" method="get">
                 <div>

@@ -47,6 +47,7 @@
             <tbody>
                 <#if projects??>
                 <#list projects as project>
+                    <#if visu == true>
                     <tr>
                         <td>
                             <form action='/mood/week/change' method ="GET">
@@ -60,6 +61,23 @@
                             <td>${project["endDate"]}</td>
                         </#if>
                     </tr>
+                    <#else>
+                    <#if project["isHidden"] = false>
+                      <tr>
+                        <td>
+                            <form action='/mood/week/change' method ="GET">
+                            <input type='hidden' name='date' value='${date?c}'/>
+                            <input type='hidden' name='changeWeek'/>
+                            <input type="submit" name = "projectName" value="${project["name"]}"/>
+                            </form>
+                        </td>
+                        <td>${project["startDate"]}</td>
+                        <#if project["endDate"]??>
+                            <td>${project["endDate"]}</td>
+                        </#if>
+                    </tr>
+                    </#if>
+                </#if>
                 </#list>
                 </#if>
             </tbody>
