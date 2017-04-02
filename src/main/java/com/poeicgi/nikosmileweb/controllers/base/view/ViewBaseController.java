@@ -137,10 +137,10 @@ public abstract class ViewBaseController<T extends DataBaseItem> extends BaseCon
 		//bloc de mise à jour du navigateur pour modo
 		User child = securityController.getConnectedUser();
 		SecurityUser secu = secuCrud.findOne(child.getId());
-		String admin="Non";
+		Boolean admin=false;
 		List<String> roles = roleCrud.getRolesForSecurityUser(secu);
 		if (roles.contains("ROLE_ADMIN")) {
-			admin = "Oui";
+			admin = true;
 		}
 		model.addAttribute("admin", admin);
 

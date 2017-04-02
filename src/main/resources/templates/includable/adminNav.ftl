@@ -1,7 +1,7 @@
 <div class="col-xs-12 col-sm-4 col-md-4">
          <div class="changeavis">
             <p style="align:center" ><font color="white"><b>Creation/Modification</b></font></p>
-            <#if admin == "Oui">
+            <#if admin == true>
                 <form id= "formid" action="/user/create/" method="get">
                     <div>
                         <#include "../includable/security/securityToken.ftl">
@@ -11,7 +11,7 @@
             <#else>
              </#if>
 
-            <#if admin == "Oui">
+            <#if admin == true>
                 <form id= "formid" action="/admin/chooseUser" method="get">
                     <div>
                         <#include "../includable/security/securityToken.ftl">
@@ -21,7 +21,7 @@
             <#else>
              </#if>
 
-            <#if admin == "Oui">
+            <#if admin == true>
             <form id= "formid" action="/project/create/" method="get">
                 <div>
                     <#include "../includable/security/securityToken.ftl">

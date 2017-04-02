@@ -83,11 +83,12 @@ public class AdminController extends ViewBaseController<User> {
 		//bloc de mise à jour du navigateur pour modo
 		User child = securityController.getConnectedUser();
 		SecurityUser secu = secuCrud.findOne(child.getId());
-		String admin="Non";
+		Boolean admin= false;
 		List<String> roles = roleCrud.getRolesForSecurityUser(secu);
 		if (roles.contains("ROLE_ADMIN")) {
-			admin = "Oui";
+			admin = true;
 		}
+		//
 
 		model.addAttribute("admin", admin);
 		model.addAttribute("projects", projects);
@@ -109,10 +110,10 @@ public class AdminController extends ViewBaseController<User> {
 		//bloc de mise à jour du navigateur pour modo
 		User child = securityController.getConnectedUser();
 		SecurityUser secu = secuCrud.findOne(child.getId());
-		String admin="Non";
+		Boolean admin= false;
 		List<String> roles = roleCrud.getRolesForSecurityUser(secu);
 		if (roles.contains("ROLE_ADMIN")) {
-			admin = "Oui";
+			admin = true;
 		}
 		model.addAttribute("admin", admin);
 
@@ -142,10 +143,10 @@ public class AdminController extends ViewBaseController<User> {
 		//bloc de mise à jour du navigateur pour modo
 		User child = securityController.getConnectedUser();
 		SecurityUser secu = secuCrud.findOne(child.getId());
-		String admin="Non";
+		Boolean admin= false;
 		List<String> roles = roleCrud.getRolesForSecurityUser(secu);
 		if (roles.contains("ROLE_ADMIN")) {
-			admin = "Oui";
+			admin = true;
 		}
 		model.addAttribute("admin", admin);
 
@@ -175,17 +176,16 @@ public class AdminController extends ViewBaseController<User> {
 		//bloc de mise à jour du navigateur pour modo
 		User child = securityController.getConnectedUser();
 		SecurityUser secu = secuCrud.findOne(child.getId());
-		String admin="Non";
+		Boolean admin= false;
 		List<String> roles2 = roleCrud.getRolesForSecurityUser(secu);
 		if (roles2.contains("ROLE_ADMIN")) {
-			admin = "Oui";
+			admin = true;
 		}
 		model.addAttribute("admin", admin);
+		//
 
 		model.addAttribute("userId", userId);
-
 		model.addAttribute("userRegistration", userRegistration);
-
 		model.addAttribute("roles", roles);
 
 		return "admin/roles";

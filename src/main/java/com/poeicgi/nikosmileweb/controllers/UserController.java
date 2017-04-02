@@ -144,10 +144,10 @@ public class UserController extends ViewBaseController<User> {
 		//bloc de mise à jour du navigateur pour modo
 		User child = securityController.getConnectedUser();
 		SecurityUser secu = secuCrud.findOne(child.getId());
-		String admin="Non";
+		Boolean admin= false;
 		List<String> roles = securityRoleCrud.getRolesForSecurityUser(secu);
 		if (roles.contains("ROLE_ADMIN")) {
-			admin = "Oui";
+			admin = true;
 		}
 		model.addAttribute("admin", admin);
 		//
