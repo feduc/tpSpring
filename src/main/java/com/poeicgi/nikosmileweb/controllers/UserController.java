@@ -42,6 +42,9 @@ public class UserController extends ViewBaseController<User> {
 
 	@Autowired
 	private SecurityController securityController;
+	
+	@Autowired
+	private SecurityUserController securityCont;
 
 	@Autowired
 	ISecurityRoleCrudRepository securityRoleCrud;
@@ -163,10 +166,14 @@ public class UserController extends ViewBaseController<User> {
 	@RequestMapping(path = "/create/done", method = RequestMethod.POST)
 	public String create(Model model, @ModelAttribute User item, @ModelAttribute SecurityUser security) {
 
+		String codedPass = securityCont.codeData(security.getPassword());
+		
 		insertItem(item);
 
+		security.setPassword(codedPass);
 		security.setId(item.getId());
 		security.setEnable(true);
+
 
 		secuCrud.save(security);
 
