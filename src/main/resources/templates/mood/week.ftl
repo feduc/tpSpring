@@ -151,9 +151,7 @@
                     <input type="hidden" name="projectName" value="${projectName}" />
 
                         <button id="nextWeek" type="submit" name="changeWeek" value="next"></button>
-
                 </form>
-
            </div>
         </div>
         </br>
