@@ -76,24 +76,31 @@
           <div class='col-xs-12 col-sm-4 col-md-4'>
             <div class='changeavis'>
               <p> <font color='white'>Mon humeur du jour </font></p>
-
-              <#if smile == 1>
-                <img src='/img/niko-vert.png' alt='exemple' width='24%'>
-              <#elseif smile == 0>
-                <img src='/img/niko-jaune.png' alt='exemple' width='24%'>
-              <#elseif smile == -1>
-                <img src='/img/niko-rouge.png' alt='exemple' width='24%'>
-              <#else>
-                <img src='/img/niko-blanc.png' alt='exemple' width='24%'>
-              </#if>
-
-              </br>
               <form id= 'formid' action='/mood/vote/' method='get'>
                     <div>
                         <#include "../includable/security/securityToken.ftl">
                     </div>
-                <font color='black'><input type='submit' color = 'black' name='Repondre 'style='width:200px'value="Changer d'avis"/>
-                </font>
+                <#if smile == 1>
+                    <img src='/img/niko-vert.png' alt='exemple' width='24%'>
+                    <br/>
+                    <font color='black'><input type='submit' color = 'black' name='Repondre 'style='width:200px'value="Changer d'avis"/>
+                    </font>
+                <#elseif smile == 0>
+                    <img src='/img/niko-jaune.png' alt='exemple' width='24%'>
+                    <br/>
+                    <font color='black'><input type='submit' color = 'black' name='Repondre 'style='width:200px'value="Changer d'avis"/>
+                    </font>
+                <#elseif smile == -1>
+                    <img src='/img/niko-rouge.png' alt='exemple' width='24%'>
+                    <br/>
+                    <font color='black'><input type='submit' color = 'black' name='Repondre 'style='width:200px'value="Changer d'avis"/>
+                    </font>
+                <#else>
+                    <img src='/img/niko-blanc.png' alt='exemple' width='24%'>
+                    <br/>
+                    <font color='black'><input type='submit' color = 'black' name='Repondre 'style='width:200px'value="Voter"/>
+                    </font>
+                </#if>
               </form>
             </div>
           </div>
@@ -112,7 +119,7 @@
                                 <#include "../includable/security/securityToken.ftl">
                             </div>
                     </form>
-                    </br>
+                    <br/>
               </#list>
               <form action='/project/choose' method='get'>
                     <div>

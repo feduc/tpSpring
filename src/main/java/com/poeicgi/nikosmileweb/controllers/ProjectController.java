@@ -94,7 +94,6 @@ public class ProjectController extends ViewBaseController<Project>{
 		project.setIsHidden(false);
 		}
 
-		projectCrud.save(project);
 		updateItem(project);
 
 		return REDIRECT + UserController.BASE_URL + "/resume";

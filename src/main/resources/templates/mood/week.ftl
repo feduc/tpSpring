@@ -36,7 +36,7 @@
             </form>
       <#else>
       </#if>
-</br>
+<br/>
   <div id="main">
      <div class="container">
       <div class="row">
@@ -60,7 +60,7 @@
                 <button style = "background-color:red ; font-weight:bold; color:white"type='button' value='submit'>Lundi</button>
                 </form>
                 </#if>
-                </br>
+                <br/>
                 <img src="/img/niko-vert-fond blanc.png" width="50%"> ${jour1satis2} <br/>
                 <img src="/img/niko-jaune-fond blanc.png" width="50%"> ${jour1satis1} <br/>
                 <img src="/img/niko-rouge-fond blanc.png" width="50%"> ${jour1satis0} <br/>
@@ -79,7 +79,7 @@
                 <button style = "background-color:red ; font-weight:bold; color:white"type='button' value='submit'>Mardi</button>
                 </form>
                 </#if>
-                </br>
+                <br/>
                 <img src="/img/niko-vert-fond blanc.png" width="50%"> ${jour2satis2} <br/>
                 <img src="/img/niko-jaune-fond blanc.png" width="50%"> ${jour2satis1} <br/>
                 <img src="/img/niko-rouge-fond blanc.png" width="50%"> ${jour2satis0} <br/>
@@ -98,7 +98,7 @@
                 <button style = "background-color:red ; font-weight:bold; color:white"type='button' value='submit'>Mercredi</button>
                 </form>
                 </#if>
-                </br>
+                <br/>
                 <img src="/img/niko-vert-fond blanc.png" width="50%"> ${jour3satis2} <br/>
                 <img src="/img/niko-jaune-fond blanc.png" width="50%"> ${jour3satis1} <br/>
                 <img src="/img/niko-rouge-fond blanc.png" width="50%"> ${jour3satis0} <br/>
@@ -117,7 +117,7 @@
                 <button style = "background-color:red ; font-weight:bold; color:white"type='button' value='submit'>Jeudi</button>
                 </form>
                 </#if>
-                </br>
+                <br/>
                 <img src="/img/niko-vert-fond blanc.png" width="50%"> ${jour4satis2} <br/>
                 <img src="/img/niko-jaune-fond blanc.png" width="50%"> ${jour4satis1} <br/>
                 <img src="/img/niko-rouge-fond blanc.png" width="50%"> ${jour4satis0} <br/>
@@ -136,7 +136,7 @@
                  <button style = "background-color:red ; font-weight:bold; color:white"type='button' value='submit'>Vendredi</button>
                 </form>
                 </#if>
-                </br>
+                <br/>
                 <img src="/img/niko-vert-fond blanc.png" width="50%"> ${jour5satis2} <br/>
                 <img src="/img/niko-jaune-fond blanc.png" width="50%"> ${jour5satis1} <br/>
                 <img src="/img/niko-rouge-fond blanc.png" width="50%"> ${jour5satis0} <br/>
@@ -154,7 +154,7 @@
 
            </div>
         </div>
-        </br>
+        <br/>
         <form id= 'formid' action='/mood/month/' method='get'>
                   <input type='hidden' name='projectName' value='${projectName}' />
                   <input type='hidden' name='date' value='${date?c}'/>
