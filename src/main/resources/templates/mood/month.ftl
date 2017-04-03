@@ -11,11 +11,10 @@
     <header>
         <img src="/img/BaniereCGI.jpg">
     </header>
-    <div align = right><a href ="page de vote.html"><img src="/img/parametre.png" alt="exemple" width="5%"></a>
-
-                    <a href =/logout><img src="/img/logout.jpg" alt="exemple" width="5%"></a>
-
-                    </div>
+    <div align = right>
+      <a href =/user/parameters><img src='/img/parametre.png' alt='exemple' width='5%'></a>
+      <a href =/logout><img src='/img/logout.jpg' alt='exemple' width='5%'></a>
+    </div>
 
       <div class="row">
           <div class="col-xs-12 col-sm-1 col-md-4">

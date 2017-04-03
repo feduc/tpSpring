@@ -32,6 +32,11 @@
 
                 <button type="submit" value="submit">Chercher</button>
             </form>
+            <form id= 'formid' action='/user/resume/' method='get'>
+                  <div style="text-align: center">
+                    <button type='submit' style='width:200px' value='submit'>Retour au resumé</button>
+                  </div>
+       </form>
              </div>
         </div>
       <div class="col-xs-12 col-sm-8 col-md-12">

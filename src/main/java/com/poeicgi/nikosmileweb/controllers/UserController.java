@@ -186,62 +186,40 @@ public class UserController extends ViewBaseController<User> {
 
 	@Secured("ROLE_USER")
 	@RequestMapping(path = "/parameters", method = RequestMethod.GET)
-	public String parameters(Model model,
-			@RequestParam(value = "oldPassword", defaultValue = "") String oldPassword,
-			@RequestParam(value = "newPassword1", defaultValue = "") String newPassword1,
-			@RequestParam(value = "newPassword2", defaultValue = "") String newPassword2) {
+	public String parameters(Model model) {
 
-		model.addAttribute("oldPassword", oldPassword);
-		model.addAttribute("newPassword1", newPassword1);
-		model.addAttribute("newPassword2", newPassword2);
-
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		org.springframework.security.core.userdetails.User userDetail = (org.springframework.security.core.userdetails.User) auth.getPrincipal();
-
-		String password = userDetail.getPassword();
-		model.addAttribute("password", password);
-
-		String login = userDetail.getUsername();
-		model.addAttribute("login", login);
 
  			return "user/parameters";
 	}
 
 	@Secured("ROLE_USER")
 	@RequestMapping(path = "/parameters/do", method = RequestMethod.POST)
-	public String logIn(Model model,
+	public String parameter(Model model,
 			@RequestParam(value = "oldPassword", defaultValue = "") String oldPassword,
 			@RequestParam(value = "newPassword1", defaultValue = "") String newPassword1,
 			@RequestParam(value = "newPassword2", defaultValue = "") String newPassword2) {
 
-		model.addAttribute("oldPassword", oldPassword);
-		model.addAttribute("newPassword1", newPassword1);
-		model.addAttribute("newPassword2", newPassword2);
-
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		org.springframework.security.core.userdetails.User userDetail = (org.springframework.security.core.userdetails.User) auth.getPrincipal();
 
-		User user = securityController.getConnectedUser();
-		String password = userDetail.getPassword();
-		model.addAttribute("password", password);
 		String login = userDetail.getUsername();
-		model.addAttribute("login", login);
 		SecurityUser security = secuCrud.findByLogin(login);
+
+		String password = security.getPassword();
 
 		Boolean changePass = false;
 
-		if (oldPassword==password && newPassword1 == newPassword2)
-		{
+		model.addAttribute("password", password);
 
+		if (oldPassword.equals(password))
+		{
 		security.setPassword(newPassword1);
 		secuCrud.save(security);
-		user.setSecurity(security);
-		updateItem(user);
 		changePass = true;
 		}
 
 		model.addAttribute("changePass", changePass);
 
- 			return "user/parameters";
+ 		return "user/parameters";
 	}
 }

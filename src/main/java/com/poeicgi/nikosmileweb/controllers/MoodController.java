@@ -624,7 +624,7 @@ public class MoodController extends ViewBaseController<Mood> {
 
 		List<Mood> moods = moodCrud.findMoodsByProjectAndDate(projectName, sd);
 
-		ArrayList<Map<String, Object>> dayInfos = new ArrayList<Map<String, Object>>();
+		ArrayList<Map<String,Object>> dayInfos = new ArrayList<Map<String,Object>>();
 
 		Boolean anonymous = projectCrud.findAnonymousStatusbyName(projectName);
 

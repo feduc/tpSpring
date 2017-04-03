@@ -11,8 +11,10 @@
     <header>
         <img src="/img/BaniereCGI.jpg">
     </header>
-    <div align = right><a href ="page de vote.html"><img src="/img/parametre.png" alt="exemple" width="5%"></a>
-                    <a href =/logout><img src="/img/logout.jpg" alt="exemple" width="5%"></a></div>
+    <div align = right>
+      <a href =/user/parameters><img src='/img/parametre.png' alt='exemple' width='5%'></a>
+      <a href =/logout><img src='/img/logout.jpg' alt='exemple' width='5%'></a>
+    </div>
 
   <h1 align="center"> Semaine du ${debutsemaine} / ${mois} au ${finsemaine} / ${mois1} / ${annee}  </h1>
       <#if leader == true>
@@ -164,9 +166,6 @@
                   </div>
         </form>
        <form id= 'formid' action='/user/resume/' method='get'>
-                  <input type='hidden' name='projectName' value='${projectName}' />
-                  <input type='hidden' name='date' value='${date?c}'/>
-                  <input type='hidden' name='changeMonth'/>
                   <div style="text-align: center">
                     <button type='submit' style='width:300px' value='submit'>Retour au resumé</button>
                   </div>

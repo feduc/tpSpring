@@ -23,6 +23,7 @@ import com.poeicgi.nikosmileweb.dao.ISecurityUserCrudRepository;
 import com.poeicgi.nikosmileweb.models.Project;
 import com.poeicgi.nikosmileweb.models.User;
 import com.poeicgi.nikosmileweb.models.security.SecurityUser;
+import com.poeicgi.nikosmileweb.utils.DumpFields;
 
 @Controller
 @RequestMapping(path = ProjectController.BASE_URL)
@@ -47,7 +48,7 @@ public class ProjectController extends ViewBaseController<Project>{
 		super(Project.class,BASE_URL);
 	}
 
-	@Secured("ROLE_USER")
+	@Secured({"ROLE_USER","ROLE_VISU"})
 	@RequestMapping(path = "/choose", method = RequestMethod.GET)
 	public String chooseView(Model model, @ModelAttribute("date") Long date, @RequestParam(value = "projectName", defaultValue = "") String projectName) {
 
@@ -97,6 +98,37 @@ public class ProjectController extends ViewBaseController<Project>{
 		updateItem(project);
 
 		return REDIRECT + UserController.BASE_URL + "/resume";
+	}
+
+	@Secured({"ROLE_ADMIN", "ROLE_MODO"})
+	@RequestMapping(path = "/create/do", method = RequestMethod.POST)
+	public String create(Model model, @ModelAttribute Project project) {
+
+		//bloc de mise à jour du navigateur pour modo
+		User child = securityController.getConnectedUser();
+		SecurityUser secu = secuCrud.findOne(child.getId());
+		Boolean admin= false;
+		List<String> roles = roleCrud.getRolesForSecurityUser(secu);
+		if (roles.contains("ROLE_ADMIN")) {
+			admin = true;
+		}
+		//
+
+		model.addAttribute("admin", admin);
+		String projectName = project.getName();
+
+		Project projectTest = projectCrud.findExactProjectByName(projectName);
+
+		Boolean alert = false;
+		if(projectTest != null)
+		{
+			alert = true;
+		}
+		else{
+		insertItem(project);
+		}
+		model.addAttribute("alert", alert);
+		return "base/create";
 	}
 
 }

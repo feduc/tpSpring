@@ -10,8 +10,10 @@
     <header>
         <img src="/img/BaniereCGI.jpg">
     </header>
-<div align = right><a href ="page de vote.html"><img src="/img/parametre.png" alt="exemple" width="5%"></a>
-                    <a href =/logout><img src="/img/logout.jpg" alt="exemple" width="5%"></a></div>
+    <div align = right>
+      <a href =/user/parameters><img src='/img/parametre.png' alt='exemple' width='5%'></a>
+      <a href =/logout><img src='/img/logout.jpg' alt='exemple' width='5%'></a>
+    </div>
   <h1 align="center"> Page d'administration</h1>
 
   <div id="main">

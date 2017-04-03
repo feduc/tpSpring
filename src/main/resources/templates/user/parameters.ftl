@@ -13,7 +13,6 @@
       <img src='/img/BaniereCGI.jpg'>
     </header>
     <div align = right>
-
       <a href =/user/parameters><img src='/img/parametre.png' alt='exemple' width='5%'></a>
       <a href =/logout><img src='/img/logout.jpg' alt='exemple' width='5%'></a>
     </div>
@@ -24,14 +23,27 @@
                       <div>
                             <#include "../includable/security/securityToken.ftl">
                       </div>
-                    <font color = "white"> <th>Ancien Mot de passe ${password}:</th></br></font>
-                    <input type="text" name="oldpassword" placeholder="entrez votre ancien mot de passe" value="${oldPassword}"/>
+                    <font color = "white"> <th>Ancien Mot de passe:</th></br></font>
+                    <input type="password" name="oldPassword" placeholder="entrez votre ancien mot de passe"/>
                     </br><font color = "white"> <th>Nouveau Mot de Passe :</th></br></font>
-                    <input type="text" name="newpassword1" placeholder="entrez votre nouveau mot de passe" value="${newPassword1}"/>
+                    <input type="password" name="newPassword1" placeholder="entrez votre nouveau mot de passe" />
                     </br><font color = "white"> <th>Confirmer votre Nouveau Mot de Passe :</th></br></font>
-                    <input type="text" name="newpassword2" placeholder="entrez votre nouveau mot de passe" value="${newPassword2}"/>
+                    <input type="password" name="newPassword2" placeholder="confirmer votre nouveau mot de passe"/>
                </br>
                 <button type="submit" value="submit">Valider</button>
+            </form>
+            <#if changePass??>
+            <#if changePass == true>
+                <font color = "white"><p color ="white">Changement de mot de passe pris en compte</p></font>
+            <#else>
+                <font color = "white"><p color ="white">Changement de mot de passe non pris en compte</p></font>
+            </#if>
+            </#if>
+            <form id= "formid" action="/user/resume/" method="get">
+                <div>
+                    <#include "../includable/security/securityToken.ftl">
+                </div>
+            <input style="width:10%" type="submit" value="Retour page perso"/>
             </form>
              </div>
         </div>
