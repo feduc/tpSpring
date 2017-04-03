@@ -21,15 +21,13 @@
             <#else>
              </#if>
 
-            <#if admin == true>
             <form id= "formid" action="/project/create/" method="get">
                 <div>
                     <#include "../includable/security/securityToken.ftl">
                 </div>
                 <input style="width:75%" type="submit" value="Projet"/>
             </form>
-            <#else>
-            </#if>
+
 
             <form id= "formid" action="/admin/choose" method="get">
                 <div>

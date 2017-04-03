@@ -11,8 +11,10 @@
     <header>
         <img src="/img/BaniereCGI.jpg">
     </header>
-    <div align = right><a href ="page de vote.html"><img src="/img/parametre.png" alt="exemple" width="5%"></a>
-                    <a href =/logout><img src="/img/logout.jpg" alt="exemple" width="5%"></a></div>
+    <div align = right>
+      <a href =/user/parameters><img src='/img/parametre.png' alt='exemple' width='5%'></a>
+      <a href =/logout><img src='/img/logout.jpg' alt='exemple' width='5%'></a>
+    </div>
 
   <h1 align="center">Votes du ${jour} / ${mois} / ${annee} pour ${projectName}</h1>
 
@@ -39,8 +41,8 @@
                   <#if info["comment"]?has_content>
                     <font color="white">${info["comment"]}</font>
                   </#if>
-                    <font color="white">${info["FirstName"]}</font>
-                    <font color="white">${info["LastName"]}</font>
+                    <i><font color="white"> - ${info["FirstName"]}
+                   ${info["LastName"]}</font></i>
                 </div>
               </div>
               </div>

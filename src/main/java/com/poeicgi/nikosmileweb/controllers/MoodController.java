@@ -544,8 +544,6 @@ public class MoodController extends ViewBaseController<Mood> {
 		redirectAttributes.addAttribute("projectName", projectName);
 		redirectAttributes.addAttribute("date", sd.getTime());
 
-
-
 		return REDIRECT + MoodController.BASE_URL + "/week/" ;
 
 	}
@@ -575,6 +573,10 @@ public class MoodController extends ViewBaseController<Mood> {
 			List<Mood> moods = moodCrud.findMoodsByProjectAndDate(projectName,sd);
 
 			ArrayList<Map<String,Object>> dayInfos = new ArrayList<Map<String,Object>>();
+			Boolean anonymous = projectCrud.findAnonymousStatusbyName(projectName);
+
+			String FirstName = "";
+			String LastName = "";
 
 			int i=0;
 			for (Mood mood : moods) {
@@ -582,20 +584,15 @@ public class MoodController extends ViewBaseController<Mood> {
 				(dayInfos.get(i)).put("satis", mood.getSatisfaction());
 				(dayInfos.get(i)).put("comment", mood.getCommentSat());
 
-				Boolean anonymous = projectCrud.findAnonymousStatusbyName(projectName);
-
-				String FirstName = "";
-				String LastName = "";
-
-				if(anonymous=false){
+				if(anonymous==false){
 				FirstName = mood.getUser().getFirstName();
-				LastName = mood.getUser().getFirstName();
+				LastName = mood.getUser().getLastName();
 				(dayInfos.get(i)).put("FirstName",FirstName);
 				(dayInfos.get(i)).put("LastName",LastName);
 				}
-				else if (anonymous=true) {
-				(dayInfos.get(i)).put("FirstName",FirstName);
-				(dayInfos.get(i)).put("LastName",LastName);
+				else if (anonymous==true) {
+				(dayInfos.get(i)).put("FirstName","");
+				(dayInfos.get(i)).put("LastName","");
 				}
 				i++;
 
@@ -748,7 +745,6 @@ public class MoodController extends ViewBaseController<Mood> {
 			days.get(i-1).put("green",green);
 			days.get(i-1).put("blue",blue);
 			days.get(i-1).put("med", med);
-
 
 		}
 		model.addAttribute("encours",encours);

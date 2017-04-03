@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.poeicgi.nikosmileweb.controllers.base.BaseController;
 import com.poeicgi.nikosmileweb.controllers.security.SecurityController;
@@ -20,6 +21,7 @@ import com.poeicgi.nikosmileweb.dao.IMoodCrudRepository;
 import com.poeicgi.nikosmileweb.dao.ISecurityRoleCrudRepository;
 import com.poeicgi.nikosmileweb.dao.ISecurityUserCrudRepository;
 import com.poeicgi.nikosmileweb.dao.base.IBaseCrudRepository;
+import com.poeicgi.nikosmileweb.models.Project;
 import com.poeicgi.nikosmileweb.models.User;
 import com.poeicgi.nikosmileweb.models.modelbase.DataBaseItem;
 import com.poeicgi.nikosmileweb.models.security.SecurityUser;
@@ -127,23 +129,22 @@ public abstract class ViewBaseController<T extends DataBaseItem> extends BaseCon
 		return "base/delete";
 	}
 
-	@Secured({"ROLE_ADMIN"})
+	@Secured({"ROLE_ADMIN", "ROLE_MODO"})
 	@RequestMapping(path = "/create/", method = RequestMethod.GET)
 	public String createView(Model model){
-
-		String pageName = "Create a "+ baseName;
-
 
 		//bloc de mise à jour du navigateur pour modo
 		User child = securityController.getConnectedUser();
 		SecurityUser secu = secuCrud.findOne(child.getId());
-		Boolean admin=false;
+		Boolean admin= false;
 		List<String> roles = roleCrud.getRolesForSecurityUser(secu);
 		if (roles.contains("ROLE_ADMIN")) {
 			admin = true;
 		}
-		model.addAttribute("admin", admin);
+		//
 
+		model.addAttribute("admin", admin);
+		String pageName = "Create a "+ baseName;
 
 		model.addAttribute("fields", DumpFields.createContentsEmpty(super.getClazz()).getMyFields());
 		model.addAttribute("page", pageName);
