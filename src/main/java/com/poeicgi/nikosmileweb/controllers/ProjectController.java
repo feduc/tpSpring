@@ -140,38 +140,4 @@ public class ProjectController extends ViewBaseController<Project>{
 
 	}
 
-
-
-
-
-
-//	public String create(Model model, @ModelAttribute Project project) {
-//
-//		//bloc de mise à jour du navigateur pour modo
-//		User child = securityController.getConnectedUser();
-//		SecurityUser secu = secuCrud.findOne(child.getId());
-//		Boolean admin= false;
-//		List<String> roles = roleCrud.getRolesForSecurityUser(secu);
-//		if (roles.contains("ROLE_ADMIN")) {
-//			admin = true;
-//		}
-//		//
-//
-//		model.addAttribute("admin", admin);
-//		String projectName = project.getName();
-//
-//		Project projectTest = projectCrud.findExactProjectByName(projectName);
-//
-//		Boolean alert = false;
-//		if(projectTest != null)
-//		{
-//			alert = true;
-//		}
-//		else{
-//		insertItem(project);
-//		}
-//		model.addAttribute("alert", alert);
-//		return super.REDIRECT+baseUrl +"/create/";
-//	}
-
 }

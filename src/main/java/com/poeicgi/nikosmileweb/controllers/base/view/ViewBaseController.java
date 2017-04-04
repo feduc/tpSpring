@@ -101,6 +101,20 @@ public abstract class ViewBaseController<T extends DataBaseItem> extends BaseCon
 	@RequestMapping(path = "/{id}/update", method = RequestMethod.GET)
 	public String updateView(Model model,@PathVariable long id){
 
+
+		//bloc de mise à jour du navigateur pour modo
+		User child = securityController.getConnectedUser();
+		SecurityUser secu = secuCrud.findOne(child.getId());
+		Boolean admin= false;
+		List<String> roles = roleCrud.getRolesForSecurityUser(secu);
+		if (roles.contains("ROLE_ADMIN")) {
+			admin = true;
+		}
+		//
+		model.addAttribute("admin", admin);
+
+
+
 		T item = (T) baseCrud.findOne(id);
 
 		String pageName = "Update "+ baseName + " n° "+ id;
@@ -158,6 +172,8 @@ public abstract class ViewBaseController<T extends DataBaseItem> extends BaseCon
 	@RequestMapping(path = "/create/do", method = RequestMethod.POST)
 	public String create(Model model, T item){
 
+
+
 		insertItem(item);
 
 //		ArrayList<T> items = (ArrayList<T>) baseCrud.findAll();
@@ -181,7 +197,7 @@ public abstract class ViewBaseController<T extends DataBaseItem> extends BaseCon
 //		model.addAttribute("fields", DumpFields.createContentsEmpty(super.getClazz()).fields);
 //		model.addAttribute("page", pageName);
 
-		return super.REDIRECT+baseUrl +"/list/";
+		return super.REDIRECT+"/user/create/";
 	}
 
 	@Secured("ROLE_ADMIN")

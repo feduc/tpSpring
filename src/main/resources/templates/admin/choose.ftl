@@ -26,6 +26,7 @@
             <font color = "white"><h1> Choisissez un projet </h1> </font>
                 <form action="/admin/choose" method="GET" >
                     <font color = "white"> <th>Nom du projet :</th><br/></font>
+                    <input type="hidden" name = "action" value ="update"/>
                     <input type="text" name="projectName" placeholder="entrez le nom du projet" value="${projectName}"/>
 
                <br/>
@@ -45,12 +46,19 @@
             <tbody>
                 <#if projects??>
                 <#list projects as project>
+
                     <tr>
                         <td>
+                           <#if action == "members">
                             <form action="/admin/${project["id"]}/members" method ="GET">
                             <input type="submit" name = "projectName" value="${project["name"]}"/>
                             </form>
-                        </td>
+                            <#elseif action == "update">
+                             <form action="/project/${project["id"]}/update" method ="GET">
+                            <input type="submit" name = "projectName" value="${project["name"]}"/>
+                            </form>
+                            </#if>
+                         </td>
                         <td>${project["startDate"]}</td>
                         <#if project["endDate"]??>
                             <td>${project["endDate"]}</td>
