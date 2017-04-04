@@ -44,9 +44,7 @@ public class SecurityUserController extends AntoineViewBaseController<SecurityUs
 
 		if (roles.contains("ROLE_ADMIN")) {
 
-			String admin="Non";
-			admin = "Oui";
-
+			String admin = "Oui";
 			model.addAttribute("admin", admin);
 			return REDIRECT+ "/user/create/";
 

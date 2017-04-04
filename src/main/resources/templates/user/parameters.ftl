@@ -34,9 +34,9 @@
             </form>
             <#if changePass??>
             <#if changePass == true>
-                <font color = "white"><p color ="white">Changement de mot de passe pris en compte</p></font>
+                <p class = "alertMessage">Changement de mot de passe pris en compte</p>
             <#else>
-                <font color = "white"><p color ="white">Changement de mot de passe non pris en compte</p></font>
+                <p class = "alertMessage">Changement de mot de passe non pris en compte</p>
             </#if>
             </#if>
             <form id= "formid" action="/user/resume/" method="get">

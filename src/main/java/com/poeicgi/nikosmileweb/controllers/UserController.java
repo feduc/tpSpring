@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -169,8 +171,12 @@ public class UserController extends ViewBaseController<User> {
 	public String create(Model model, @ModelAttribute User item, @ModelAttribute SecurityUser security,@ModelAttribute("alertMessage") String alertMessage,
 		final BindingResult childBindingResult, final Model model2, final RedirectAttributes redirectAttributes){
 
+
 		String loginTest = security.getLogin();
 		String regisTest = item.getRegistrationCGI();
+
+		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		String codedPass = passwordEncoder.encode(security.getPassword());
 
 		SecurityUser securityTest = secuCrud.findByLogin(loginTest);
 		User userRegisTest = userCrud.findExactUserByRegistration(regisTest);
@@ -195,6 +201,7 @@ public class UserController extends ViewBaseController<User> {
 		insertItem(item);
 		security.setId(item.getId());
 		security.setEnable(true);
+		security.setPassword(codedPass);
 		secuCrud.save(security);
 		item.setSecurity(security);
 		updateItem(item);
@@ -224,16 +231,17 @@ public class UserController extends ViewBaseController<User> {
 
 		String login = userDetail.getUsername();
 		SecurityUser security = secuCrud.findByLogin(login);
-
+		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		String password = security.getPassword();
 
 		Boolean changePass = false;
 
 		model.addAttribute("password", password);
 
-		if (oldPassword.equals(password))
+		if ((passwordEncoder.encode(oldPassword)).equals(password) && newPassword1.equals(newPassword2))
 		{
-		security.setPassword(newPassword1);
+		security.setPassword(passwordEncoder.encode(newPassword1));
+
 		secuCrud.save(security);
 		changePass = true;
 		}
