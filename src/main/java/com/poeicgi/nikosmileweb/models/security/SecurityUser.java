@@ -26,7 +26,7 @@ public class SecurityUser extends DataBaseItem {
 	public static final String TABLE = "securite";
 
 	@Transient
-	public static final String[] FIELDS =  {"id", "login", "mot_de_passe", "statut", "enable"};
+	public static final String[] FIELDS =  {"id", "login", "mot_de_passe","enable"};
 
 	public ArrayList<Map<String,Object>> getMyFields() {
 		ArrayList<Map<String,Object>> myFields = new ArrayList<Map<String,Object>>();
@@ -41,25 +41,20 @@ public class SecurityUser extends DataBaseItem {
 		(myFields.get(2)).put("name", "password");
 		(myFields.get(2)).put("type", "String");
 		myFields.add(new HashMap<String,Object>());
-		(myFields.get(3)).put("name", "status");
-		(myFields.get(3)).put("type", "String");
-		myFields.add(new HashMap<String,Object>());
-		(myFields.get(4)).put("name", "enable");
-		(myFields.get(4)).put("type", "Boolean");
+		(myFields.get(3)).put("name", "enable");
+		(myFields.get(3)).put("type", "Boolean");
 
 		return myFields;
 	}
 
+	@Column(unique = true, nullable = false)
 	private String login;
 
-	@Column(name="mot_de_passe")
+	@Column(name = "mot_de_passe", nullable = false)
 	private String password;
 
-	@Column(name="statut")
-	private String status;
-
+	@Column(nullable = false)
 	private Boolean enable;
-
 
 	@ManyToMany
 	private Set<SecurityRole> roles;
@@ -92,15 +87,6 @@ public class SecurityUser extends DataBaseItem {
 	 */
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
 	}
 
 	public Boolean getEnable() {

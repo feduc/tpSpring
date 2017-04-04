@@ -56,24 +56,25 @@ public class Project extends DataBaseItem {
 		return myFields;
 	}
 
-	@Column(name = "nom_projet")
+	@Column(name = "nom_projet", nullable = false, unique = true)
 	private String name;
 
 	@ManyToOne(targetEntity = User.class)
 	private User projectLeader;
 
+	@Column(nullable = false)
 	private String verticale;
 
-	@Column(name = "date_debut")
+	@Column(name = "date_debut", nullable = false)
 	private Date startDate;
 
 	@Column(nullable = true, name = "date_fin")
 	private Date endDate;
 
-	@Column(name = "projet_anonyme")
+	@Column(name = "projet_anonyme", nullable = false)
 	private Boolean isAnonymous;
 
-	@Column(name = "projet_cache")
+	@Column(name = "projet_cache", nullable = false)
 	private Boolean isHidden;
 
 	@ManyToMany(targetEntity = User.class)
@@ -131,9 +132,9 @@ public class Project extends DataBaseItem {
 	}
 
 	public Set<User> getTeam() {
-		
+
 			return team;
-		
+
 	}
 
 	public void setTeam(Set<User> team) {
