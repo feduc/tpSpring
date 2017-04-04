@@ -26,6 +26,7 @@
             <font color = "white"><h1> Choisissez un utilisateur </h1> </font>
                 <form action="/admin/chooseUser" method="GET" >
                     <font color = "white"> <th>Matricule de l'utilisateur :</th><br/></font>
+                    <input type="hidden" name = "action" value="${action}"/>
                     <input type="text" name="userRegistration" placeholder="entrez le matricule de l'utilisateur" value="${userRegistration}"/>
                <br/>
                 <button type="submit" value="submit">Chercher</button>
@@ -46,7 +47,11 @@
                 <#list users as user>
                     <tr>
                         <td>
-                            <form action="/admin/${user["id"]}/roles" method ="GET">
+                            <#if action == "roles">
+                                <form action="/admin/${user["id"]}/roles" method ="GET">
+                            <#elseif action == "update">
+                                <form action="/user/${user["id"]}/update" method ="GET">
+                            </#if>
                             <input type="submit" name = "userRegistration" value="${user["registrationCGI"]}"/>
                             </form>
                         </td>

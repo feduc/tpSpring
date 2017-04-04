@@ -40,25 +40,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		// .permitAll();
 	}
 
-//	@Autowired
-//	DataSource dataSource;
-//
-//	@Autowired
-//	public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
-//
-//		auth.jdbcAuthentication().dataSource(dataSource)
-//				.passwordEncoder(passwordEncoder())
-//				.usersByUsernameQuery("select login,mot_de_passe,enable from securite where login = ?")
-//				.authoritiesByUsernameQuery(
-//						"select secu.login, secuRole.role from security_role as secuRole join securite_security_role as secu_role on secuRole.id=secu_role.roles_id join securite as secu on secu.id=secu_role.SecurityUser_id where secu.login = ?");
-//
-//	}
-//
-//	@Bean
-//	public PasswordEncoder passwordEncoder() {
-//		PasswordEncoder encoder = new BCryptPasswordEncoder();
-//
-//		return encoder;
-//	}
+	@Autowired
+	DataSource dataSource;
+
+	@Autowired
+	public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
+
+		auth.jdbcAuthentication().dataSource(dataSource)
+				.passwordEncoder(passwordEncoder())
+				.usersByUsernameQuery("select login,mot_de_passe,enable from securite where login = ?")
+				.authoritiesByUsernameQuery(
+						"select secu.login, secuRole.role from security_role as secuRole join securite_security_role as secu_role on secuRole.id=secu_role.roles_id join securite as secu on secu.id=secu_role.SecurityUser_id where secu.login = ?");
+
+	}
+
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		PasswordEncoder encoder = new BCryptPasswordEncoder();
+
+		return encoder;
+	}
 
 }

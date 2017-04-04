@@ -6,7 +6,18 @@
                     <div>
                         <#include "../includable/security/securityToken.ftl">
                     </div>
-                    <input style="width:75%" type="submit" value="Utilisateur"/>
+                    <input style="width:75%" type="submit" value="Créer un utilisateur"/>
+                </form>
+            <#else>
+             </#if>
+             
+             <#if admin == true>
+                <form id= "formid" action="/admin/chooseUser" method="get">
+                    <div>
+                        <#include "../includable/security/securityToken.ftl">
+                    </div>
+                    <input type="hidden" name = "action" value="update"/>
+                    <input style="width:75%" type="submit" value="Modifier un utilisateur"/>
                 </form>
             <#else>
              </#if>
@@ -16,6 +27,7 @@
                     <div>
                         <#include "../includable/security/securityToken.ftl">
                     </div>
+                    <input type="hidden" name = "action" value="roles"/>
                     <input style="width:75%" type="submit" value="Roles d'un utilisateur"/>
                 </form>
             <#else>

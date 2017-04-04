@@ -143,6 +143,7 @@ public class UserController extends ViewBaseController<User> {
 		model.addAttribute("modo", modo);
 		return "user/resume";
 	}
+	
 	@Secured("ROLE_ADMIN")
 	@Override
 	@RequestMapping(path = "/create/", method = RequestMethod.GET)
@@ -166,6 +167,7 @@ public class UserController extends ViewBaseController<User> {
 
 		return "admin/createUser";
 	}
+	
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(path = "/create/done", method = RequestMethod.POST)
 	public String create(Model model, @ModelAttribute User item, @ModelAttribute SecurityUser security,@ModelAttribute("alertMessage") String alertMessage,
@@ -209,6 +211,55 @@ public class UserController extends ViewBaseController<User> {
 		redirectAttributes.addAttribute("alertMessage", alertMessage);
 		return REDIRECT + UserController.BASE_URL + "/create/";
 		}
+	}
+	
+	@Secured("ROLE_ADMIN")
+	@Override
+	@RequestMapping(path = "/{id}/update", method = RequestMethod.GET)
+	public String updateView(Model model,@PathVariable long id){
+
+		//bloc de mise à jour du navigateur pour modo
+		User child = securityController.getConnectedUser();
+		SecurityUser secu = secuCrud.findOne(child.getId());
+		Boolean admin= false;
+		List<String> roles = securityRoleCrud.getRolesForSecurityUser(secu);
+		if (roles.contains("ROLE_ADMIN")) {
+			admin = true;
+		}
+		model.addAttribute("admin", admin);
+		//
+		
+		User item = userCrud.findOne(id);
+		SecurityUser security = secuCrud.findOne(id);
+
+		model.addAttribute("item", DumpFields.fielder(item));
+		model.addAttribute("security", DumpFields.fielder(security));
+		model.addAttribute("fields", DumpFields.createContentsEmpty(super.getClazz()).getMyFields());
+
+		return "admin/updateUser";
+	}
+	
+	@Secured("ROLE_ADMIN")
+	@RequestMapping(path = "/{id}/update/done", method = RequestMethod.POST)
+	public String update(Model model,@PathVariable long id, @ModelAttribute User item, @ModelAttribute SecurityUser security,@ModelAttribute("alertMessage") String alertMessage,
+		final BindingResult childBindingResult, final Model model2, final RedirectAttributes redirectAttributes){
+		String codedPass;
+		if (security.getPassword()!= "") {
+			PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+			codedPass = passwordEncoder.encode(security.getPassword());
+		} else {
+			codedPass = secuCrud.findOne(id).getPassword();
+		}
+		insertItem(item);
+		security.setId(item.getId());
+		security.setEnable(true);
+		security.setPassword(codedPass);
+		secuCrud.save(security);
+		item.setSecurity(security);
+		updateItem(item);
+
+		return REDIRECT + UserController.BASE_URL + "/create/";
+		
 	}
 
 	@Secured("ROLE_USER")

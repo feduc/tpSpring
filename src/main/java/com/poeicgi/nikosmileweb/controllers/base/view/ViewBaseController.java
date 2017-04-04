@@ -24,6 +24,7 @@ import com.poeicgi.nikosmileweb.dao.base.IBaseCrudRepository;
 import com.poeicgi.nikosmileweb.models.Project;
 import com.poeicgi.nikosmileweb.models.User;
 import com.poeicgi.nikosmileweb.models.modelbase.DataBaseItem;
+import com.poeicgi.nikosmileweb.models.security.SecurityRole;
 import com.poeicgi.nikosmileweb.models.security.SecurityUser;
 import com.poeicgi.nikosmileweb.utils.DumpFields;
 
@@ -138,7 +139,10 @@ public abstract class ViewBaseController<T extends DataBaseItem> extends BaseCon
 		User child = securityController.getConnectedUser();
 		SecurityUser secu = secuCrud.findOne(child.getId());
 		Boolean admin= false;
-		List<String> roles = roleCrud.getRolesForSecurityUser(secu);
+		List<String> roles = null;
+		for (SecurityRole role : secu.getRoles()) {
+			roles.add(role.getRole());
+		}
 		if (roles.contains("ROLE_ADMIN")) {
 			admin = true;
 		}
