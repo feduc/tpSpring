@@ -26,7 +26,7 @@ public class SecurityUser extends DataBaseItem {
 	public static final String TABLE = "securite";
 
 	@Transient
-	public static final String[] FIELDS =  {"id", "login", "mot_de_passe","enable"};
+	public static final String[] FIELDS =  {"id", "login", "mot_de_passe", "enable"};
 
 	public ArrayList<Map<String,Object>> getMyFields() {
 		ArrayList<Map<String,Object>> myFields = new ArrayList<Map<String,Object>>();
