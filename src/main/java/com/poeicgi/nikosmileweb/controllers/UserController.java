@@ -241,21 +241,30 @@ public class UserController extends ViewBaseController<User> {
 	
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(path = "/{id}/update/done", method = RequestMethod.POST)
-	public String update(Model model,@PathVariable long id, @ModelAttribute User item, @ModelAttribute SecurityUser security,@ModelAttribute("alertMessage") String alertMessage,
-		final BindingResult childBindingResult, final Model model2, final RedirectAttributes redirectAttributes){
+	public String update(Model model,@PathVariable long id, @ModelAttribute User item, @ModelAttribute SecurityUser security){
+		
+		SecurityUser secu = secuCrud.findOne(id);
+		User user = userCrud.findOne(id);
+		
 		String codedPass;
-		if (security.getPassword()!= "") {
-			PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-			codedPass = passwordEncoder.encode(security.getPassword());
-		} else {
-			codedPass = secuCrud.findOne(id).getPassword();
-		}
+		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		codedPass = passwordEncoder.encode(security.getPassword());
+		
+		item.setMoods(user.getMoods());
+		item.setProjects(user.getProjects());
+		item.setId(id);
+		
 		insertItem(item);
-		security.setId(item.getId());
+		
+		security.setId(id);
 		security.setEnable(true);
 		security.setPassword(codedPass);
+		security.setRoles(secu.getRoles());
+		
 		secuCrud.save(security);
+		
 		item.setSecurity(security);
+		
 		updateItem(item);
 
 		return REDIRECT + UserController.BASE_URL + "/create/";

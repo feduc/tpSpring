@@ -29,13 +29,16 @@
                 <#list fields as field>
                       <#list item?keys as key>
                         <#if key==field["name"]>
-                            <font color = "white"><th>${key} :</th></font><br/>
+                            <#if key == "id">
+                            <#else>
+                            <font color = "white">${key} :</font><br/>
+                            </#if>
                         </#if>
                     </#list>
                     <#list item?keys as key>
                         <#if key==field["name"]>
                             <#if key == "id">
-                                <input type="text"  value="${item[key]?c}" name="${key}" readonly/> <br/>
+                                
                             <#elseif key == "name">
                                 <input type="text"  value="${item[key]}" name="${key}" readonly/> <br/>
                             <#elseif item[key]?is_boolean>
@@ -52,8 +55,7 @@
                         </#if>
                    </#list>
                 </#list>
-            </tr>
-        </table>
+
         <button type="submit" value="submit">Update</button>
     <#include "../includable/security/securityToken.ftl">
     </form>

@@ -52,7 +52,7 @@
                 <div>
                     <#include "../includable/security/securityToken.ftl">
                 </div>
-                <input type="hidden" name = "action" value ="membres"/>
+                <input type="hidden" name = "action" value ="members"/>
                 <input style="width:75%" type="submit" value="Membres d'un projet"/>
             </form>
 

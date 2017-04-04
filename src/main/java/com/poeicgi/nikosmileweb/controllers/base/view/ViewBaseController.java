@@ -153,10 +153,7 @@ public abstract class ViewBaseController<T extends DataBaseItem> extends BaseCon
 		User child = securityController.getConnectedUser();
 		SecurityUser secu = secuCrud.findOne(child.getId());
 		Boolean admin= false;
-		List<String> roles = null;
-		for (SecurityRole role : secu.getRoles()) {
-			roles.add(role.getRole());
-		}
+		List<String> roles = roleCrud.getRolesForSecurityUser(secu);
 		if (roles.contains("ROLE_ADMIN")) {
 			admin = true;
 		}
