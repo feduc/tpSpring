@@ -26,7 +26,7 @@
             <font color = "white"><h1> Choisissez un projet </h1> </font>
                 <form action="/admin/choose" method="GET" >
                     <font color = "white"> <th>Nom du projet :</th><br/></font>
-                    <input type="hidden" name = "action" value ="update"/>
+                    <input type="hidden" name = "action" value ="${action}"/>
                     <input type="text" name="projectName" placeholder="entrez le nom du projet" value="${projectName}"/>
 
                <br/>
@@ -46,7 +46,6 @@
             <tbody>
                 <#if projects??>
                 <#list projects as project>
-
                     <tr>
                         <td>
                            <#if action == "members">

@@ -23,7 +23,17 @@
       <div class="col-xs-12 col-sm-8 col-md-8">
          <div class="changeavis">
 
-    <font color = "white"><h1> ${page} </h1></font>
+    <font color = "white"><h1> ${page}
+                <#list fields as field>
+                  <#list item?keys as key>
+                    <#if key==field["name"]>
+                        <#if key == "name">
+                            ${item[key]}
+                        </#if>
+                     </#if>
+                </#list>
+            </#list>
+    </h1></font>
     <form action="${path}/${item["id"]}/update/do" method="POST">
 
                 <#list fields as field>

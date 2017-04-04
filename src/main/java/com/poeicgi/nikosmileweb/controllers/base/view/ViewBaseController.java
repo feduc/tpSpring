@@ -99,7 +99,7 @@ public abstract class ViewBaseController<T extends DataBaseItem> extends BaseCon
 
 	@Secured({"ROLE_ADMIN", "ROLE_MODO"})
 	@RequestMapping(path = "/{id}/update", method = RequestMethod.GET)
-	public String updateView(Model model,@PathVariable long id){
+	public String updateView(Model model,@PathVariable long id,@RequestParam(value = "action", defaultValue = "") String action){
 
 
 		//bloc de mise à jour du navigateur pour modo
@@ -112,12 +112,10 @@ public abstract class ViewBaseController<T extends DataBaseItem> extends BaseCon
 		}
 		//
 		model.addAttribute("admin", admin);
-
-
-
+		model.addAttribute("action", action);
 		T item = (T) baseCrud.findOne(id);
 
-		String pageName = "Update "+ baseName + " n° "+ id;
+		String pageName = "Update "+ baseName + " : ";
 
 		model.addAttribute("item", DumpFields.fielder(item));
 		model.addAttribute("fields", DumpFields.createContentsEmpty(super.getClazz()).getMyFields());

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -138,6 +139,29 @@ public class ProjectController extends ViewBaseController<Project>{
 		return super.REDIRECT + "/project/create/";
 		}
 
+
+
+	}
+
+
+	@Secured({"ROLE_ADMIN", "ROLE_MODO"})
+	@RequestMapping(path = "/{id}/update/done", method = RequestMethod.POST)
+	public String updateProj(Model model, @ModelAttribute Project item, @PathVariable Long id){
+
+		Project project = projectCrud.findOne(id);
+		item.setTeam(project.getTeam());
+
+		item.setProjectLeader(project.getProjectLeader());
+		item.setId(id);
+		updateItem(item);
+
+//		ArrayList<T> items = (ArrayList<T>) baseCrud.findAll();
+//		String pageName = baseName.toUpperCase() + "S";
+//		model.addAttribute("items", DumpFields.listFielder(items));
+//		model.addAttribute("fields", DumpFields.createContentsEmpty(super.getClazz()).fields);
+//		model.addAttribute("page", pageName);
+
+		return super.REDIRECT+"/user/create/";
 	}
 
 }
