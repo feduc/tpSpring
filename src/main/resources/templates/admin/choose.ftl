@@ -46,7 +46,6 @@
             <tbody>
                 <#if projects??>
                 <#list projects as project>
-
                     <tr>
                         <td>
                            <#if action == "members">

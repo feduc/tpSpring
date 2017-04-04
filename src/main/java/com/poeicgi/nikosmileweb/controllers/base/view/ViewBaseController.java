@@ -113,12 +113,9 @@ public abstract class ViewBaseController<T extends DataBaseItem> extends BaseCon
 		}
 		//
 		model.addAttribute("admin", admin);
-
-
-
 		T item = (T) baseCrud.findOne(id);
 
-		String pageName = "Update "+ baseName + " n° "+ id;
+		String pageName = "Update "+ baseName + " : ";
 
 		model.addAttribute("item", DumpFields.fielder(item));
 		model.addAttribute("fields", DumpFields.createContentsEmpty(super.getClazz()).getMyFields());

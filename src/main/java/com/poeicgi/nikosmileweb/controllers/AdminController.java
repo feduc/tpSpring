@@ -92,7 +92,6 @@ public class AdminController extends ViewBaseController<User> {
 		}
 		//
 		model.addAttribute("action", action);
-
 		model.addAttribute("admin", admin);
 		model.addAttribute("projects", projects);
 		model.addAttribute("projectName", projectName);
