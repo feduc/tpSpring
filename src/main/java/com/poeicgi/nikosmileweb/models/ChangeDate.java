@@ -37,7 +37,7 @@ public class ChangeDate extends DataBaseItem{
 		return myFields;
 	}
 
-	@Column(name = "date_modif")
+	@Column(name = "date_modif", nullable = false)
 	private Date changeDate;
 
 	@ManyToOne(targetEntity=Mood.class)

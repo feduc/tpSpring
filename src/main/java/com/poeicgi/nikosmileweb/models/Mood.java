@@ -54,13 +54,13 @@ public class Mood extends DataBaseItem {
 		return myFields;
 	}
 
-	@Column(name="avis_journee")
+	@Column(name="avis_journee", nullable = false)
 	private int satisfaction;
 
-	@Column(name="date_jour")
+	@Column(name="date_jour", nullable = false)
 	private Date logDate;
 
-	@Column(name="date_vote")
+	@Column(name="date_vote", nullable = false)
 	private Date voteDate;
 
 	@Column(nullable=true, name="texte_jour")

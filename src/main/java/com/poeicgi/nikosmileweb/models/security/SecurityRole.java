@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -26,6 +27,7 @@ public class SecurityRole extends DataBaseItem{
 	@Transient
 	public static final String[] FIELDS = { "id", "role"};
 
+	@Column(unique = true, nullable = false)
 	private String role;
 
 	public ArrayList<Map<String,Object>> getMyFields() {

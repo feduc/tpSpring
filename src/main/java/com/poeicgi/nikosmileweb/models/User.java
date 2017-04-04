@@ -56,18 +56,19 @@ public class User extends DataBaseItem{
 		return myFields;
 	}
 
-	@Column(name="nom")
+	@Column(name="nom", nullable = false)
 	private String lastName;
 
-	@Column(name="prenom")
+	@Column(name="prenom", nullable = false)
 	private String firstName;
 
-	@Column(name="matricule_CGI")
+	@Column(name="matricule_CGI", nullable = false, unique = true)
 	private String registrationCGI;
 
+	@Column(nullable = false)
 	private String verticale;
 
-	@Column(name="agence")
+	@Column(name="agence", nullable = false)
 	private String agency;
 
 	@OneToMany(targetEntity=Mood.class)

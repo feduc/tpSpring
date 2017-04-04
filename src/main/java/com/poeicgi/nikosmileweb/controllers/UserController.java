@@ -90,8 +90,13 @@ public class UserController extends ViewBaseController<User> {
 
 		model.addAttribute("date", today.getTime());
 		Integer satisfaction = null;
-		if (moodCrud.findLastVote(user).compareTo(today)<0){ satisfaction = 40;}
-		else{satisfaction=moodCrud.findSatisfaction(user, today);}
+		Date lastMoodDate = moodCrud.findLastVote(user);
+		
+		if(lastMoodDate!=null){
+			if (lastMoodDate.compareTo(today)<0){ satisfaction = 40;}
+			else{satisfaction=moodCrud.findSatisfaction(user, today);}
+		}else { satisfaction = 40;}	
+			
 		model.addAttribute("smile", satisfaction);
 
 		List<String> actualProjectsNames = projectCrud.findActualProjectsByUser(user, today);
@@ -296,9 +301,7 @@ public class UserController extends ViewBaseController<User> {
 
 		Boolean changePass = false;
 
-		model.addAttribute("password", password);
-
-		if ((passwordEncoder.encode(oldPassword)).equals(password) && newPassword1.equals(newPassword2))
+		if (passwordEncoder.matches(oldPassword, password) && newPassword1.equals(newPassword2))
 		{
 		security.setPassword(passwordEncoder.encode(newPassword1));
 
