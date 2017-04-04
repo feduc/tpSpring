@@ -121,7 +121,7 @@ public class AdminController extends ViewBaseController<User> {
 			admin = true;
 		}
 		model.addAttribute("admin", admin);
-		model.addAttribute("action",action);
+		model.addAttribute("action", action);
 		model.addAttribute("users", users);
 		model.addAttribute("userRegistration", userRegistration);
 		return "admin/chooseUser";
@@ -131,7 +131,8 @@ public class AdminController extends ViewBaseController<User> {
 	@RequestMapping(path = "/{projectId}/members", method = RequestMethod.GET)
 	public String membersView(Model model, @PathVariable(value = "projectId") String projectId,
 			@RequestParam(value = "projectName", defaultValue = "") String projectName,
-			@RequestParam(value = "userRegistration", defaultValue = "") String userRegistration) {
+			@RequestParam(value = "userRegistration", defaultValue = "") String userRegistration,
+			@RequestParam(value = "leaderId", defaultValue = "0") String leaderId) {
 
 		// apres renseignement de l'id projet selectionné dans choose
 		// remplissage de la liste user correspondant
@@ -154,10 +155,10 @@ public class AdminController extends ViewBaseController<User> {
 			admin = true;
 		}
 		model.addAttribute("admin", admin);
-
 		model.addAttribute("projectId", projectId);
 		model.addAttribute("projectName", projectName);
 		model.addAttribute("userRegistration", userRegistration);
+		model.addAttribute("leaderId", Integer.parseInt(leaderId));
 		model.addAttribute("members", members);
 		model.addAttribute("users", users);
 
@@ -265,6 +266,23 @@ public class AdminController extends ViewBaseController<User> {
 		roleCrud.save(role);
 
 		return REDIRECT + BASE_URL + "/" + userId + "/roles?userRegistration=" + userRegistration;
+	}
+
+	@Secured({ "ROLE_ADMIN", "ROLE_MODO" })
+	@RequestMapping(path = "/{projectId}/members/project-leader-update", method = RequestMethod.POST)
+	public String projectLeaderUpdate(Model model, @PathVariable(value = "projectId") String projectId,
+			@ModelAttribute(value = "projectLeader") String userRegistration,
+			@RequestParam("projectName1") String projectName) {
+
+		Project project = projectCrud.findOne(Long.parseLong(projectId));
+		User user = userCrud.findExactUserByRegistration(userRegistration);
+
+		project.setProjectLeader(user);
+
+		projectCrud.save(project);
+
+		return REDIRECT + BASE_URL + "/" + projectId + "/members?projectName=" + projectName + "&leaderId="
+				+ project.getProjectLeader().getId();
 	}
 
 }

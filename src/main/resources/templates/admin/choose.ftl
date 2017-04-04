@@ -50,13 +50,16 @@
                         <td>
                            <#if action == "members">
                             <form action="/admin/${project["id"]}/members" method ="GET">
-                            <input type="submit" name = "projectName" value="${project["name"]}"/>
+                                <input type="submit" name = "projectName" value="${project["name"]}"/>
+                                <#if project["projectLeader"]??>
+                                    <input type="hidden" name = "leaderId" value="${(project["projectLeader"])["id"]}"/>
+                                </#if>
                             </form>
-                            <#elseif action == "update">
+                           <#elseif action == "update">
                              <form action="/project/${project["id"]}/update" method ="GET">
-                            <input type="submit" name = "projectName" value="${project["name"]}"/>
-                            </form>
-                            </#if>
+                                <input type="submit" name = "projectName" value="${project["name"]}"/>
+                             </form>
+                           </#if>
                          </td>
                         <td>${project["startDate"]}</td>
                         <#if project["endDate"]??>

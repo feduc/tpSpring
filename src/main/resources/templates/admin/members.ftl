@@ -65,6 +65,7 @@
         </table>
       </div>
       <div class="col-xs-12 col-sm-8 col-md-8 pull-right">
+      <form action="/admin/${projectId}/members/project-leader-update" method ="POST">
         <table class="table">
             <thead>
                 <tr>
@@ -72,6 +73,7 @@
                     <th>Nom</th>
                     <th>Matricule</th>
                     <th>Retirer du Projet</th>
+                    <th>Chef de projet</th>
                 </tr>
             </thead>
             <tbody>
@@ -88,11 +90,24 @@
                             <input type="submit" value="Retirer"/>
                             </form>
                         </td>
+                        <td>
+                            <#if leaderId == member["id"]>
+                            <input type="radio" name="projectLeader" value="${member["registrationCGI"]}" checked="checked"/>
+                            <#else>
+                            <input type="radio" name="projectLeader" value="${member["registrationCGI"]}"/>
+                            </#if>
+                            <#include "../includable/security/securityToken.ftl">
+                            
+                            
+                        </td>
                     </tr>
                 </#list>
                 </#if>
             </tbody>
         </table>
+        <input type="hidden" name="projectName1" value="${projectName}"/>
+        <input type="submit" value="Selectionner un Chef de Projet"/>
+      </form>
       </div>
         </div>
       </div>
