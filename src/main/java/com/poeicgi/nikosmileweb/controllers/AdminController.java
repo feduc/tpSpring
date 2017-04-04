@@ -173,9 +173,12 @@ public class AdminController extends ViewBaseController<User> {
 		// creation d'une liste nulle
 		Set<SecurityRole> roles = null;
 
+		SecurityUser securityTest = new SecurityUser();
+		securityTest = secuCrud.findOne(Long.parseLong(userId));
+		if(securityTest != null){
 		// auquel on vient afficher les roles du user
 		roles = (secuCrud.findOne(Long.parseLong(userId))).getRoles();
-
+		}
 		// bloc de mise à jour du navigateur pour modo
 		User child = securityController.getConnectedUser();
 		SecurityUser secu = secuCrud.findOne(child.getId());
