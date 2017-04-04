@@ -72,7 +72,8 @@ public class AdminController extends ViewBaseController<User> {
 
 	@Secured({ "ROLE_ADMIN", "ROLE_MODO" })
 	@RequestMapping(path = "/choose", method = RequestMethod.GET)
-	public String chooseView(Model model, @RequestParam(value = "projectName", defaultValue = "") String projectName) {
+	public String chooseView(Model model, @RequestParam(value = "projectName", defaultValue = "") String projectName,
+			@RequestParam(value = "action", defaultValue = "") String action) {
 
 		// creation d'une liste de projets en remplissage du resultat de la
 		// requete
@@ -90,6 +91,7 @@ public class AdminController extends ViewBaseController<User> {
 			admin = true;
 		}
 		//
+		model.addAttribute("action", action);
 
 		model.addAttribute("admin", admin);
 		model.addAttribute("projects", projects);

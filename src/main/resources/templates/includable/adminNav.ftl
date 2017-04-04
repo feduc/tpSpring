@@ -37,14 +37,22 @@
                 <div>
                     <#include "../includable/security/securityToken.ftl">
                 </div>
-                <input style="width:75%" type="submit" value="Projet"/>
+                <input style="width:75%" type="submit" value="Créer un Projet"/>
             </form>
 
+            <form id= "formid" action="/admin/choose/" method="get">
+                <div>
+                    <#include "../includable/security/securityToken.ftl">
+                </div>
+                <input type="hidden" name = "action" value ="update"/>
+                <input style="width:75%" type="submit" value="Modifier un Projet"/>
+            </form>
 
             <form id= "formid" action="/admin/choose" method="get">
                 <div>
                     <#include "../includable/security/securityToken.ftl">
                 </div>
+                <input type="hidden" name = "action" value ="membres"/>
                 <input style="width:75%" type="submit" value="Membres d'un projet"/>
             </form>
 
