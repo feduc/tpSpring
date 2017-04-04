@@ -25,10 +25,10 @@
          <div class="changeavis">
             <font color = "white"><h1> Choisissez un projet </h1> </font>
                 <form action="/admin/choose" method="GET" >
-                    <font color = "white"> <th>Nom du projet :</th></br></font>
+                    <font color = "white"> <th>Nom du projet :</th><br/></font>
                     <input type="text" name="projectName" placeholder="entrez le nom du projet" value="${projectName}"/>
 
-               </br>
+               <br/>
                 <button type="submit" value="submit">Chercher</button>
             </form>
              </div>

@@ -25,48 +25,48 @@
          <div class="changeavis">
             <font color = "white"><h1> ${page} </h1> </font>
                 <form action="/user/create/done" method="POST" id = "renseignement">
-                        <font color = "white"><th>Login :</th></br></font>
+                        <font color = "white"><th>Login :</th><br/></font>
                         <input type="text" name="login" required="required"/>
-                        </br>
+                        <br/>
 
-                        <font color = "white"><th>Mot de Passe :</th></br></font>
+                        <font color = "white"><th>Mot de Passe :</th><br/></font>
                         <input type="text" name="password" required="required"/>
-                        </br>
+                        <br/>
                     <#list fields as field>
                         <#if field["name"]=="id">
                         <#elseif field["type"]== "boolean">
-                        <font color = "white"><th>${field["name"]} :</th></br></font>
+                        <font color = "white"><th>${field["name"]} :</th><br/></font>
                             <input type="text" name="${field["name"]}" pattern="(true|false)"
                                  title="boolean : true/false" required="required"/>
-                                 </br>
+                                 <br/>
                         <#elseif field["type"] == "Date">
-                        <font color = "white"> <th>${field["name"]} :</th></br></font>
+                        <font color = "white"> <th>${field["name"]} :</th><br/></font>
                       <input type="text" name="${field["name"]}" required="required" title="Date : YYYY/MM/DD HH:MM:SS"
                                  pattern="[0-9][0-9][0-9][0-9]\/((02\/(0[1-9]|[12][0-9]))|((0[469]|11)\/(0[1-9]|[12][0-9]|30))|((0[13578]|1[02])\/(0[1-9]|[12][0-9]|3[01])))\s([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]"/>
-                        </br>
+                        <br/>
                         <#elseif field["type"] == "int">
-                        <font color = "white"> <th>${field["name"]} :</th></br></font>
+                        <font color = "white"> <th>${field["name"]} :</th><br/></font>
                           <input type="text" name="${field["name"]}" pattern="(-?[0-9]+)" title="integer"
                                   required="required"/>
-                         </br>
+                         <br/>
                         <#elseif field["type"] == "Long">
-                        <font color = "white"> <th>${field["name"]} :</th></br></font>
+                        <font color = "white"> <th>${field["name"]} :</th><br/></font>
                             <input type="text" name="${field["name"]}" pattern="(-?[0-9])+" title="integer"
                                   required="required"/>
-                         </br>
+                         <br/>
                         <#else>
-                        <font color = "white"> <th>${field["name"]} :</th></br></font>
+                        <font color = "white"> <th>${field["name"]} :</th><br/></font>
                         <input type="text" name="${field["name"]}" required="required"/>
-                        </br>
+                        <br/>
                        </#if>
                     </#list>
                     <#include "../includable/security/securityToken.ftl">
-               </br>
+               <br/>
+             <#if alertMessage != "">
+                     <p class = "alertMessage"> ${alertMessage} </p>
+                  </#if>
+            <br/>
                 <button type="submit" value="submit">Create</button>
-
-                    <div>
-        <#include "../includable/security/securityToken.ftl">
-    </div>
             </form>
 
             </div>

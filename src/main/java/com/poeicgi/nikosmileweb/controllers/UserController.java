@@ -14,11 +14,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.poeicgi.nikosmileweb.controllers.base.view.ViewBaseController;
 import com.poeicgi.nikosmileweb.controllers.security.SecurityController;
@@ -42,6 +44,9 @@ public class UserController extends ViewBaseController<User> {
 
 	@Autowired
 	private SecurityController securityController;
+
+	@Autowired
+	private SecurityUserController securityCont;
 
 	@Autowired
 	ISecurityRoleCrudRepository securityRoleCrud;
@@ -139,7 +144,7 @@ public class UserController extends ViewBaseController<User> {
 	@Secured("ROLE_ADMIN")
 	@Override
 	@RequestMapping(path = "/create/", method = RequestMethod.GET)
-	public String createView(Model model){
+	public String createView(Model model, @RequestParam(value= "alertMessage", defaultValue ="") String alertMessage){
 
 		//bloc de mise à jour du navigateur pour modo
 		User child = securityController.getConnectedUser();
@@ -151,7 +156,7 @@ public class UserController extends ViewBaseController<User> {
 		}
 		model.addAttribute("admin", admin);
 		//
-
+		model.addAttribute("alertMessage", alertMessage);
 		String pageName = "Create a User";
 
 		model.addAttribute("fields", DumpFields.createContentsEmpty(super.getClazz()).getMyFields());
@@ -161,20 +166,42 @@ public class UserController extends ViewBaseController<User> {
 	}
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(path = "/create/done", method = RequestMethod.POST)
-	public String create(Model model, @ModelAttribute User item, @ModelAttribute SecurityUser security) {
+	public String create(Model model, @ModelAttribute User item, @ModelAttribute SecurityUser security,@ModelAttribute("alertMessage") String alertMessage,
+		final BindingResult childBindingResult, final Model model2, final RedirectAttributes redirectAttributes){
+
+		String loginTest = security.getLogin();
+		String regisTest = item.getRegistrationCGI();
+
+		SecurityUser securityTest = secuCrud.findByLogin(loginTest);
+		User userRegisTest = userCrud.findExactUserByRegistration(regisTest);
+
+		Boolean alert = false;
+		if(securityTest != null)
+		{
+			alert = true;
+			alertMessage = "Login déjà existant";
+			redirectAttributes.addAttribute("alertMessage", alertMessage);
+			return REDIRECT + UserController.BASE_URL + "/create/";
+		}
+		else if (userRegisTest != null)
+		{
+			alert = true;
+			alertMessage = "Matricule déjà existant";
+			redirectAttributes.addAttribute("alertMessage", alertMessage);
+			return REDIRECT + UserController.BASE_URL + "/create/";
+		}
+		else{
 
 		insertItem(item);
-
 		security.setId(item.getId());
 		security.setEnable(true);
-
 		secuCrud.save(security);
-
 		item.setSecurity(security);
-
 		updateItem(item);
-
-		return REDIRECT + UserController.BASE_URL + "/resume";
+		alertMessage = "Utilisateur créé";
+		redirectAttributes.addAttribute("alertMessage", alertMessage);
+		return REDIRECT + UserController.BASE_URL + "/create/";
+		}
 	}
 
 	@Secured("ROLE_USER")

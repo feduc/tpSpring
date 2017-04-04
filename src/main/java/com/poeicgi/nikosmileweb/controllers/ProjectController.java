@@ -48,6 +48,9 @@ public class ProjectController extends ViewBaseController<Project>{
 		super(Project.class,BASE_URL);
 	}
 
+	private String baseName;
+	private String baseUrl;
+
 	@Secured({"ROLE_USER","ROLE_VISU"})
 	@RequestMapping(path = "/choose", method = RequestMethod.GET)
 	public String chooseView(Model model, @ModelAttribute("date") Long date, @RequestParam(value = "projectName", defaultValue = "") String projectName) {
@@ -101,8 +104,9 @@ public class ProjectController extends ViewBaseController<Project>{
 	}
 
 	@Secured({"ROLE_ADMIN", "ROLE_MODO"})
-	@RequestMapping(path = "/create/do", method = RequestMethod.POST)
-	public String create(Model model, @ModelAttribute Project project) {
+	@RequestMapping(path = "/create/done", method = RequestMethod.POST)
+	public String create(Model model, @ModelAttribute("project") Project project, @ModelAttribute("alertMessage") String alertMessage,
+		final BindingResult childBindingResult, final Model model2, final RedirectAttributes redirectAttributes){
 
 		//bloc de mise à jour du navigateur pour modo
 		User child = securityController.getConnectedUser();
@@ -113,8 +117,8 @@ public class ProjectController extends ViewBaseController<Project>{
 			admin = true;
 		}
 		//
-
 		model.addAttribute("admin", admin);
+
 		String projectName = project.getName();
 
 		Project projectTest = projectCrud.findExactProjectByName(projectName);
@@ -123,12 +127,51 @@ public class ProjectController extends ViewBaseController<Project>{
 		if(projectTest != null)
 		{
 			alert = true;
+			alertMessage = "Projet déjà existant";
+			redirectAttributes.addAttribute("alertMessage", alertMessage);
+			return super.REDIRECT + "/project/create/";
 		}
 		else{
 		insertItem(project);
+		alertMessage = "Projet créé";
+		redirectAttributes.addAttribute("alertMessage", alertMessage);
+		return super.REDIRECT + "/project/create/";
 		}
-		model.addAttribute("alert", alert);
-		return "base/create";
+
 	}
+
+
+
+
+
+
+//	public String create(Model model, @ModelAttribute Project project) {
+//
+//		//bloc de mise à jour du navigateur pour modo
+//		User child = securityController.getConnectedUser();
+//		SecurityUser secu = secuCrud.findOne(child.getId());
+//		Boolean admin= false;
+//		List<String> roles = roleCrud.getRolesForSecurityUser(secu);
+//		if (roles.contains("ROLE_ADMIN")) {
+//			admin = true;
+//		}
+//		//
+//
+//		model.addAttribute("admin", admin);
+//		String projectName = project.getName();
+//
+//		Project projectTest = projectCrud.findExactProjectByName(projectName);
+//
+//		Boolean alert = false;
+//		if(projectTest != null)
+//		{
+//			alert = true;
+//		}
+//		else{
+//		insertItem(project);
+//		}
+//		model.addAttribute("alert", alert);
+//		return super.REDIRECT+baseUrl +"/create/";
+//	}
 
 }

@@ -5,6 +5,7 @@
     <script src="/Chart.js-master/src/chart.js"></script>
       <link rel="stylesheet" href="/css/bootstrap.css">
       <link rel="stylesheet" href="/css/main1.css">
+
 </head>
 <body>
     <header>
@@ -24,53 +25,44 @@
       <div class="col-xs-12 col-sm-8 col-md-8">
          <div class="changeavis">
             <font color = "white"><h1> ${page} </h1> </font>
-                <form action="${path}/create/do" method="POST" id = "renseignement">
+                <form action="${path}/create/done" method="POST" id = "renseignement">
                     <#list fields as field>
                         <#if field["name"]=="id">
                         <#elseif field["type"]== "boolean">
-                        <font color = "white"><th>${field["name"]} :</th></br></font>
+                        <font color = "white"><th>${field["name"]} :</th><br/></font>
                             <input type="text" name="${field["name"]}" pattern="(true|false)"
                                  title="boolean : true/false" required="required"/>
-                                 </br>
+                                 <br/>
                         <#elseif field["type"] == "Date">
-                        <font color = "white"> <th>${field["name"]} :</th></br></font>
+                        <font color = "white"> <th>${field["name"]} :</th><br/></font>
                       <input type="text" name="${field["name"]}" required="required" title="Date : YYYY/MM/DD HH:MM:SS"
                                  pattern="[0-9][0-9][0-9][0-9]\/((02\/(0[1-9]|[12][0-9]))|((0[469]|11)\/(0[1-9]|[12][0-9]|30))|((0[13578]|1[02])\/(0[1-9]|[12][0-9]|3[01])))\s([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]"/>
-                        </br>
+                        <br/>
                         <#elseif field["type"] == "int">
-                        <font color = "white"> <th>${field["name"]} :</th></br></font>
+                        <font color = "white"> <th>${field["name"]} :</th><br/></font>
                           <input type="text" name="${field["name"]}" pattern="(-?[0-9]+)" title="integer"
                                   required="required"/>
-                         </br>
+                         <br/>
                         <#elseif field["type"] == "Long">
-                        <font color = "white"> <th>${field["name"]} :</th></br></font>
+                        <font color = "white"> <th>${field["name"]} :</th><br/></font>
                             <input type="text" name="${field["name"]}" pattern="(-?[0-9])+" title="integer"
                                   required="required"/>
-                         </br>
+                         <br/>
                         <#else>
-                        <font color = "white"> <th>${field["name"]} :</th></br></font>
+                        <font color = "white"> <th>${field["name"]} :</th><br/></font>
                         <input type="text" name="${field["name"]}" required="required"/>
-                        </br>
+                        <br/>
                        </#if>
 
                     </#list>
                     <#include "../includable/security/securityToken.ftl">
-               </br>
-                <button type="submit" value="submit">Create</button>
-
-                  <#if alert??>
-                     <#if alert == true>
-                     <p>Projet déjà existant</p>
-                    <#else>
-                    <p>Projet en création</p>
-                     </#if>
+               <br/>
+                 <#if alertMessage != "">
+                     <p class = "alertMessage"> ${alertMessage} </p>
                   </#if>
-
-                    <div>
-        <#include "../includable/security/securityToken.ftl">
-    </div>
+            <br/>
+                <button type="submit" value="submit" >Create</button>
             </form>
-
             </div>
         </div>
       </div>

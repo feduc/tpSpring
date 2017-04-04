@@ -131,7 +131,8 @@ public abstract class ViewBaseController<T extends DataBaseItem> extends BaseCon
 
 	@Secured({"ROLE_ADMIN", "ROLE_MODO"})
 	@RequestMapping(path = "/create/", method = RequestMethod.GET)
-	public String createView(Model model){
+	public String createView(Model model,@RequestParam(value= "alertMessage", defaultValue ="") String alertMessage){
+
 
 		//bloc de mise à jour du navigateur pour modo
 		User child = securityController.getConnectedUser();
@@ -142,7 +143,7 @@ public abstract class ViewBaseController<T extends DataBaseItem> extends BaseCon
 			admin = true;
 		}
 		//
-
+		model.addAttribute("alertMessage", alertMessage);
 		model.addAttribute("admin", admin);
 		String pageName = "Create a "+ baseName;
 
@@ -165,7 +166,7 @@ public abstract class ViewBaseController<T extends DataBaseItem> extends BaseCon
 //		model.addAttribute("fields", DumpFields.createContentsEmpty(super.getClazz()).fields);
 //		model.addAttribute("page", pageName);
 
-		return super.REDIRECT+baseUrl +"/list/";
+		return super.REDIRECT+baseUrl +"/create/";
 	}
 
 	@Secured({"ROLE_ADMIN", "ROLE_MODO"})

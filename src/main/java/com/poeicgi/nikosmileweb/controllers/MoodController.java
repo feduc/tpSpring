@@ -60,8 +60,6 @@ public class MoodController extends ViewBaseController<Mood> {
 
 	public final static String BASE_URL = "/mood";
 
-
-
 	// value is the address to enter in the browser to launch index(), it can be
 	// more than one when writing value = {"/path1", "/path2"}
 	@Secured("ROLE_USER")
@@ -105,34 +103,105 @@ public class MoodController extends ViewBaseController<Mood> {
 		Date voteDate;
 
 		// si la la date du dernier vote est null alors on vote pour la journee
-		// d'hier
+		// d'hier ou, si on est dimanche ou lundi, pour vendredi
 		// on a jamais vote
 		if (lastVote == null) {
-			voteDate = yesterday;
+			if (todayTest.get(GregorianCalendar.DAY_OF_WEEK) == 1) {
+				GregorianCalendar fridayTest = new GregorianCalendar();
+				fridayTest.setTimeInMillis(yesterdayTest.getTimeInMillis());
+				fridayTest.add(GregorianCalendar.DATE, -1);
+
+				Date friday = new Date(fridayTest.getTimeInMillis());
+
+				voteDate = friday;
+			} else if (todayTest.get(GregorianCalendar.DAY_OF_WEEK) == 2) {
+				GregorianCalendar fridayTest = new GregorianCalendar();
+				fridayTest.setTimeInMillis(yesterdayTest.getTimeInMillis());
+				fridayTest.add(GregorianCalendar.DATE, -2);
+
+				Date friday = new Date(fridayTest.getTimeInMillis());
+
+				voteDate = friday;
+			} else {
+				voteDate = yesterday;
+			}
+
 		} else {
 			// sinon on transforme en calendar cette valeur lastvote
 			lastVoteTest.setTime(lastVote);
 
-			// si la date d'aujourd'hui est �gale � cette date test
-			if (todayTest.get(GregorianCalendar.YEAR) == lastVoteTest.get(GregorianCalendar.YEAR)
-					&& todayTest.get(GregorianCalendar.MONTH) == lastVoteTest.get(GregorianCalendar.MONTH) && todayTest
-							.get(GregorianCalendar.DAY_OF_MONTH) == lastVoteTest.get(GregorianCalendar.DAY_OF_MONTH)) {
-
-				// alors on est parti pour modifier le vote d'aujourd'hui
-				voteDate = today;
-				// on recupere l'id du vote a modifier
-				id = moodCrud.findLastVoteID(child, lastVote);
-
-				// sinon si la datetestd'hier est egale au lastvotetest
-			} else if (yesterdayTest.get(GregorianCalendar.YEAR) == lastVoteTest.get(GregorianCalendar.YEAR)
-					&& yesterdayTest.get(GregorianCalendar.MONTH) == lastVoteTest.get(GregorianCalendar.MONTH)
-					&& yesterdayTest.get(GregorianCalendar.DAY_OF_MONTH) == lastVoteTest
-							.get(GregorianCalendar.DAY_OF_MONTH)) {
-				// alors la date du vote est aujourd'hui
-				voteDate = today;
-			} else {
-				// sinon la date du vote est pour la journee hier
+			if (todayTest.get(GregorianCalendar.DAY_OF_WEEK) == 7) {
 				voteDate = yesterday;
+
+				if (lastVote.equals(yesterday)) {
+					// on recupere l'id du vote a modifier
+					id = moodCrud.findLastVoteID(child, lastVote);
+				}
+
+			} else if (todayTest.get(GregorianCalendar.DAY_OF_WEEK) == 1) {
+
+				GregorianCalendar fridayTest = new GregorianCalendar();
+				fridayTest.setTimeInMillis(yesterdayTest.getTimeInMillis());
+				fridayTest.add(GregorianCalendar.DATE, -1);
+
+				Date friday = new Date(fridayTest.getTimeInMillis());
+
+				voteDate = friday;
+
+				if (lastVote.equals(friday)) {
+					// on recupere l'id du vote a modifier
+					id = moodCrud.findLastVoteID(child, lastVote);
+				}
+
+			} else if (todayTest.get(GregorianCalendar.DAY_OF_WEEK) == 2) {
+
+				GregorianCalendar fridayTest = new GregorianCalendar();
+				fridayTest.setTimeInMillis(yesterdayTest.getTimeInMillis());
+				fridayTest.add(GregorianCalendar.DATE, -2);
+
+				Date friday = new Date(fridayTest.getTimeInMillis());
+
+				if (todayTest.get(GregorianCalendar.YEAR) == lastVoteTest.get(GregorianCalendar.YEAR)
+						&& todayTest.get(GregorianCalendar.MONTH) == lastVoteTest.get(GregorianCalendar.MONTH)
+						&& todayTest.get(GregorianCalendar.DAY_OF_MONTH) == lastVoteTest
+								.get(GregorianCalendar.DAY_OF_MONTH)) {
+					// on est parti pour modifier le vote d'aujourd'hui
+					voteDate = today;
+					// on recupere l'id du vote a modifier
+					id = moodCrud.findLastVoteID(child, lastVote);
+				} else if (fridayTest.get(GregorianCalendar.YEAR) == lastVoteTest.get(GregorianCalendar.YEAR)
+						&& fridayTest.get(GregorianCalendar.MONTH) == lastVoteTest.get(GregorianCalendar.MONTH)
+						&& fridayTest.get(GregorianCalendar.DAY_OF_MONTH) == lastVoteTest
+								.get(GregorianCalendar.DAY_OF_MONTH)) {
+					voteDate = today;
+				} else {
+					voteDate = friday;
+				}
+
+			} else {
+
+				// si la date d'aujourd'hui est egale a cette date test
+				if (todayTest.get(GregorianCalendar.YEAR) == lastVoteTest.get(GregorianCalendar.YEAR)
+						&& todayTest.get(GregorianCalendar.MONTH) == lastVoteTest.get(GregorianCalendar.MONTH)
+						&& todayTest.get(GregorianCalendar.DAY_OF_MONTH) == lastVoteTest
+								.get(GregorianCalendar.DAY_OF_MONTH)) {
+
+					// alors on est parti pour modifier le vote d'aujourd'hui
+					voteDate = today;
+					// on recupere l'id du vote a modifier
+					id = moodCrud.findLastVoteID(child, lastVote);
+
+					// sinon si la datetestd'hier est egale au lastvotetest
+				} else if (yesterdayTest.get(GregorianCalendar.YEAR) == lastVoteTest.get(GregorianCalendar.YEAR)
+						&& yesterdayTest.get(GregorianCalendar.MONTH) == lastVoteTest.get(GregorianCalendar.MONTH)
+						&& yesterdayTest.get(GregorianCalendar.DAY_OF_MONTH) == lastVoteTest
+								.get(GregorianCalendar.DAY_OF_MONTH)) {
+					// alors la date du vote est aujourd'hui
+					voteDate = today;
+				} else {
+					// sinon la date du vote est pour la journee hier
+					voteDate = yesterday;
+				}
 			}
 		}
 
@@ -147,8 +216,7 @@ public class MoodController extends ViewBaseController<Mood> {
 
 	@Secured("ROLE_USER")
 	@RequestMapping(path = "/create/done", method = RequestMethod.POST)
-	public String create(Model model, @ModelAttribute Mood item,
-			@RequestParam("MoodID") String MoodID) {
+	public String create(Model model, @ModelAttribute Mood item, @RequestParam("MoodID") String MoodID) {
 
 		Long id = Long.parseLong(MoodID);
 
@@ -182,8 +250,7 @@ public class MoodController extends ViewBaseController<Mood> {
 
 	@Secured("ROLE_USER")
 	@RequestMapping(path = "/week", method = RequestMethod.GET)
-	public String weekView(Model model,@ModelAttribute("child") User child,
-			@ModelAttribute("date") Long date,
+	public String weekView(Model model, @ModelAttribute("child") User child, @ModelAttribute("date") Long date,
 			@ModelAttribute("projectName") String projectName)
 
 	{
@@ -195,9 +262,8 @@ public class MoodController extends ViewBaseController<Mood> {
 
 		Boolean leader = false;
 
-		if (leaderId == connect.getId())
-		{
-			leader=true;
+		if (leaderId == connect.getId()) {
+			leader = true;
 		}
 
 		model.addAttribute("leader", leader);
@@ -318,34 +384,32 @@ public class MoodController extends ViewBaseController<Mood> {
 				String nom = "jour" + j + "satis" + i;
 				int satis = i - (nbChoice / 2);
 
-				if(endDate!=null){
+				if (endDate != null) {
 
-					if ((startDate.compareTo(sd) == -1) && (sd.compareTo(endDate))==-1) {
+					if ((startDate.compareTo(sd) == -1) && (sd.compareTo(endDate)) == -1) {
 						model.addAttribute(nom, moodCrud.countMoodsBySatisfactionForSummary(projectName, sd, satis));
 					}
 
-					if ((startDate.compareTo(sd) == 0) || (sd.compareTo(endDate))==0){
+					if ((startDate.compareTo(sd) == 0) || (sd.compareTo(endDate)) == 0) {
 						model.addAttribute(nom, moodCrud.countMoodsBySatisfactionForSummary(projectName, sd, satis));
 					}
 
-					if (startDate.compareTo(sd)  == 1 ||(sd.compareTo(endDate))==1) {
+					if (startDate.compareTo(sd) == 1 || (sd.compareTo(endDate)) == 1) {
+						model.addAttribute(nom, moodCrud.countMoodsBySatisfactionForSummary(projectName, sd, -2));
+					}
+				} else {
+					if ((startDate.compareTo(sd) == -1)) {
+						model.addAttribute(nom, moodCrud.countMoodsBySatisfactionForSummary(projectName, sd, satis));
+					}
+
+					if ((startDate.compareTo(sd) == 0)) {
+						model.addAttribute(nom, moodCrud.countMoodsBySatisfactionForSummary(projectName, sd, satis));
+					}
+
+					if (startDate.compareTo(sd) == 1) {
 						model.addAttribute(nom, moodCrud.countMoodsBySatisfactionForSummary(projectName, sd, -2));
 					}
 				}
-				else
-					{
-					if ((startDate.compareTo(sd) == -1)){
-						model.addAttribute(nom, moodCrud.countMoodsBySatisfactionForSummary(projectName, sd, satis));
-					}
-
-					if ((startDate.compareTo(sd) == 0)){
-						model.addAttribute(nom, moodCrud.countMoodsBySatisfactionForSummary(projectName, sd, satis));
-					}
-
-					if (startDate.compareTo(sd)  == 1) {
-						model.addAttribute(nom, moodCrud.countMoodsBySatisfactionForSummary(projectName, sd, -2));
-					}
-					}
 			}
 
 			cd.setTime(sd);
@@ -354,146 +418,136 @@ public class MoodController extends ViewBaseController<Mood> {
 		}
 
 		model.addAttribute("lundi", lundi.getTime());
-		String encourslundi="";
-		if(endDate!=null){
-			if ((startDate.compareTo(lundi) == -1) && (lundi.compareTo(endDate))==-1) {
-				encourslundi="ok";
+		String encourslundi = "";
+		if (endDate != null) {
+			if ((startDate.compareTo(lundi) == -1) && (lundi.compareTo(endDate)) == -1) {
+				encourslundi = "ok";
 			}
-			if ((startDate.compareTo(lundi) == 0) || (lundi.compareTo(endDate))==0){
-				encourslundi="ok";
+			if ((startDate.compareTo(lundi) == 0) || (lundi.compareTo(endDate)) == 0) {
+				encourslundi = "ok";
 			}
-			if (startDate.compareTo(lundi)  == 1 ||(lundi.compareTo(endDate))==1) {
-				encourslundi="PasEnCours";
+			if (startDate.compareTo(lundi) == 1 || (lundi.compareTo(endDate)) == 1) {
+				encourslundi = "PasEnCours";
+			}
+		} else {
+			if ((startDate.compareTo(lundi) == -1)) {
+				encourslundi = "ok";
+			}
+			if ((startDate.compareTo(lundi) == 0)) {
+				encourslundi = "ok";
+			}
+			if (startDate.compareTo(lundi) == 1) {
+				encourslundi = "PasEnCours";
 			}
 		}
-		else
-			{
-			if ((startDate.compareTo(lundi) == -1)){
-				encourslundi="ok";
-			}
-			if ((startDate.compareTo(lundi) == 0)){
-				encourslundi="ok";
-			}
-			if (startDate.compareTo(lundi)  == 1) {
-				encourslundi="PasEnCours";
-			}
-			}
 		model.addAttribute("encourslundi", encourslundi);
 		cd.setTime(lundi);
 		cd.add(Calendar.DATE, 1);
 		mardi = new Date(cd.getTimeInMillis());
 		model.addAttribute("mardi", mardi.getTime());
-		String encoursmardi="";
-		if(endDate!=null){
-			if ((startDate.compareTo(mardi) == -1) && (mardi.compareTo(endDate))==-1) {
-				encoursmardi="ok";
+		String encoursmardi = "";
+		if (endDate != null) {
+			if ((startDate.compareTo(mardi) == -1) && (mardi.compareTo(endDate)) == -1) {
+				encoursmardi = "ok";
 			}
-			if ((startDate.compareTo(mardi) == 0) || (mardi.compareTo(endDate))==0){
-				encoursmardi="ok";
+			if ((startDate.compareTo(mardi) == 0) || (mardi.compareTo(endDate)) == 0) {
+				encoursmardi = "ok";
 			}
-			if (startDate.compareTo(mardi)  == 1 ||(mardi.compareTo(endDate))==1) {
-				encoursmardi="PasEnCours";
+			if (startDate.compareTo(mardi) == 1 || (mardi.compareTo(endDate)) == 1) {
+				encoursmardi = "PasEnCours";
+			}
+		} else {
+			if ((startDate.compareTo(mardi) == -1)) {
+				encoursmardi = "ok";
+			}
+			if ((startDate.compareTo(mardi) == 0)) {
+				encoursmardi = "ok";
+			}
+			if (startDate.compareTo(mardi) == 1) {
+				encoursmardi = "PasEnCours";
 			}
 		}
-		else
-			{
-			if ((startDate.compareTo(mardi) == -1)){
-				encoursmardi="ok";
-			}
-			if ((startDate.compareTo(mardi) == 0)){
-				encoursmardi="ok";
-			}
-			if (startDate.compareTo(mardi)  == 1) {
-				encoursmardi="PasEnCours";
-			}
-			}
 		model.addAttribute("encoursmardi", encoursmardi);
 
 		cd.add(Calendar.DATE, 1);
 		mercredi = new Date(cd.getTimeInMillis());
 		model.addAttribute("mercredi", mercredi.getTime());
-		String encoursmercredi="";
-		if(endDate!=null){
-			if ((startDate.compareTo(mercredi) == -1) && (mercredi.compareTo(endDate))==-1) {
-				encoursmercredi="ok";
+		String encoursmercredi = "";
+		if (endDate != null) {
+			if ((startDate.compareTo(mercredi) == -1) && (mercredi.compareTo(endDate)) == -1) {
+				encoursmercredi = "ok";
 			}
-			if ((startDate.compareTo(mercredi) == 0) || (mercredi.compareTo(endDate))==0){
-				encoursmercredi="ok";
+			if ((startDate.compareTo(mercredi) == 0) || (mercredi.compareTo(endDate)) == 0) {
+				encoursmercredi = "ok";
 			}
-			if (startDate.compareTo(mercredi)  == 1 ||(mercredi.compareTo(endDate))==1) {
-				encoursmercredi="PasEnCours";
+			if (startDate.compareTo(mercredi) == 1 || (mercredi.compareTo(endDate)) == 1) {
+				encoursmercredi = "PasEnCours";
+			}
+		} else {
+			if ((startDate.compareTo(mercredi) == -1)) {
+				encoursmercredi = "ok";
+			}
+			if ((startDate.compareTo(mercredi) == 0)) {
+				encoursmercredi = "ok";
+			}
+			if (startDate.compareTo(mercredi) == 1) {
+				encoursmercredi = "PasEnCours";
 			}
 		}
-		else
-			{
-			if ((startDate.compareTo(mercredi) == -1)){
-				encoursmercredi="ok";
-			}
-			if ((startDate.compareTo(mercredi) == 0)){
-				encoursmercredi="ok";
-			}
-			if (startDate.compareTo(mercredi)  == 1) {
-				encoursmercredi="PasEnCours";
-			}
-			}
 		model.addAttribute("encoursmercredi", encoursmercredi);
 
 		cd.add(Calendar.DATE, 1);
 		jeudi = new Date(cd.getTimeInMillis());
 		model.addAttribute("jeudi", jeudi.getTime());
-		String encoursjeudi="";
-		if(endDate!=null){
-			if ((startDate.compareTo(jeudi) == -1) && (jeudi.compareTo(endDate))==-1) {
-				encoursjeudi="ok";
+		String encoursjeudi = "";
+		if (endDate != null) {
+			if ((startDate.compareTo(jeudi) == -1) && (jeudi.compareTo(endDate)) == -1) {
+				encoursjeudi = "ok";
 			}
-			if ((startDate.compareTo(jeudi) == 0) || (jeudi.compareTo(endDate))==0){
-				encoursjeudi="ok";
+			if ((startDate.compareTo(jeudi) == 0) || (jeudi.compareTo(endDate)) == 0) {
+				encoursjeudi = "ok";
 			}
-			if (startDate.compareTo(jeudi)  == 1 ||(jeudi.compareTo(endDate))==1) {
-				encoursjeudi="PasEnCours";
+			if (startDate.compareTo(jeudi) == 1 || (jeudi.compareTo(endDate)) == 1) {
+				encoursjeudi = "PasEnCours";
+			}
+		} else {
+			if ((startDate.compareTo(jeudi) == -1)) {
+				encoursjeudi = "ok";
+			}
+			if ((startDate.compareTo(jeudi) == 0)) {
+				encoursjeudi = "ok";
+			}
+			if (startDate.compareTo(jeudi) == 1) {
+				encoursjeudi = "PasEnCours";
 			}
 		}
-		else
-			{
-			if ((startDate.compareTo(jeudi) == -1)){
-				encoursjeudi="ok";
-			}
-			if ((startDate.compareTo(jeudi) == 0)){
-				encoursjeudi="ok";
-			}
-			if (startDate.compareTo(jeudi)  == 1) {
-				encoursjeudi="PasEnCours";
-			}
-			}
 		model.addAttribute("encoursjeudi", encoursjeudi);
 
 		cd.add(Calendar.DATE, 1);
 		vendredi = new Date(cd.getTimeInMillis());
 		model.addAttribute("vendredi", vendredi.getTime());
-		String encoursvendredi="";
-		if(endDate!=null){
-			if ((startDate.compareTo(vendredi) == -1) && (vendredi.compareTo(endDate))==-1) {
-				encoursvendredi="ok";
+		String encoursvendredi = "";
+		if (endDate != null) {
+			if ((startDate.compareTo(vendredi) == -1) && (vendredi.compareTo(endDate)) == -1) {
+				encoursvendredi = "ok";
 			}
-			if ((startDate.compareTo(vendredi) == 0) || (vendredi.compareTo(endDate))==0){
-				encoursvendredi="ok";
+			if ((startDate.compareTo(vendredi) == 0) || (vendredi.compareTo(endDate)) == 0) {
+				encoursvendredi = "ok";
 			}
-			if (startDate.compareTo(vendredi)  == 1 ||(vendredi.compareTo(endDate))==1) {
-				encoursvendredi="PasEnCours";
+			if (startDate.compareTo(vendredi) == 1 || (vendredi.compareTo(endDate)) == 1) {
+				encoursvendredi = "PasEnCours";
+			}
+		} else {
+			if ((startDate.compareTo(vendredi) == -1)) {
+				encoursvendredi = "ok";
+			}
+			if ((startDate.compareTo(vendredi) == 0)) {
+				encoursvendredi = "ok";
+			}
+			if (startDate.compareTo(vendredi) == 1) {
+				encoursvendredi = "PasEnCours";
 			}
 		}
-		else
-			{
-			if ((startDate.compareTo(vendredi) == -1)){
-				encoursvendredi="ok";
-			}
-			if ((startDate.compareTo(vendredi) == 0)){
-				encoursvendredi="ok";
-			}
-			if (startDate.compareTo(vendredi)  == 1) {
-				encoursvendredi="PasEnCours";
-			}
-			}
 		model.addAttribute("encoursvendredi", encoursvendredi);
 
 		Boolean isAnonymous = projectCrud.findAnonymousStatusbyName(projectName);
@@ -507,30 +561,28 @@ public class MoodController extends ViewBaseController<Mood> {
 
 	@Secured("ROLE_USER")
 	@RequestMapping(path = "/week/change", method = RequestMethod.GET)
-	public String weekChange(Model model,@ModelAttribute User child,
-			@ModelAttribute("date") Long date,@ModelAttribute("projectName") String projectName,@ModelAttribute("changeWeek") String changeWeek,
+	public String weekChange(Model model, @ModelAttribute User child, @ModelAttribute("date") Long date,
+			@ModelAttribute("projectName") String projectName, @ModelAttribute("changeWeek") String changeWeek,
 			final BindingResult childBindingResult, final Model model2, final RedirectAttributes redirectAttributes) {
 
-			Date sd= new Date();
-			Calendar cd = Calendar.getInstance();
+		Date sd = new Date();
+		Calendar cd = Calendar.getInstance();
 
-		if (changeWeek.equals("previous")){
+		if (changeWeek.equals("previous")) {
 
 			sd = new Date(date);
 
 			cd.setTime(sd);
 			cd.add(Calendar.DATE, -7);
 			sd = new Date(cd.getTimeInMillis());
-		}
-		else if (changeWeek.equals("next")){
+		} else if (changeWeek.equals("next")) {
 
 			sd = new Date(date);
 
 			cd.setTime(sd);
 			cd.add(Calendar.DATE, 7);
 			sd = new Date(cd.getTimeInMillis());
-		}
-		else {
+		} else {
 			cd = Calendar.getInstance();
 			cd.setTime(sd);
 
@@ -544,70 +596,71 @@ public class MoodController extends ViewBaseController<Mood> {
 		redirectAttributes.addAttribute("projectName", projectName);
 		redirectAttributes.addAttribute("date", sd.getTime());
 
-		return REDIRECT + MoodController.BASE_URL + "/week/" ;
+		return REDIRECT + MoodController.BASE_URL + "/week/";
 
 	}
 
 	@Secured("ROLE_USER")
 	@RequestMapping(path = "/day/", method = RequestMethod.GET)
-	public String dayView(Model model,
-			@ModelAttribute("date") Long date,@ModelAttribute("projectName") String projectName) {
+	public String dayView(Model model, @ModelAttribute("date") Long date,
+			@ModelAttribute("projectName") String projectName) {
 
-			Date sd= new Date();
-			Calendar cd = Calendar.getInstance();
-			sd = new Date(date);
-			cd.setTimeInMillis(date);
+		Date sd = new Date();
+		Calendar cd = Calendar.getInstance();
+		sd = new Date(date);
+		cd.setTimeInMillis(date);
 
-			int jour = cd.get(Calendar.DAY_OF_MONTH);
-			int mois = cd.get(Calendar.MONTH);
-			int annee = cd.get(Calendar.YEAR);
+		int jour = cd.get(Calendar.DAY_OF_MONTH);
+		int mois = cd.get(Calendar.MONTH);
+		int annee = cd.get(Calendar.YEAR);
 
-			model.addAttribute("jour", String.format("%02d", jour));
-			model.addAttribute("mois", String.format("%02d", mois + 1));
-			model.addAttribute("annee", String.format("%04d", annee));
+		model.addAttribute("jour", String.format("%02d", jour));
+		model.addAttribute("mois", String.format("%02d", mois + 1));
+		model.addAttribute("annee", String.format("%04d", annee));
 
-			model.addAttribute("date", date);
+		model.addAttribute("date", date);
 
-			model.addAttribute("projectName", projectName);
+		model.addAttribute("projectName", projectName);
 
-			List<Mood> moods = moodCrud.findMoodsByProjectAndDate(projectName,sd);
+		List<Mood> moods = moodCrud.findMoodsByProjectAndDate(projectName, sd);
 
-			ArrayList<Map<String,Object>> dayInfos = new ArrayList<Map<String,Object>>();
-			Boolean anonymous = projectCrud.findAnonymousStatusbyName(projectName);
+		ArrayList<Map<String,Object>> dayInfos = new ArrayList<Map<String,Object>>();
 
-			String FirstName = "";
-			String LastName = "";
+		Boolean anonymous = projectCrud.findAnonymousStatusbyName(projectName);
 
-			int i=0;
-			for (Mood mood : moods) {
-				dayInfos.add(new HashMap<String,Object>());
-				(dayInfos.get(i)).put("satis", mood.getSatisfaction());
-				(dayInfos.get(i)).put("comment", mood.getCommentSat());
+		String FirstName = "";
+		String LastName = "";
 
-				if(anonymous==false){
+		int i = 0;
+		for (Mood mood : moods) {
+			dayInfos.add(new HashMap<String, Object>());
+			(dayInfos.get(i)).put("satis", mood.getSatisfaction());
+			(dayInfos.get(i)).put("comment", mood.getCommentSat());
+
+			if (anonymous == false) {
 				FirstName = mood.getUser().getFirstName();
 				LastName = mood.getUser().getLastName();
-				(dayInfos.get(i)).put("FirstName",FirstName);
-				(dayInfos.get(i)).put("LastName",LastName);
-				}
-				else if (anonymous==true) {
-				(dayInfos.get(i)).put("FirstName","");
-				(dayInfos.get(i)).put("LastName","");
-				}
-				i++;
-
+				(dayInfos.get(i)).put("FirstName", FirstName);
+				(dayInfos.get(i)).put("LastName", LastName);
+			} else if (anonymous == true) {
+				(dayInfos.get(i)).put("FirstName", "");
+				(dayInfos.get(i)).put("LastName", "");
 			}
 
-			model.addAttribute("dayInfos", dayInfos);
+			i++;
 
-		return "mood/day" ;
+		}
+
+		model.addAttribute("dayInfos", dayInfos);
+
+		return "mood/day";
 
 	}
 
 	@Secured("ROLE_USER")
 	@RequestMapping(path = "/month", method = RequestMethod.GET)
-	public String MonthView(Model model,
-			@ModelAttribute("date") Long date,@ModelAttribute("projectName") String projectName) {
+	public String MonthView(Model model, @ModelAttribute("date") Long date,
+			@ModelAttribute("projectName") String projectName) {
 
 		Date sd = new Date(date);
 		Calendar cd = Calendar.getInstance();
@@ -619,51 +672,49 @@ public class MoodController extends ViewBaseController<Mood> {
 		Integer today = cd.get(Calendar.DAY_OF_MONTH);
 		Integer annee = cd.get(Calendar.YEAR);
 
-		ArrayList<Map<String,Object>> days = new ArrayList<Map<String,Object>>();
+		ArrayList<Map<String, Object>> days = new ArrayList<Map<String, Object>>();
 
 		Date startDate = projectCrud.findProjectStartDatebyName(projectName);
 		Date endDate = projectCrud.findProjectEndDatebyName(projectName);
 
 		String encours = "";
 
-		int i =0;
-		for (i=1; i<=dayEndMonth ; i++){
+		int i = 0;
+		for (i = 1; i <= dayEndMonth; i++) {
 			days.add(new HashMap<String, Object>());
-			cd.set(GregorianCalendar.DAY_OF_MONTH,i);
+			cd.set(GregorianCalendar.DAY_OF_MONTH, i);
 			sd = new Date(cd.getTimeInMillis());
 
-			if(endDate!=null){
+			if (endDate != null) {
 
-				if ((startDate.compareTo(sd) == -1) && (sd.compareTo(endDate))==-1) {
-					encours="ok";
+				if ((startDate.compareTo(sd) == -1) && (sd.compareTo(endDate)) == -1) {
+					encours = "ok";
 				}
 
-				if ((startDate.compareTo(sd) == 0) || (sd.compareTo(endDate))==0){
-					encours="ok";
+				if ((startDate.compareTo(sd) == 0) || (sd.compareTo(endDate)) == 0) {
+					encours = "ok";
 				}
 
-				if (startDate.compareTo(sd)  == 1 ||(sd.compareTo(endDate))==1) {
-					encours="PasEnCours";
+				if (startDate.compareTo(sd) == 1 || (sd.compareTo(endDate)) == 1) {
+					encours = "PasEnCours";
+				}
+			} else {
+				if ((startDate.compareTo(sd) == -1)) {
+					encours = "ok";
+				}
+
+				if ((startDate.compareTo(sd) == 0)) {
+					encours = "ok";
+				}
+
+				if (startDate.compareTo(sd) == 1) {
+					encours = "PasEnCours";
 				}
 			}
-			else
-				{
-				if ((startDate.compareTo(sd) == -1)){
-					encours="ok";
-				}
 
-				if ((startDate.compareTo(sd) == 0)){
-					encours="ok";
-				}
-
-				if (startDate.compareTo(sd)  == 1) {
-					encours="PasEnCours";
-				}
-				}
-
-			days.get(i-1).put("jour", i);
-			days.get(i-1).put("date", sd.getTime());
-			days.get(i-1).put("encours",encours);
+			days.get(i - 1).put("jour", i);
+			days.get(i - 1).put("date", sd.getTime());
+			days.get(i - 1).put("encours", encours);
 
 			GregorianCalendar todayTest = new GregorianCalendar();
 
@@ -673,83 +724,72 @@ public class MoodController extends ViewBaseController<Mood> {
 			todayTest.set(GregorianCalendar.YEAR, annee);
 			Integer joursem = todayTest.get(GregorianCalendar.DAY_OF_WEEK);
 
-			days.get(i-1).put("joursem", joursem);
+			days.get(i - 1).put("joursem", joursem);
 
 			String nomjour = "";
 
-			if (joursem == 2){
+			if (joursem == 2) {
 				nomjour = "Lundi";
-			}
-			else if (joursem == 3){
+			} else if (joursem == 3) {
 				nomjour = "Mardi";
-			}
-			else if (joursem == 4){
+			} else if (joursem == 4) {
 				nomjour = "Mercredi";
-			}
-			else if (joursem == 5){
+			} else if (joursem == 5) {
 				nomjour = "Jeudi";
-			}
-			else if (joursem == 6){
+			} else if (joursem == 6) {
 				nomjour = "Vendredi";
-			}
-			else if (joursem == 7){
+			} else if (joursem == 7) {
 				nomjour = "Samedi";
-			}
-			else if (joursem == 1){
+			} else if (joursem == 1) {
 				nomjour = "Dimanche";
 			}
 
-			days.get(i-1).put("nomjour", nomjour);
+			days.get(i - 1).put("nomjour", nomjour);
 			todayTest.set(GregorianCalendar.HOUR_OF_DAY, 00);
 			todayTest.set(GregorianCalendar.MINUTE, 00);
 			todayTest.set(GregorianCalendar.SECOND, 00);
 			todayTest.set(GregorianCalendar.MILLISECOND, 00);
 
-			Date todayTestDate = new Date (todayTest.getTimeInMillis());
+			Date todayTestDate = new Date(todayTest.getTimeInMillis());
 
-			Float nbavis = moodCrud.countMoodsByDate(projectName,todayTestDate);
-			Float somAvis = moodCrud.sumMoodsByDate(projectName,todayTestDate);
+			Float nbavis = moodCrud.countMoodsByDate(projectName, todayTestDate);
+			Float somAvis = moodCrud.sumMoodsByDate(projectName, todayTestDate);
 
-			days.get(i-1).put("nbavis", nbavis);
-			days.get(i-1).put("somAvis", somAvis);
+			days.get(i - 1).put("nbavis", nbavis);
+			days.get(i - 1).put("somAvis", somAvis);
 
 			Float med = null;
 			Integer red = null;
 			Integer green = null;
 			Integer blue = 0;
 
-			if (somAvis != null){
+			if (somAvis != null) {
 
-			med = (somAvis / nbavis);
+				med = (somAvis / nbavis);
 
-			if(med > 0)
-			{
-				green = 255;
-				red = Math.round(255 * (1 - med));
-			}
-			else if (med < 0)
-			{
-				red = 255;
-				green = Math.round(255 * (1 + med));
-			}
-			else
-			{
-				red = 255;
-				green = 255;
-				blue = 0;
-			}
+				if (med > 0) {
+					green = 255;
+					red = Math.round(255 * (1 - med));
+				} else if (med < 0) {
+					red = 255;
+					green = Math.round(255 * (1 + med));
+				} else {
+					red = 255;
+					green = 255;
+					blue = 0;
+				}
 
 			}
 
-			days.get(i-1).put("red",red);
-			days.get(i-1).put("green",green);
-			days.get(i-1).put("blue",blue);
-			days.get(i-1).put("med", med);
+			days.get(i - 1).put("red", red);
+			days.get(i - 1).put("green", green);
+			days.get(i - 1).put("blue", blue);
+			days.get(i - 1).put("med", med);
 
 		}
-		model.addAttribute("encours",encours);
-		model.addAttribute("days",days);
-		model.addAttribute("mois", String.format("%02d", Month+1));
+		model.addAttribute("encours", encours);
+		model.addAttribute("days", days);
+		model.addAttribute("mois", String.format("%02d", Month + 1));
 		model.addAttribute("debutmois", String.format("%02d", dayBeginMonth));
 		model.addAttribute("finmois", String.format("%02d", dayEndMonth));
 		model.addAttribute("jouractuel", String.format("%02d", today));
@@ -760,14 +800,14 @@ public class MoodController extends ViewBaseController<Mood> {
 
 	@Secured("ROLE_USER")
 	@RequestMapping(path = "/month/change", method = RequestMethod.GET)
-	public String monthChange(Model model,
-		@ModelAttribute("date") Long date,@ModelAttribute("projectName") String projectName,@ModelAttribute("changeMonth") String changeMonth,
-		final BindingResult childBindingResult, final Model model2, final RedirectAttributes redirectAttributes) {
+	public String monthChange(Model model, @ModelAttribute("date") Long date,
+			@ModelAttribute("projectName") String projectName, @ModelAttribute("changeMonth") String changeMonth,
+			final BindingResult childBindingResult, final Model model2, final RedirectAttributes redirectAttributes) {
 
-		Date sd= new Date();
+		Date sd = new Date();
 		Calendar cd = Calendar.getInstance();
 
-		if (changeMonth.equals("previous")){
+		if (changeMonth.equals("previous")) {
 
 			sd = new Date(date);
 
@@ -775,8 +815,7 @@ public class MoodController extends ViewBaseController<Mood> {
 			cd.set(Calendar.DAY_OF_MONTH, 1);
 			cd.add(Calendar.MONTH, -1);
 			sd = new Date(cd.getTimeInMillis());
-		}
-		else if (changeMonth.equals("next")){
+		} else if (changeMonth.equals("next")) {
 
 			sd = new Date(date);
 			Integer dayEndMonth = cd.getActualMaximum(Calendar.DAY_OF_MONTH);
@@ -784,8 +823,7 @@ public class MoodController extends ViewBaseController<Mood> {
 			cd.add(Calendar.MONTH, 1);
 			cd.set(Calendar.DAY_OF_MONTH, 1);
 			sd = new Date(cd.getTimeInMillis());
-		}
-		else {
+		} else {
 			cd = Calendar.getInstance();
 			cd.setTime(sd);
 
@@ -799,7 +837,7 @@ public class MoodController extends ViewBaseController<Mood> {
 		redirectAttributes.addAttribute("projectName", projectName);
 		redirectAttributes.addAttribute("date", sd.getTime());
 
-		return REDIRECT + MoodController.BASE_URL + "/month/" ;
+		return REDIRECT + MoodController.BASE_URL + "/month/";
 
 	}
 

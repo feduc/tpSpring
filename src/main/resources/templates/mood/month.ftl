@@ -284,23 +284,7 @@
                         </#if>
 
                 <#elseif int["joursem"]== 7 && int["jour"]== 1 >
-                    <#if int["med"]?has_content>
-                        <div class="col-xs-12 col-sm-2 col-md-2"><div class="weekend" style="background-color:rgb(255,255,255)"style ="color:white"></div> </div>
-                        <div class="col-xs-12 col-sm-2 col-md-2"><div class="weekend" style="background-color:rgb(255,255,255)"style ="color:white"></div> </div>
-                        <div class="col-xs-12 col-sm-2 col-md-2"><div class="weekend" style="background-color:rgb(255,255,255)"style ="color:white"></div> </div>
-                        <div class="col-xs-12 col-sm-2 col-md-2"><div class="weekend" style="background-color:rgb(255,255,255)"style ="color:white"></div> </div>
-                        <div class="col-xs-12 col-sm-2 col-md-2"><div class="weekend" style="background-color:rgb(255,255,255)"style ="color:white"></div> </div>
-                        <div class="col-xs-12 col-sm-2 col-md-1">
-                            <div class="weekend" style="background-color:rgb(192,192,192)">
-                                    <form id= 'formid' action='/mood/week/' method='get'>
-                                        <input type='hidden' name='projectName' value='${projectName}' />
-                                        <input type="hidden" name="date" value="${int['date']?c}" />
-                                        <button type='submit' value='submit'>WE</button>
-                                    </form>
-                            </div>
-                        </div>
-                        </div>
-                        <#else>
+
                             <div class="col-xs-12 col-sm-2 col-md-2"><div class="weekend" style="background-color:rgb(255,255,255)"style ="color:white"></div> </div>
                             <div class="col-xs-12 col-sm-2 col-md-2"><div class="weekend" style="background-color:rgb(255,255,255)"style ="color:white"></div> </div>
                             <div class="col-xs-12 col-sm-2 col-md-2"><div class="weekend" style="background-color:rgb(255,255,255)"style ="color:white"></div> </div>
@@ -315,10 +299,9 @@
                                     </form>
                                 </div>
                             </div>
-                    </#if>
-                    <#else>
+
+                <#else>
                 <#if int["joursem"]== 7>
-                        <#if int["med"]?has_content>
                             <div class="col-xs-12 col-sm-2 col-md-1">
                                 <div class="weekend" style="background-color:rgb(192,192,192)">
                                     <form id= 'formid' action='/mood/week/' method='get'>
@@ -328,19 +311,7 @@
                                     </form>
                                 </div>
                             </div>
-                            <#else>
-                            <div class="col-xs-12 col-sm-2 col-md-1">
-                                <div class="weekend" style="background-color:rgb(192,192,192)">
-                                    <form id= 'formid' action='/mood/week/' method='get'>
-                                        <input type='hidden' name='projectName' value='${projectName}' />
-                                        <input type="hidden" name="date" value="${int['date']?c}" />
-                                        <button type='submit' value='submit'>WE</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </#if>
                         <#elseif int["joursem"]== 1>
-                        <#if int["med"]?has_content>
                             <div class="col-xs-12 col-sm-2 col-md-1">
                                 <div class="weekend" style="background-color:rgb(192,192,192)">
                                     <form id= 'formid' action='/mood/week/' method='get'>
@@ -350,17 +321,6 @@
                                     </form>
                                 </div>
                             </div>
-                            <#else>
-                            <div class="col-xs-12 col-sm-2 col-md-1">
-                                <div class="weekend" style="background-color:rgb(192,192,192)">
-                                    <form id= 'formid' action='/mood/week/' method='get'>
-                                        <input type='hidden' name='projectName' value='${projectName}' />
-                                        <input type="hidden" name="date" value="${int['date']?c}" />
-                                        <button type='submit' value='submit'>WE</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </#if>
                         <#else>
                         <#if int["encours"]== "ok">
                             <#if int["med"]?has_content>
