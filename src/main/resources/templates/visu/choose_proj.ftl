@@ -99,11 +99,8 @@
 
     <script>
     $(document).ready(function(){
-
     });
-
     $(document).unload(function(){
-
     });
     </script>
 

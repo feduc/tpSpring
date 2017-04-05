@@ -132,9 +132,9 @@ public class Project extends DataBaseItem {
 	}
 
 	public Set<User> getTeam() {
-		
+
 			return team;
-		
+
 	}
 
 	public void setTeam(Set<User> team) {

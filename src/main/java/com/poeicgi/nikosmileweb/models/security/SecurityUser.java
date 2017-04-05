@@ -56,7 +56,6 @@ public class SecurityUser extends DataBaseItem {
 	@Column(nullable = false)
 	private Boolean enable;
 
-
 	@ManyToMany
 	private Set<SecurityRole> roles;
 

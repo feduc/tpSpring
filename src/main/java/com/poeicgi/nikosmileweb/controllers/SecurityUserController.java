@@ -58,7 +58,7 @@ public class SecurityUserController extends ViewBaseController<SecurityUser> {
 
 	 public SecurityUserController() {
 	 super(SecurityUser.class, BASE_URL);
-	
+	 
 	 }
 
 	@Autowired

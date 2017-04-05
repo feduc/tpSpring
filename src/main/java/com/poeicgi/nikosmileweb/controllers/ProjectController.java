@@ -1,7 +1,5 @@
 package com.poeicgi.nikosmileweb.controllers;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +22,6 @@ import com.poeicgi.nikosmileweb.dao.ISecurityUserCrudRepository;
 import com.poeicgi.nikosmileweb.models.Project;
 import com.poeicgi.nikosmileweb.models.User;
 import com.poeicgi.nikosmileweb.models.security.SecurityUser;
-import com.poeicgi.nikosmileweb.utils.DumpFields;
 
 @Controller
 @RequestMapping(path = ProjectController.BASE_URL)
@@ -48,9 +45,6 @@ public class ProjectController extends ViewBaseController<Project>{
 	public ProjectController() {
 		super(Project.class,BASE_URL);
 	}
-
-	private String baseName;
-	private String baseUrl;
 
 	@Secured({"ROLE_USER","ROLE_VISU"})
 	@RequestMapping(path = "/choose", method = RequestMethod.GET)
@@ -126,11 +120,7 @@ public class ProjectController extends ViewBaseController<Project>{
 		redirectAttributes.addAttribute("alertMessage", alertMessage);
 		return REDIRECT + "/project/create/";
 		}
-
-
-
 	}
-
 
 	@Secured({"ROLE_ADMIN", "ROLE_MODO"})
 	@RequestMapping(path = "/{id}/update/done", method = RequestMethod.POST)
@@ -151,5 +141,4 @@ public class ProjectController extends ViewBaseController<Project>{
 
 		return super.REDIRECT+"/user/create/";
 	}
-
 }

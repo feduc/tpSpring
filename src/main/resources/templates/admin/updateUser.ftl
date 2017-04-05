@@ -25,11 +25,11 @@
 
     <h1> <font color = "white">Update User : ${item["registrationCGI"]} </font></h1>
     <form action="/user/${item["id"]}/update/done" method="POST">
-        <font color = "white">login :</font><br/> 
+        <font color = "white">login :</font><br/>
         <input type="text"  value="${security["login"]}" name="login" readonly/><br/>
-        <font color = "white">password :</font><br/> 
+        <font color = "white">password :</font><br/>
         <input type="text" name="password" required="required"/><br/>
-        <font color = "white">enable :</font><br/> 
+        <font color = "white">enable :</font><br/>
         <input type="text"  value="${security["enable"]?c}" name="enable" pattern="(true|false)" required="required"/><br/>
         <#list fields as field>
                       <#list item?keys as key>
