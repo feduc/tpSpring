@@ -6,7 +6,6 @@
       <link rel="stylesheet" href="/css/bootstrap.css">
       <link rel="stylesheet" href="/css/main1.css">
 </head>
-
 <body>
     <header>
         <img src="/img/BaniereCGI.jpg">
@@ -37,7 +36,6 @@
                     </#if>
                 </div>
                 <div class="col-xs-9 col-sm-9 col-md-9" id="comment">
-
                   <#if info["comment"]?has_content>
                     <font color="white">${info["comment"]} - </font>
                   </#if>

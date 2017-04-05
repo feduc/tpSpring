@@ -32,7 +32,7 @@
                         <font color = "white"><th>${field["name"]} :</th><br/></font>
                             <input type="text" name="${field["name"]}" pattern="(true|false)"
                                  title="boolean : true/false" required="required"/>
-                                 <br/>
+                        <br/>
                         <#elseif field["type"] == "Date">
                         <font color = "white"> <th>${field["name"]} :</th><br/></font>
                       <input type="text" name="${field["name"]}" required="required" title="Date : YYYY/MM/DD HH:MM:SS"

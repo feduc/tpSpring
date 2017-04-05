@@ -25,11 +25,11 @@
 
     <h1> <font color = "white">Update User : ${item["registrationCGI"]} </font></h1>
     <form action="/user/${item["id"]}/update/done" method="POST">
-        <font color = "white">login :</font><br/> 
+        <font color = "white">login :</font><br/>
         <input type="text"  value="${security["login"]}" name="login" readonly/><br/>
-        <font color = "white">password :</font><br/> 
+        <font color = "white">password :</font><br/>
         <input type="text" name="password" required="required"/><br/>
-        <font color = "white">enable :</font><br/> 
+        <font color = "white">enable :</font><br/>
         <input type="text"  value="${security["enable"]?c}" name="enable" pattern="(true|false)" required="required"/><br/>
         <#list fields as field>
                       <#list item?keys as key>
@@ -64,17 +64,4 @@
     <#include "../includable/security/securityToken.ftl">
 
     </form>
-</body>
-<head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
-    <script>
-        $.validate({
-        modules : 'date'
-        });
-    </script>
-</head>
-<body>
-    
 </body>

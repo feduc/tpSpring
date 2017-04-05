@@ -48,7 +48,6 @@
                     <#list item?keys as key>
                         <#if key==field["name"]>
                             <#if key == "id">
-                                
                             <#elseif key == "name">
                                 <input type="text"  value="${item[key]}" name="${key}" readonly/> <br/>
                             <#elseif item[key]?is_boolean>

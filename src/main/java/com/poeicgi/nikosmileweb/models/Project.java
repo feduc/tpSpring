@@ -68,7 +68,7 @@ public class Project extends DataBaseItem {
 	@Column(name = "date_debut", nullable = false)
 	private Date startDate;
 
-	@Column(nullable = true, name = "date_fin")
+	@Column(nullable = false, name = "date_fin")
 	private Date endDate;
 
 	@Column(name = "projet_anonyme", nullable = false)
