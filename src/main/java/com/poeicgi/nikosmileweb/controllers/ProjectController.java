@@ -109,34 +109,22 @@ public class ProjectController extends ViewBaseController<Project>{
 	public String create(Model model, @ModelAttribute("project") Project project, @ModelAttribute("alertMessage") String alertMessage,
 		final BindingResult childBindingResult, final Model model2, final RedirectAttributes redirectAttributes){
 
-		//bloc de mise à jour du navigateur pour modo
-		User child = securityController.getConnectedUser();
-		SecurityUser secu = secuCrud.findOne(child.getId());
-		Boolean admin= false;
-		List<String> roles = roleCrud.getRolesForSecurityUser(secu);
-		if (roles.contains("ROLE_ADMIN")) {
-			admin = true;
-		}
-		//
-		model.addAttribute("admin", admin);
-
 		String projectName = project.getName();
 
 		Project projectTest = projectCrud.findExactProjectByName(projectName);
 
-		Boolean alert = false;
 		if(projectTest != null)
 		{
-			alert = true;
 			alertMessage = "Projet déjà existant";
 			redirectAttributes.addAttribute("alertMessage", alertMessage);
-			return super.REDIRECT + "/project/create/";
+			return REDIRECT + "/project/create/";
 		}
 		else{
+
 		insertItem(project);
 		alertMessage = "Projet créé";
 		redirectAttributes.addAttribute("alertMessage", alertMessage);
-		return super.REDIRECT + "/project/create/";
+		return REDIRECT + "/project/create/";
 		}
 
 

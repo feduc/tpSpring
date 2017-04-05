@@ -63,9 +63,9 @@
                 </form>
                 </#if>
                 <br/>
-                <img src="/img/niko-vert-fond blanc.png" width="50%"> ${jour1satis2} <br/>
-                <img src="/img/niko-jaune-fond blanc.png" width="50%"> ${jour1satis1} <br/>
-                <img src="/img/niko-rouge-fond blanc.png" width="50%"> ${jour1satis0} <br/>
+                <img src="/img/niko-vert.png" width="50%"> ${jour1satis2} <br/>
+                <img src="/img/niko-jaune.png" width="50%"> ${jour1satis1} <br/>
+                <img src="/img/niko-rouge.png" width="50%"> ${jour1satis0} <br/>
                 </div>
            </div>
           <div class="col-xs-12 col-sm-2 col-md-2">
@@ -82,9 +82,9 @@
                 </form>
                 </#if>
                 <br/>
-                <img src="/img/niko-vert-fond blanc.png" width="50%"> ${jour2satis2} <br/>
-                <img src="/img/niko-jaune-fond blanc.png" width="50%"> ${jour2satis1} <br/>
-                <img src="/img/niko-rouge-fond blanc.png" width="50%"> ${jour2satis0} <br/>
+                <img src="/img/niko-vert.png" width="50%"> ${jour2satis2} <br/>
+                <img src="/img/niko-jaune.png" width="50%"> ${jour2satis1} <br/>
+                <img src="/img/niko-rouge.png" width="50%"> ${jour2satis0} <br/>
                 </div>
            </div>
            <div class="col-xs-12 col-sm-2 col-md-2">
@@ -101,9 +101,9 @@
                 </form>
                 </#if>
                 <br/>
-                <img src="/img/niko-vert-fond blanc.png" width="50%"> ${jour3satis2} <br/>
-                <img src="/img/niko-jaune-fond blanc.png" width="50%"> ${jour3satis1} <br/>
-                <img src="/img/niko-rouge-fond blanc.png" width="50%"> ${jour3satis0} <br/>
+                <img src="/img/niko-vert.png" width="50%"> ${jour3satis2} <br/>
+                <img src="/img/niko-jaune.png" width="50%"> ${jour3satis1} <br/>
+                <img src="/img/niko-rouge.png" width="50%"> ${jour3satis0} <br/>
                 </div>
            </div>
             <div class="col-xs-12 col-sm-2 col-md-2">
@@ -120,9 +120,9 @@
                 </form>
                 </#if>
                 <br/>
-                <img src="/img/niko-vert-fond blanc.png" width="50%"> ${jour4satis2} <br/>
-                <img src="/img/niko-jaune-fond blanc.png" width="50%"> ${jour4satis1} <br/>
-                <img src="/img/niko-rouge-fond blanc.png" width="50%"> ${jour4satis0} <br/>
+                <img src="/img/niko-vert.png" width="50%"> ${jour4satis2} <br/>
+                <img src="/img/niko-jaune.png" width="50%"> ${jour4satis1} <br/>
+                <img src="/img/niko-rouge.png" width="50%"> ${jour4satis0} <br/>
                 </div>
            </div>
            <div class="col-xs-12 col-sm-2 col-md-2">
@@ -139,9 +139,9 @@
                 </form>
                 </#if>
                 <br/>
-                <img src="/img/niko-vert-fond blanc.png" width="50%"> ${jour5satis2} <br/>
-                <img src="/img/niko-jaune-fond blanc.png" width="50%"> ${jour5satis1} <br/>
-                <img src="/img/niko-rouge-fond blanc.png" width="50%"> ${jour5satis0} <br/>
+                <img src="/img/niko-vert.png" width="50%"> ${jour5satis2} <br/>
+                <img src="/img/niko-jaune.png" width="50%"> ${jour5satis1} <br/>
+                <img src="/img/niko-rouge.png" width="50%"> ${jour5satis0} <br/>
                 </div>
            </div>
 
