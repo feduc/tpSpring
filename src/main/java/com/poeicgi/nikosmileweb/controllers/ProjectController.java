@@ -73,7 +73,7 @@ public class ProjectController extends ViewBaseController<Project>{
 
 	@Secured("ROLE_USER")
 	@RequestMapping(path = "/HiddenAnonymous", method = RequestMethod.POST)
-	public String projectParam(Model model, @ModelAttribute("projectName") String projectName,
+	public String projectParam(Model model, @ModelAttribute("projectName") String projectName,@ModelAttribute("date") Long date,
 	@RequestParam(value = "isAnonymous",  required = false) String isAnonymous,
 	@RequestParam(value = "isHidden",  required = false) String isHidden){
 
@@ -95,7 +95,7 @@ public class ProjectController extends ViewBaseController<Project>{
 
 		updateItem(project);
 
-		return REDIRECT + UserController.BASE_URL + "/resume";
+		return REDIRECT + MoodController.BASE_URL + "/week?projectName="+ projectName+"&date="+date;
 	}
 
 	@Secured({"ROLE_ADMIN", "ROLE_MODO"})

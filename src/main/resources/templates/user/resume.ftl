@@ -118,7 +118,7 @@
                         <#include "../includable/security/securityToken.ftl">
                     </div>
                 <input type='hidden' name='date' value='${date?c}'/>
-                <button type='submit' style='width:300px' value='submit'>Vers la selection d'autres projets</button>
+                <button type='submit' style='width:300px' value='submit'>Vers la sélection d'autres projets</button>
               </form>
 
             <#if admin == true>
@@ -131,7 +131,7 @@
               <#else>
              </#if>
             <#if modo == true>
-                <form action='/admin/choose/' method='get'>
+                <form action='/project/create/' method='get'>
                     <div>
                         <#include "../includable/security/securityToken.ftl">
                     </div>
