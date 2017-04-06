@@ -135,6 +135,7 @@
                     <div>
                         <#include "../includable/security/securityToken.ftl">
                     </div>
+                    <input type="hidden" name = "action" value ="update"/>
                 <button type='submit' style='width:300px' value='submit'>Page Modérateur</button>
               </form>
               <#else>

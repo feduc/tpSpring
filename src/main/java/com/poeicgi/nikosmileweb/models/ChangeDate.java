@@ -62,6 +62,4 @@ public class ChangeDate extends DataBaseItem{
 	public ChangeDate() {
 		super(ChangeDate.TABLE, ChangeDate.FIELDS);
 	}
-
-
 }

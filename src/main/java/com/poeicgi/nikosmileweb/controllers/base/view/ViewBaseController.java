@@ -112,6 +112,7 @@ public abstract class ViewBaseController<T extends DataBaseItem> extends BaseCon
 			admin = true;
 		}
 		//
+		
 		model.addAttribute("admin", admin);
 		T item = (T) baseCrud.findOne(id);
 

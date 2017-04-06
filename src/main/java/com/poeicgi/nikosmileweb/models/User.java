@@ -29,7 +29,6 @@ public class User extends DataBaseItem{
 	@Transient
 	public static final String[] FIELDS =  {"id", "nom", "prenom", "matricule_CGI", "verticale", "agence"};
 
-
 	@Override
 	public ArrayList<Map<String,Object>> getMyFields() {
 		ArrayList<Map<String,Object>> myFields = new ArrayList<Map<String,Object>>();
@@ -88,7 +87,6 @@ public class User extends DataBaseItem{
 	public void setAgency(String agency) {
 		this.agency = agency;
 	}
-
 
 	public String getVerticale() {
 		return verticale;
@@ -164,8 +162,6 @@ public class User extends DataBaseItem{
 		return "User [lastName=" + lastName + ", firstName=" + firstName + ", registrationCGI=" + registrationCGI
 				+ ", verticale=" + verticale + ", agency=" + agency + "]";
 	}
-
-
 
 }
 

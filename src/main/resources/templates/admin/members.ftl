@@ -97,8 +97,6 @@
                             <input type="radio" name="projectLeader" value="${member["registrationCGI"]}"/>
                             </#if>
                             <#include "../includable/security/securityToken.ftl">
-                            
-                            
                         </td>
                     </tr>
                 </#list>

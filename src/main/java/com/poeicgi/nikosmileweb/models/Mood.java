@@ -194,11 +194,8 @@ public class Mood extends DataBaseItem {
 			}else{
 				return false;
 			}
-
+		}
 	}
-
-	}
-
 }
 
 

@@ -46,7 +46,7 @@ public class SecurityUserController extends ViewBaseController<SecurityUser> {
 			return REDIRECT+ "/user/create/";
 
 		} else if (roles.contains("ROLE_MODO"))  {
-			return REDIRECT + AdminController.BASE_URL + "/choose";
+			return REDIRECT + ProjectController.BASE_URL + "/create/";
 		} else if (roles.contains("ROLE_VISU"))  {
 			return REDIRECT + UserController.BASE_URL + "/resume";
 		} else if (roles.contains("ROLE_USER"))  {
@@ -58,7 +58,7 @@ public class SecurityUserController extends ViewBaseController<SecurityUser> {
 
 	 public SecurityUserController() {
 	 super(SecurityUser.class, BASE_URL);
-	 
+
 	 }
 
 	@Autowired

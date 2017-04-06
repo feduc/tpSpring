@@ -132,9 +132,7 @@ public class Project extends DataBaseItem {
 	}
 
 	public Set<User> getTeam() {
-
-			return team;
-
+		return team;
 	}
 
 	public void setTeam(Set<User> team) {
@@ -170,7 +168,5 @@ public class Project extends DataBaseItem {
 		// for (User user : team) {
 		// user.getProjects().add(this);
 		// }
-
 	}
-
 }
