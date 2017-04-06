@@ -27,6 +27,7 @@
                 <form action="/admin/${projectId}/members" method="GET" >
                     <font color = "white"> <th>Matricule de l'utilisateur :</th><br/></font>
                     <input type="hidden" name="projectName" value="${projectName}"/>
+                    <input type="hidden" name="leaderId" value="${leaderId}"/>
                     <input type="text" name="userRegistration" placeholder="entrez le matricule de l'utilisateur" value="${userRegistration}"/>
 
                <br/>
