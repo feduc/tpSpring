@@ -206,8 +206,14 @@ public class AdminController extends ViewBaseController<User> {
 		// sauvegarde des deux objets
 		userCrud.save(user);
 		projectCrud.save(project);
+		
+		Long leaderId = 0L;
+		if (project.getProjectLeader()!=null) {
+		leaderId = project.getProjectLeader().getId();
+		}
 
-		return REDIRECT + BASE_URL + "/" + projectId + "/members?projectName=" + projectName;
+		return REDIRECT + BASE_URL + "/" + projectId + "/members?projectName=" + projectName + "&leaderId="
+				+ leaderId;
 	}
 
 	@Secured("ROLE_ADMIN")
@@ -235,11 +241,17 @@ public class AdminController extends ViewBaseController<User> {
 		User user = userCrud.findOne(Long.parseLong(userId));
 		user.getProjects().add(project);
 		project.getTeam().add(user);
-
+		
 		userCrud.save(user);
-		projectCrud.save(project);
+		projectCrud.save(project);	
 
-		return REDIRECT + BASE_URL + "/" + projectId + "/members?projectName=" + projectName;
+		Long leaderId = 0L;
+		if (project.getProjectLeader()!=null) {
+		leaderId = project.getProjectLeader().getId();
+		}
+		
+		return REDIRECT + BASE_URL + "/" + projectId + "/members?projectName=" + projectName + "&leaderId="
+				+ leaderId;
 	}
 
 	@Secured("ROLE_ADMIN")
