@@ -139,6 +139,6 @@ public class ProjectController extends ViewBaseController<Project>{
 //		model.addAttribute("fields", DumpFields.createContentsEmpty(super.getClazz()).fields);
 //		model.addAttribute("page", pageName);
 
-		return super.REDIRECT+"/user/create/";
+		return super.REDIRECT+"/project/create/";
 	}
 }

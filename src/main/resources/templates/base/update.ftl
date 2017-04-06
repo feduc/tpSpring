@@ -34,7 +34,7 @@
                 </#list>
             </#list>
     </h1></font>
-    <form action="${path}/${item["id"]}/update/do" method="POST">
+    <form action="${path}/${item["id"]}/update/done" method="POST">
 
                 <#list fields as field>
                       <#list item?keys as key>
@@ -73,5 +73,7 @@
         </div>
       </div>
       </div>
-
+ <footer>
+    <img src="/img/basdepage.JPG">
+  </footer>
 </body>
