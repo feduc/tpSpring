@@ -62,7 +62,7 @@
   </div>
 
   <footer>
-    <img src="/image/basdepage.jpg">
+    <img src="/img/basdepage.jpg">
   </footer>
 </body>
 </html>

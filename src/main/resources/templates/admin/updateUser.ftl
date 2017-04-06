@@ -64,4 +64,7 @@
     <#include "../includable/security/securityToken.ftl">
 
     </form>
+     <footer>
+        <img src="/img/basdepage.JPG">
+     </footer>
 </body>

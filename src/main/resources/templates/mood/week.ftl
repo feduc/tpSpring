@@ -15,7 +15,7 @@
       <a href =/user/parameters><img src='/img/parametre.png' alt='exemple' width='5%'></a>
       <a href =/logout><img src='/img/logout.jpg' alt='exemple' width='5%'></a>
     </div>
-
+  <h1 align="center"> ${projectName}  </h1>
   <h1 align="center"> Semaine du ${debutsemaine} / ${mois} au ${finsemaine} / ${mois1} / ${annee}  </h1>
       <#if leader == true>
              <form id= 'formid' action='/project/HiddenAnonymous' method='POST'>

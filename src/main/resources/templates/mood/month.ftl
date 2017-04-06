@@ -17,17 +17,18 @@
     </div>
 
       <div class="row">
-          <div class="col-xs-12 col-sm-1 col-md-4">
+          <div class="col-xs-12 col-sm-4 col-md-4">
                     <form action="/mood/month/change" method="GET">
                       <input type="hidden" name="date" value="${date?c}" />
                         <input type="hidden" name="projectName" value="${projectName}" />
                             <button id="previousMonth" type="submit" name="changeMonth" value="previous"></button>
                     </form>
            </div>
-          <div class="col-xs-12 col-sm-1 col-md-4">
+          <div class="col-xs-12 col-sm-4 col-md-4">
+                      <h1 align="center"> ${projectName}  </h1>
                       <h1 align="center">  Mois du ${debutmois} / ${mois} au ${finmois} / ${mois} / ${annee}</h1>
           </div>
-          <div class="col-xs-12 col-sm-1 col-md-4">
+          <div class="col-xs-12 col-sm-4 col-md-4">
                     <form action="/mood/month/change" method="GET">
                         <input type="hidden" name="date" value="${date?c}" />
                         <input type="hidden" name="projectName" value="${projectName}" />
@@ -49,8 +50,8 @@
                     <div class="col-xs-12 col-sm-2 col-md-2"><div class="weekend" style="background-color:rgb(255,255,255)"></div> </div>
                     <div class="col-xs-12 col-sm-2 col-md-2"><div class="weekend" style="background-color:rgb(255,255,255)"></div> </div>
                     <div class="col-xs-12 col-sm-2 col-md-2"><div class="weekend" style="background-color:rgb(255,255,255)"></div> </div>
-                    <div class="col-xs-12 col-sm-2 col-md-1"><div class="weekend" style="background-color:rgb(255,255,255)"></div> </div>
-                    <div class="col-xs-12 col-sm-2 col-md-1">
+                    <div class="col-xs-12 col-sm-1 col-md-1"><div class="weekend" style="background-color:rgb(255,255,255)"></div> </div>
+                    <div class="col-xs-12 col-sm-1 col-md-1">
                         <div class="weekend" style="background-color:rgb(192,192,192)">
                                 <form id= 'formid' action='/mood/week/' method='get'>
                                     <input type='hidden' name='projectName' value='${projectName}' />
@@ -65,8 +66,8 @@
                     <div class="col-xs-12 col-sm-2 col-md-2"><div class="weekend" style="background-color:rgb(255,255,255)"></div> </div>
                     <div class="col-xs-12 col-sm-2 col-md-2"><div class="weekend" style="background-color:rgb(255,255,255)"></div> </div>
                     <div class="col-xs-12 col-sm-2 col-md-2"><div class="weekend" style="background-color:rgb(255,255,255)"></div> </div>
-                    <div class="col-xs-12 col-sm-2 col-md-1"><div class="weekend" style="background-color:rgb(255,255,255)"></div> </div>
-                    <div class="col-xs-12 col-sm-2 col-md-1">
+                    <div class="col-xs-12 col-sm-1 col-md-1"><div class="weekend" style="background-color:rgb(255,255,255)"></div> </div>
+                    <div class="col-xs-12 col-sm-1 col-md-1">
                         <div class="weekend" style="background-color:rgb(192,192,192)">
                                 <form id= 'formid' action='/mood/week/' method='get'>
                                     <input type='hidden' name='projectName' value='${projectName}' />
@@ -290,7 +291,7 @@
                             <div class="col-xs-12 col-sm-2 col-md-2"><div class="weekend" style="background-color:rgb(255,255,255)"style ="color:white"></div> </div>
                             <div class="col-xs-12 col-sm-2 col-md-2"><div class="weekend" style="background-color:rgb(255,255,255)"style ="color:white"></div> </div>
                             <div class="col-xs-12 col-sm-2 col-md-2"><div class="weekend" style="background-color:rgb(255,255,255)"style ="color:white"></div> </div>
-                            <div class="col-xs-12 col-sm-2 col-md-1">
+                            <div class="col-xs-12 col-sm-1 col-md-1">
                                 <div class="weekend" style="background-color:rgb(192,192,192)">
                                     <form id= 'formid' action='/mood/week/' method='get'>
                                         <input type='hidden' name='projectName' value='${projectName}' />
@@ -302,7 +303,7 @@
 
                 <#else>
                 <#if int["joursem"]== 7>
-                            <div class="col-xs-12 col-sm-2 col-md-1">
+                            <div class="col-xs-12 col-sm-1 col-md-1">
                                 <div class="weekend" style="background-color:rgb(192,192,192)">
                                     <form id= 'formid' action='/mood/week/' method='get'>
                                         <input type='hidden' name='projectName' value='${projectName}' />
@@ -312,7 +313,7 @@
                                 </div>
                             </div>
                         <#elseif int["joursem"]== 1>
-                            <div class="col-xs-12 col-sm-2 col-md-1">
+                            <div class="col-xs-12 col-sm-1 col-md-1">
                                 <div class="weekend" style="background-color:rgb(192,192,192)">
                                     <form id= 'formid' action='/mood/week/' method='get'>
                                         <input type='hidden' name='projectName' value='${projectName}' />
@@ -364,7 +365,6 @@
            <form id= 'formid' action='/user/resume/' method='get'>
                   <input type='hidden' name='projectName' value='${projectName}' />
                   <input type='hidden' name='date' value='${date?c}'/>
-                  <input type='hidden' name='changeMonth'/>
                   <div style="text-align: center">
                     <button type='submit' style='width:300px' value='submit'>Retour au resumé</button>
                   </div>

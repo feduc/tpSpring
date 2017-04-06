@@ -113,6 +113,8 @@
                     </form>
                     <br/>
               </#list>
+              <hr style= "width:75%"/>
+              <p> <FONT color='white'>Navigation</FONT></p>
               <form action='/project/choose' method='get'>
                     <div>
                         <#include "../includable/security/securityToken.ftl">
@@ -149,18 +151,5 @@
     <footer>
       <img src='/img/basdepage.jpg'>
     </footer>
-
-    <script src='/js/projectsViewingOnResume.js'></script>
-
-    <script>
-    $(document).ready(function(){
-
-    });
-
-    $(document).unload(function(){
-
-    });
-    </script>
-
   </body>
 </html>

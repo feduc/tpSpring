@@ -25,6 +25,7 @@
         <label for="mdp">Mot de Passe:</label>
         <input type="password" name="password" required="required"/>
     </div>
+    <br/>
     <#include "../includable/security/securityToken.ftl">
     <div class="button">
     <button type="submit" value="submit">Log In</button>

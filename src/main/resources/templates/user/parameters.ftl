@@ -24,12 +24,13 @@
                             <#include "../includable/security/securityToken.ftl">
                       </div>
                     <font color = "white"> <th>Ancien Mot de passe:</th></br></font>
-                    <input type="password" name="oldPassword" placeholder="entrez votre ancien mot de passe"/>
+                    <input type="password" name="oldPassword" placeholder="ancien mot de passe"/>
                     </br><font color = "white"> <th>Nouveau Mot de Passe :</th></br></font>
-                    <input type="password" name="newPassword1" placeholder="entrez votre nouveau mot de passe" />
+                    <input type="password" name="newPassword1" placeholder="nouveau mot de passe" />
                     </br><font color = "white"> <th>Confirmer votre Nouveau Mot de Passe :</th></br></font>
-                    <input type="password" name="newPassword2" placeholder="confirmer votre nouveau mot de passe"/>
-               </br>
+                    <input type="password" name="newPassword2" placeholder="confirmer"/>
+               <br/>
+               <br/>
                 <button type="submit" value="submit">Valider</button>
             </form>
             <#if changePass??>
@@ -43,7 +44,8 @@
                 <div>
                     <#include "../includable/security/securityToken.ftl">
                 </div>
-            <input style="width:10%" type="submit" value="Retour page perso"/>
+                <hr style= "width:75%"/>
+            <input style="width:20%" type="submit" value="Retour page perso"/>
             </form>
              </div>
         </div>

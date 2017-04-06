@@ -94,15 +94,5 @@
     <footer>
       <img src='/img/basdepage.jpg'>
     </footer>
-
-    <script src='/js/projectsViewingOnResume.js'></script>
-
-    <script>
-    $(document).ready(function(){
-    });
-    $(document).unload(function(){
-    });
-    </script>
-
   </body>
 </html>
