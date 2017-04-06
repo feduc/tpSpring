@@ -25,15 +25,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		// impose that to request anything you need to be authenticated
 		http.authorizeRequests()
-				.anyRequest()
-				.authenticated()
+				.antMatchers("/static/**").permitAll()
+				//.anyRequest().authenticated()
 			.and()
 				.formLogin()
 				.loginPage("/login")
 				.usernameParameter("username")
 				.passwordParameter("password")
 				.permitAll()
-				.defaultSuccessUrl("/security/login/do", true);
+				.defaultSuccessUrl("/security/login/do", true);	
 	}
 
 	@Autowired
