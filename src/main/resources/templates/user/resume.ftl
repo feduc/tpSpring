@@ -34,7 +34,8 @@
   </head>
   <body>
     <header>
-      <img src='/img/BaniereCGI.jpg'>
+     <img src="/img/NikoSmile-logo.png" align="left" height="80px">
+     <img src="/img/LogoCGI.png" align="right" height="80px">
     </header>
     <div align = right>
       <a href =/user/parameters><img src='/img/parametre.png' alt='exemple' width='5%'></a>
@@ -149,7 +150,8 @@
       </div>
     </div>
     <footer>
-      <img src='/img/basdepage.jpg'>
+     <img src="/img/NikoSmile-logo.png" align="left" height="80px">
+     <img src="/img/LogoCGI.png" align="right" height="80px">
     </footer>
   </body>
 </html>

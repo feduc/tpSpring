@@ -2,6 +2,23 @@
 body {
   background-color: #f7f7f7; }
 
+header {
+    background: linear-gradient(white ,grey);
+    height: 100px;
+    padding: 10px;
+}
+
+footer {
+    position: absolute;
+    background: linear-gradient(grey, white);
+    height: 100px;
+    padding: 10px;
+    width: 100%;
+}
+
+.bottom {
+	bottom: 0px;
+}
 
 html {
 

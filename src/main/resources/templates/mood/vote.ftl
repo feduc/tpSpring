@@ -8,7 +8,8 @@
 </head>
 <body>
     <header>
-     <img src="/img/BaniereCGI.jpg">
+     <img src="/img/NikoSmile-logo.png" align="left" height="80px">
+     <img src="/img/LogoCGI.png" align="right" height="80px">
   </header>
 
   <h1 align="center">Quel a été votre ressenti pour la journée du ${voteDate?string('yyyy/MM/dd')}?</h1>
@@ -62,7 +63,8 @@
   </div>
 
   <footer>
-    <img src="/img/basdepage.jpg">
+     <img src="/img/NikoSmile-logo.png" align="left" height="80px">
+     <img src="/img/LogoCGI.png" align="right" height="80px">
   </footer>
 </body>
 </html>
