@@ -15,6 +15,7 @@
       <a href =/user/parameters><img src='/img/parametre.png' alt='exemple' width='5%'></a>
       <a href =/logout><img src='/img/logout.jpg' alt='exemple' width='5%'></a>
     </div>
+    <div class="row">
       <div class="col-xs-12 col-sm-8 col-md-12">
          <div class="changeavis">
             <font color = "white"><h1> Modification de votre mot de passe </h1> </font>
@@ -47,6 +48,7 @@
             <input style="width:20%" type="submit" value="Retour page perso"/>
             </form>
              </div>
+        </div>
         </div>
 
     <footer>
