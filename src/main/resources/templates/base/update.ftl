@@ -67,7 +67,7 @@
                         </#if>
                    </#list>
                 </#list>
-
+        <br/>
         <button type="submit" value="submit">Update</button>
     <#include "../includable/security/securityToken.ftl">
     </form>

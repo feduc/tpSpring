@@ -87,13 +87,18 @@
                         <td>${member["firstName"]}</td>
                         <td>${member["lastName"]}</td>
                         <td>${member["registrationCGI"]}</td>
-                        <td>
-                            <form action="/admin/${projectId}/members/${member["id"]}/remove" method ="POST">
-                            <input type="hidden" name="projectName" value="${projectName}"/>
-                            <#include "../includable/security/securityToken.ftl">
-                            <input type="submit" value="Retirer"/>
-                            </form>
-                        </td>
+                        <#if leaderId == member["id"]>
+                            <td></td>
+                        <#else>
+                            <td>
+                                <form action="/admin/${projectId}/members/${member["id"]}/remove" method ="POST">
+                                    <input type="hidden" name="projectName" value="${projectName}"/>
+                                    <#include "../includable/security/securityToken.ftl">
+                                    <input type="submit" value="Retirer"/>
+                                </form>
+                            </td>
+                        </#if>
+                        
                         <td>
                             <#if leaderId == member["id"]>
                             <input type="radio" name="projectLeader" value="${member["registrationCGI"]}" checked="checked"/>

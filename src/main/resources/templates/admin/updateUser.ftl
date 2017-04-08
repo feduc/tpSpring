@@ -55,18 +55,21 @@
                                 <input type="text"  value="${item[key]?string('yyyy/MM/dd HH:mm:ss')}" name="${key}"
                                 required="required" title="Date : YYYY/MM/DD HH:MM:SS" pattern="[0-2][0-9][0-9][0-9]\/((02\/(0[1-9]|[12][0-9]))|((0[469]|11)\/(0[1-9]|[12][0-9]|30))|((0[13578]|1[02])\/(0[1-9]|[12][0-9]|3[01])))\s([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]"/><br/>
                             <#elseif item[key]?is_number>
-                                <input type="text"  value="${item[key]}" name="${key}" data-validation="number" data-validation-allowing="integer" required="required"/><br/>
+                                <input type="text"  value="${item[key]}" name="${key}" pattern="-?[0-9]*" required="required"/><br/>
                             <#else>
                                 <input type="text"  value="${item[key]}" name="${key}" required="required"/><br/>
                             </#if>
                         </#if>
                    </#list>
                 </#list>
-
+        <br/>
         <button type="submit" value="submit">Update</button>
     <#include "../includable/security/securityToken.ftl">
-
     </form>
+    </div>
+    </div>
+    </div>
+    </div>
      <footer>
      <img src="/img/NikoSmile-logo.png" align="left" height="80px">
      <img src="/img/LogoCGI.png" align="right" height="80px">
